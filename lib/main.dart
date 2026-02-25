@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tawfeer_market/splash_page.dart';
+import 'package:tawfeer_market/pages/login_page.dart';
+import 'package:tawfeer_market/pages/splash_page.dart';
 
 void main() {
   runApp(const TawfeerMarket());
@@ -13,7 +14,8 @@ class TawfeerMarket extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        SplashPage.id: (context) => SplashPage(),
+        SplashPage.id : (context) => SplashPage(),
+        LoginPage.id : (context) => LoginPage(),
       },
       initialRoute: SplashPage.id,
     );
