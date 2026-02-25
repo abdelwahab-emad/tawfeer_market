@@ -2,31 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:tawfeer_market/constants.dart';
 
 class CustomButton extends StatelessWidget {
-  CustomButton({super.key, required this.onTap, required this.text});
+  CustomButton({
+    super.key,
+    required this.onTap, 
+    required this.text, 
+    required this.textColor, 
+    required this.filledColor,
+    this.borderColor = const Color(kprimarycolor),
+  });
 
   String text;
+  Color textColor;
+  Color filledColor;
+  Color borderColor;
   final void Function() onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Color(kprimarycolor), width: 2),
-          ),
-          height: 45,
-          child: Center(
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Color(0xFF001D3D),
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: filledColor,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: borderColor, width: 2.5),
+        ),
+        height: 55,
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: textColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),

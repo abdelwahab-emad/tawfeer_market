@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/pages/login_page.dart';
+import 'package:tawfeer_market/pages/register_page.dart';
 import 'package:tawfeer_market/pages/splash_page.dart';
 
 void main() {
@@ -16,6 +17,7 @@ class TawfeerMarket extends StatelessWidget {
       routes: {
         SplashPage.id : (context) => SplashPage(),
         LoginPage.id : (context) => LoginPage(),
+        RegisterPage.id : (context) => RegisterPage(),
       },
       initialRoute: SplashPage.id,
     );

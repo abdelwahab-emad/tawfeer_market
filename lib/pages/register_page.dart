@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/constants.dart';
-import 'package:tawfeer_market/pages/register_page.dart';
+import 'package:tawfeer_market/pages/login_page.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
-  static String id = 'login_page';
-
+  static String id = 'Register_page';
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 130,),
             Row(
@@ -40,43 +38,50 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 100,),
+            const SizedBox(height: 50,),
+            CustomTextField(
+              prefixIcon: Icons.person_outline,
+              labelText: 'First Name',
+            ),
+            const SizedBox(height: 10),
+            CustomTextField(
+              prefixIcon: Icons.person_outline,
+              labelText: 'Last Name',
+            ),
+            const SizedBox(height: 10),
             CustomTextField(
               prefixIcon: Icons.email_outlined,
               labelText: 'Email Address',
             ),
             const SizedBox(height: 10),
-            CustomTextField(
+           CustomTextField(
               prefixIcon: Icons.lock_outline,
               suffixIcon: Icons.visibility_outlined,
               obscureText: true,
               labelText: 'Password',
             ),
-        
-            const SizedBox(height: 15),
+             const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: CustomButton(
                 onTap: () {},
-                text: 'Sign in',
+                text: 'Sign Up',
                 textColor: Colors.white,
                 filledColor: Color(kprimarycolor),
               ),
             ),
             const SizedBox(height: 15),
             Text(
-              "Don't have an Account?",
+              "Already have an Account?",
               style: TextStyle(color: Colors.grey[800], fontSize: 16),
             ),
             const SizedBox(height: 15),
 
             GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, RegisterPage.id);
-              },
+              onTap: () => Navigator.pop(context),
 
               child: Text(
-                "Sign Up",
+                "Sign in",
                 style: TextStyle(
                   color: Color(kprimarycolor),
                   fontSize: 20,

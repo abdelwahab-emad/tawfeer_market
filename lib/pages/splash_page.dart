@@ -38,26 +38,33 @@ class SplashPage extends StatelessWidget {
               'assests/—Pngtree—fresh groceries spilling out of_23492477.png',
             ),
             const Spacer(flex: 2),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomButton(
-                    onTap: () {
-                      Navigator.pushNamed(context, LoginPage.id);
-                    },
-                    text: 'English',
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: CustomButton(
+                      onTap: () {
+                        Navigator.pushNamed(context, LoginPage.id);
+                      },
+                      text: 'English',
+                      textColor: Color(0xFF001D3D),
+                      filledColor: Colors.white,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: CustomButton(
-                    onTap: () {
-                      Navigator.pushNamed(context, LoginPage.id);
-                    },
-                    text: 'العربيه',
+                  const SizedBox(width: 14,),
+                  Expanded(
+                    child: CustomButton(
+                      onTap: () {
+                        Navigator.pushNamed(context, LoginPage.id);
+                      },
+                      text: 'العربيه',
+                      textColor: Color(0xFF001D3D),
+                      filledColor: Colors.white,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
