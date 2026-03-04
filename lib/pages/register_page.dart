@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_cubit.dart';
-import 'package:tawfeer_market/cubits/register_cubit/register_states.dart'; // تأكد من استدعاء ملف الحالات
+import 'package:tawfeer_market/cubits/register_cubit/register_states.dart';
+import 'package:tawfeer_market/pages/login_page.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
 
@@ -172,7 +173,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(color: Colors.grey[800], fontSize: 16),
                       ),
                       GestureDetector(
-                        onTap: () => Navigator.pop(context),
+                        onTap: () {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            LoginPage.id,
+                          );
+                        },
                         child: Text(
                           "Sign in",
                           style: TextStyle(

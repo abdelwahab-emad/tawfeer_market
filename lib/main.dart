@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tawfeer_market/cubits/login_cubit/login_cubit.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_cubit.dart';
 import 'package:tawfeer_market/firebase_options.dart';
 import 'package:tawfeer_market/pages/login_page.dart';
@@ -24,7 +25,10 @@ class TawfeerMarket extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         SplashPage.id : (context) => const SplashPage(),
-        LoginPage.id : (context) => const LoginPage(),
+        LoginPage.id : (context) => BlocProvider(
+          create: (context) => LoginCubit(),
+          child: const LoginPage(),
+        ),
         RegisterPage.id : (context) => BlocProvider(
           create: (context) => RegisterCubit(),
           child: const RegisterPage(),
