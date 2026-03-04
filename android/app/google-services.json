@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "915399947091",
+    "project_id": "tawfeer-market-2ae89",
+    "storage_bucket": "tawfeer-market-2ae89.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915399947091:android:c3654b845a675641d767a6",
+        "android_client_info": {
+          "package_name": "com.example.tawfeer_market"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqEkW-6gWWDWtpL6RhLaOo0qnDYPsgnLs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
