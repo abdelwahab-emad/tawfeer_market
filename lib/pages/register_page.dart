@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_cubit.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_states.dart';
+import 'package:tawfeer_market/pages/home_page.dart';
 import 'package:tawfeer_market/pages/login_page.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
@@ -29,17 +30,40 @@ class _RegisterPageState extends State<RegisterPage> {
     return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) {
         if (state is RegisterSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Account Created Successfully!'),
-              backgroundColor: Colors.green,
-            ),
-          );
+          Navigator.pushReplacementNamed(context, HomePage.id);
         } else if (state is RegisterFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.errorMessage),
-              backgroundColor: Colors.red,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              padding: EdgeInsets.zero,
+              behavior: SnackBarBehavior.floating,
+              margin: const EdgeInsets.only(bottom: 55),
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      state.errorMessage,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              duration: const Duration(seconds: 3),
             ),
           );
         }
@@ -165,25 +189,23 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 15),
 
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Already have an Account? ",
                         style: TextStyle(color: Colors.grey[800], fontSize: 16),
                       ),
+                      const SizedBox(height: 10,),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacementNamed(
-                            context,
-                            LoginPage.id,
-                          );
+                          Navigator.pushReplacementNamed(context, LoginPage.id);
                         },
                         child: Text(
                           "Sign in",
                           style: TextStyle(
                             color: Color(kprimarycolor),
-                            fontSize: 18,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

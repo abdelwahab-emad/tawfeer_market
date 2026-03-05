@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_cubit.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_cubit.dart';
 import 'package:tawfeer_market/firebase_options.dart';
+import 'package:tawfeer_market/pages/home_page.dart';
 import 'package:tawfeer_market/pages/login_page.dart';
 import 'package:tawfeer_market/pages/register_page.dart';
 import 'package:tawfeer_market/pages/splash_page.dart';
@@ -33,6 +34,7 @@ class TawfeerMarket extends StatelessWidget {
           create: (context) => RegisterCubit(),
           child: const RegisterPage(),
         ),
+        HomePage.id : (context) => const HomePage(),
       },
       initialRoute: SplashPage.id,
     );

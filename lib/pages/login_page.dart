@@ -6,6 +6,7 @@ import 'package:tawfeer_market/cubits/login_cubit/login_states.dart';
 import 'package:tawfeer_market/pages/register_page.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
+import 'package:tawfeer_market/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -27,17 +28,40 @@ class _LoginPageState extends State<LoginPage> {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Login Success!'),
-              backgroundColor: Colors.green,
-            ),
-          );
+          Navigator.pushReplacementNamed(context, HomePage.id);
         } else if (state is LoginFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.errorMessage),
-              backgroundColor: Colors.red,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              padding: EdgeInsets.zero,
+              behavior: SnackBarBehavior.floating,
+              margin: const EdgeInsets.only(bottom: 55),
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      state.errorMessage,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              duration: const Duration(seconds: 3),
             ),
           );
         }
