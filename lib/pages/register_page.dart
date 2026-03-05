@@ -6,6 +6,7 @@ import 'package:tawfeer_market/cubits/register_cubit/register_states.dart';
 import 'package:tawfeer_market/pages/home_page.dart';
 import 'package:tawfeer_market/pages/login_page.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
+import 'package:tawfeer_market/widgets/custom_snackbar.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -32,40 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
         if (state is RegisterSuccess) {
           Navigator.pushReplacementNamed(context, HomePage.id);
         } else if (state is RegisterFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              padding: EdgeInsets.zero,
-              behavior: SnackBarBehavior.floating,
-              margin: const EdgeInsets.only(bottom: 55),
-              content: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 12,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      state.errorMessage,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              duration: const Duration(seconds: 3),
-            ),
-          );
+          showCustomSnackBar(context, state.errorMessage);
         }
       },
 
@@ -196,7 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         "Already have an Account? ",
                         style: TextStyle(color: Colors.grey[800], fontSize: 16),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(height: 10),
                       GestureDetector(
                         onTap: () {
                           Navigator.pushReplacementNamed(context, LoginPage.id);
