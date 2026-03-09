@@ -4,7 +4,7 @@ import 'package:tawfeer_market/cubits/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:tawfeer_market/cubits/bottom_nav_cubit/bottom_nav_states.dart';
 import 'package:tawfeer_market/pages/home_page.dart';
 import 'package:tawfeer_market/pages/cart_page.dart';
-import 'package:tawfeer_market/pages/wishlist_page.dart';
+import 'package:tawfeer_market/pages/Favorites.page.dart';
 import 'package:tawfeer_market/pages/profile_page.dart';
 import 'package:tawfeer_market/widgets/custom_nav_item.dart';
 
@@ -15,7 +15,7 @@ class UserMainLayout extends StatelessWidget {
   final List<Widget> _pages = const [
     HomePage(),
     CartPage(),
-    WishlistPage(),
+    FavoritesPage(),
     ProfilePage(),
   ];
 
@@ -43,7 +43,7 @@ class UserMainLayout extends StatelessWidget {
               children: [
                 CustomNavItem(index: 0, icon: Icons.home, label: "Home", currentIndex: currentIndex),
                 CustomNavItem(index: 1, icon: Icons.shopping_cart, label: "Cart", currentIndex: currentIndex),
-                CustomNavItem(index: 2, icon: Icons.favorite, label: "Wishlist", currentIndex: currentIndex),
+                CustomNavItem(index: 2, icon: Icons.favorite, label: "Favorites", currentIndex: currentIndex),
                 CustomNavItem(index: 3, icon: Icons.person, label: "Profile", currentIndex: currentIndex),
               ],
             ),

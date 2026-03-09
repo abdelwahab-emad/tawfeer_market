@@ -11,8 +11,8 @@ import 'package:tawfeer_market/pages/login_page.dart';
 import 'package:tawfeer_market/pages/profile_page.dart';
 import 'package:tawfeer_market/pages/register_page.dart';
 import 'package:tawfeer_market/pages/splash_page.dart';
-import 'package:tawfeer_market/pages/user_main_layout.dart';
-import 'package:tawfeer_market/pages/wishlist_page.dart';
+import 'package:tawfeer_market/pages/user_main_layou_page.dart';
+import 'package:tawfeer_market/pages/Favorites.page.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +41,7 @@ class TawfeerMarket extends StatelessWidget {
         ),
         HomePage.id : (context) => const HomePage(),
         CartPage.id : (context) => const CartPage(),
-        WishlistPage.id : (context) => const WishlistPage(),
+        FavoritesPage.id : (context) => const FavoritesPage(),
         ProfilePage.id : (context) => const ProfilePage(),
         UserMainLayout.id : (context) => BlocProvider(
           create: (context) => BottomNavCubit(),
