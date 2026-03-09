@@ -4,10 +4,10 @@ import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_cubit.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_states.dart';
 import 'package:tawfeer_market/pages/register_page.dart';
+import 'package:tawfeer_market/pages/user_main_layout.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
 import 'package:tawfeer_market/widgets/custom_snackbar.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
-import 'package:tawfeer_market/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          Navigator.pushReplacementNamed(context, HomePage.id);
+          Navigator.pushReplacementNamed(context, UserMainLayout.id);
         } else if (state is LoginFailure) {
           showCustomSnackBar(context, state.errorMessage);
         }

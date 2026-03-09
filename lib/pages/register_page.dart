@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_cubit.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_states.dart';
-import 'package:tawfeer_market/pages/home_page.dart';
 import 'package:tawfeer_market/pages/login_page.dart';
+import 'package:tawfeer_market/pages/user_main_layout.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
 import 'package:tawfeer_market/widgets/custom_snackbar.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
@@ -31,7 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) {
         if (state is RegisterSuccess) {
-          Navigator.pushReplacementNamed(context, HomePage.id);
+          Navigator.pushReplacementNamed(context, UserMainLayout.id);
         } else if (state is RegisterFailure) {
           showCustomSnackBar(context, state.errorMessage);
         }
