@@ -4,7 +4,7 @@ import 'package:tawfeer_market/cubits/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:tawfeer_market/cubits/bottom_nav_cubit/bottom_nav_states.dart';
 import 'package:tawfeer_market/pages/home_page.dart';
 import 'package:tawfeer_market/pages/cart_page.dart';
-import 'package:tawfeer_market/pages/Favorites.page.dart';
+import 'package:tawfeer_market/pages/Favorites_page.dart';
 import 'package:tawfeer_market/pages/profile_page.dart';
 import 'package:tawfeer_market/widgets/custom_nav_item.dart';
 
