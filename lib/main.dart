@@ -11,7 +11,7 @@ import 'package:tawfeer_market/pages/login_page.dart';
 import 'package:tawfeer_market/pages/profile_page.dart';
 import 'package:tawfeer_market/pages/register_page.dart';
 import 'package:tawfeer_market/pages/splash_page.dart';
-import 'package:tawfeer_market/pages/user_main_layou_page.dart';
+import 'package:tawfeer_market/pages/user_main_layout_page.dart';
 import 'package:tawfeer_market/pages/Favorites_page.dart';
 
 void main() async{

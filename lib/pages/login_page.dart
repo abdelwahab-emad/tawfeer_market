@@ -4,7 +4,7 @@ import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_cubit.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_states.dart';
 import 'package:tawfeer_market/pages/register_page.dart';
-import 'package:tawfeer_market/pages/user_main_layou_page.dart';
+import 'package:tawfeer_market/pages/user_main_layout_page.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
 import 'package:tawfeer_market/widgets/custom_snackbar.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
