@@ -11,6 +11,9 @@ class CustomTextField extends StatelessWidget {
     this.obscureText = false,
     required this.labelText,
     this.onSuffixPressed,
+    this.borderRadius = 15.0,
+    this.readOnly = false,
+    this.prefixIconSize = 22.0,
   });
 
   final String labelText;
@@ -21,6 +24,9 @@ class CustomTextField extends StatelessWidget {
   final IconData? suffixIcon;
   final bool obscureText;
   final void Function()? onSuffixPressed;
+  final double borderRadius;
+  final bool readOnly;
+  final double prefixIconSize;
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +44,12 @@ class CustomTextField extends StatelessWidget {
         style: const TextStyle(color: Colors.black, fontSize: 16),
         decoration: InputDecoration(
           labelText: labelText,
+          floatingLabelBehavior: readOnly ? FloatingLabelBehavior.never : FloatingLabelBehavior.auto,
           labelStyle: TextStyle(color: Colors.grey[700], fontSize: 18),
           floatingLabelStyle: const TextStyle(color: hintGrey),
           hintStyle: const TextStyle(color: hintGrey, fontSize: 14),
           prefixIcon: prefixIcon != null
-              ? Icon(prefixIcon, color: Colors.grey[700], size: 22)
+              ? Icon(prefixIcon, color: Colors.grey[700], size: prefixIconSize)
               : null,
 
           suffixIcon: suffixIcon != null
@@ -58,19 +65,19 @@ class CustomTextField extends StatelessWidget {
           fillColor: Colors.white,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade200, width: 1),
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(borderRadius),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: hintGrey, width: 1.5),
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(borderRadius),
           ),
           errorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.red),
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(borderRadius),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.red, width: 1.5),
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(borderRadius),
           ),
           contentPadding: const EdgeInsets.symmetric(
             vertical: 16,
