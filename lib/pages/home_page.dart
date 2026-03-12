@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tawfeer_market/widgets/custom_text_field.dart';
+import 'package:tawfeer_market/widgets/home_app_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,34 +16,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(130),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(50),
-                bottomRight: Radius.circular(50),
-              ),
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xFFFF9800), Color(0xFFFF5722)],
-              ),
-            ),
-            child: SafeArea(
-              child: Center(
-                child: CustomTextField(
-                  labelText: 'Search in Tawfeer Market',
-                  prefixIcon: Icons.search,
-                  prefixIconSize: 28, 
-                  borderRadius: 40, 
-                  readOnly: true, 
-                ),
-              ),
-            ),
-          ),
-        ),
+        child: HomeAppBar(),
       ),
       body: const Center(child: Text("Home Content Starts Here")),
     );
