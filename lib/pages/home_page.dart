@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/widgets/home_app_bar.dart';
+import 'package:tawfeer_market/widgets/offers_slider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,15 +11,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(130),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(130),
         child: HomeAppBar(),
       ),
-      body: const Center(child: Text("Home Content Starts Here")),
+      body: ListView(
+        children: [
+          const SizedBox(height: 30),
+          OffersSlider(),
+        ],
+      ),
     );
   }
 }

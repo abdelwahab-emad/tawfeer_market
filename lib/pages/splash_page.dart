@@ -35,7 +35,7 @@ class SplashPage extends StatelessWidget {
             ),
             const Spacer(flex: 1),
             Image.asset(
-              'assests/—Pngtree—fresh groceries spilling out of_23492477.png',
+              'assets/splashphoto.png',
             ),
             const Spacer(flex: 2),
             Padding(
