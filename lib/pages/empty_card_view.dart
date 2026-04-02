@@ -11,16 +11,7 @@ class EmptyCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text('My Cart'),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: Column(
+    return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset('assets/Cartphoto.jpeg'),
@@ -40,7 +31,6 @@ class EmptyCardView extends StatelessWidget {
             filledColor: Colors.white,
           ),
         ],
-      ),
     );
   }
 }
