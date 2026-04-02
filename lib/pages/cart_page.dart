@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tawfeer_market/pages/empty_card_view.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -11,8 +12,7 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-    );
+    return EmptyCardView();
   }
 }
+
