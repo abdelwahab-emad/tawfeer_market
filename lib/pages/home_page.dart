@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/pages/categories_view.dart';
+import 'package:tawfeer_market/pages/daily_needs_view.dart';
 import 'package:tawfeer_market/widgets/home_app_bar.dart';
 import 'package:tawfeer_market/widgets/offers_slider.dart';
 
@@ -24,11 +25,12 @@ class _HomePageState extends State<HomePage> {
         children: [
           const SizedBox(height: 30),
           OffersSlider(),
-          const SizedBox(height: 30,),
+          const SizedBox(height: 30),
           CategoriesView(),
+          const SizedBox(height: 30),
+          DailyNeedsView(),
         ],
       ),
     );
   }
 }
-
