@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tawfeer_market/pages/categories_view.dart';
 import 'package:tawfeer_market/widgets/home_app_bar.dart';
 import 'package:tawfeer_market/widgets/offers_slider.dart';
 
@@ -11,7 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,8 +24,11 @@ class _HomePageState extends State<HomePage> {
         children: [
           const SizedBox(height: 30),
           OffersSlider(),
+          const SizedBox(height: 30,),
+          CategoriesView(),
         ],
       ),
     );
   }
 }
+
