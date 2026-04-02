@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tawfeer_market/pages/bulk_view.dart';
 import 'package:tawfeer_market/pages/categories_view.dart';
 import 'package:tawfeer_market/pages/daily_needs_view.dart';
 import 'package:tawfeer_market/widgets/home_app_bar.dart';
@@ -29,6 +30,8 @@ class _HomePageState extends State<HomePage> {
           CategoriesView(),
           const SizedBox(height: 30),
           DailyNeedsView(),
+          const SizedBox(height: 30,),
+          BulkView(),
         ],
       ),
     );
