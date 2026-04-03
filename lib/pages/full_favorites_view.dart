@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tawfeer_market/pages/cart_item.dart';
 import 'package:tawfeer_market/pages/favorites_item.dart';
 
 class FullFavoritesView extends StatelessWidget {

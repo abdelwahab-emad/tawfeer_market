@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tawfeer_market/pages/empty_favorites_page.dart';
 import 'package:tawfeer_market/pages/full_favorites_view.dart';
 
 class FavoritesPage extends StatefulWidget {
