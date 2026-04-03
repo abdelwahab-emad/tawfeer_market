@@ -31,7 +31,11 @@ class ProductItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: Center(child: Image.asset(image, fit: BoxFit.contain)),
+                  child: Center(
+                    child: Image.network(
+                      image, fit: BoxFit.contain
+                    )
+                  ),
                 ),
                 const SizedBox(height: 15),
                 Text(

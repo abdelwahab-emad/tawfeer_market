@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/cubits/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:tawfeer_market/cubits/category_cubit/category_cubit.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_cubit.dart';
+import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_cubit.dart';
 import 'package:tawfeer_market/firebase_options.dart';
 import 'package:tawfeer_market/pages/cart_page.dart';
@@ -32,6 +33,7 @@ class TawfeerMarket extends StatelessWidget {
         BlocProvider(create: (context) => RegisterCubit()),
         BlocProvider(create: (context) => BottomNavCubit()),
         BlocProvider(create: (context) => CategoryCubit()..getCategories()),
+        BlocProvider(create: (context) => ProductCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
