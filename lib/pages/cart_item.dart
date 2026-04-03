@@ -26,7 +26,6 @@ class CartItem extends StatelessWidget {
             height: 70,
             width: 70,
             decoration: BoxDecoration(
-              color: const Color(kprimarycolor).withOpacity(0.05),
               borderRadius: BorderRadius.circular(10),
               image: const DecorationImage(
                 image: AssetImage('assets/lepton.jpeg'),

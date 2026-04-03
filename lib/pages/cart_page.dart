@@ -16,6 +16,7 @@ class _CartPageState extends State<CartPage> {
       backgroundColor: Colors.white, 
       appBar: AppBar(
         backgroundColor: Colors.white,
+        scrolledUnderElevation: 0.0,
         title: const Text('My Cart', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
         automaticallyImplyLeading: false,
         centerTitle: true,
