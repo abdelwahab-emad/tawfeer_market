@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/cubits/category_cubit/category_cubit.dart';
 import 'package:tawfeer_market/widgets/category_item.dart';
 
 class CategoriesView extends StatelessWidget {
@@ -40,24 +42,53 @@ class CategoriesView extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 10, 10),
-            child: SizedBox(
-              height: 280,
-              child: GridView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 15,
-                  crossAxisSpacing: 10,
-                  childAspectRatio: 1.3,
-                ),
-                itemBuilder: (context, index) {
-                  return const CategoryItem(
-                    image: 'assets/offer2.png',
-                    label: 'Dairy',
+            child: BlocBuilder<CategoryCubit, CategoryState>(
+              builder: (context, state) {
+                if (state is CategoryLoading) {
+                  return const SizedBox(
+                    height: 280,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: Color(kprimarycolor),
+                      ),
+                    ),
                   );
-                },
-              ),
+                } else if (state is CategorySuccess) {
+                  print("✅ عدد الأقسام اللي وصلت: ${state.categoriesList.length}");
+                  return SizedBox(
+                    height: 280,
+                    child: GridView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: state.categoriesList.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 15,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: 1.3,
+                          ),
+                      itemBuilder: (context, index) {
+                        var category = state.categoriesList[index];
+                        return CategoryItem(
+                          image: category.imageUrl,
+                          label: category.name,
+                        );
+                      },
+                    ),
+                  );
+                } else if (state is CategoryError) {
+                  return SizedBox(
+                    height: 280,
+                    child: Center(
+                      child: Text(
+                        state.message,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  );
+                }
+                return const SizedBox(height: 280);
+              },
             ),
           ),
         ],

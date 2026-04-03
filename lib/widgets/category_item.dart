@@ -17,7 +17,7 @@ class CategoryItem extends StatelessWidget {
             color: Color(kprimarycolor).withOpacity(0.05),
             borderRadius: BorderRadius.circular(15),
             image: DecorationImage(
-              image: AssetImage(image),
+              image: NetworkImage(image),
               fit: BoxFit.cover,
             )
           ),

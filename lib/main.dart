@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/cubits/bottom_nav_cubit/bottom_nav_cubit.dart';
+import 'package:tawfeer_market/cubits/category_cubit/category_cubit.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_cubit.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_cubit.dart';
 import 'package:tawfeer_market/firebase_options.dart';
@@ -30,6 +31,7 @@ class TawfeerMarket extends StatelessWidget {
         BlocProvider(create: (context) => LoginCubit()),
         BlocProvider(create: (context) => RegisterCubit()),
         BlocProvider(create: (context) => BottomNavCubit()),
+        BlocProvider(create: (context) => CategoryCubit()..getCategories()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
