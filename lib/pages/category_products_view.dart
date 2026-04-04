@@ -17,6 +17,11 @@ class CategoryProductsView extends StatelessWidget {
           if (state is ProductLoading) {
             return const Center(child: CircularProgressIndicator(color: Color(kprimarycolor),),);
           } else if (state is ProductSuccess) {
+            if(state.products.isEmpty){
+              return const Center(
+                child: Image(image: AssetImage('assets/notresultsfound.jpeg')),
+              );
+            }
             return GridView.builder(
               padding: const EdgeInsets.all(16),
               itemCount: state.products.length,
