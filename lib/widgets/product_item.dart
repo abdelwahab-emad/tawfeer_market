@@ -10,8 +10,6 @@ class ProductItem extends StatelessWidget {
     required this.oldPrice,
     required this.hasDiscount,
     this.onTap,
-    this.showBorder = true,
-    this.showAddButton = true,
   });
 
   final String name;
@@ -20,8 +18,6 @@ class ProductItem extends StatelessWidget {
   final String oldPrice;
   final bool hasDiscount;
   final void Function()? onTap;
-  final bool showBorder;
-  final bool showAddButton;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -31,9 +27,7 @@ class ProductItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          border: showBorder
-              ? Border.all(color: Colors.grey.withOpacity(0.2))
-              : null,
+          border: Border.all(color: Colors.grey.withOpacity(0.2)),
         ),
         child: Stack(
           children: [
@@ -90,19 +84,18 @@ class ProductItem extends StatelessWidget {
               child: Icon(Icons.favorite_border, color: Color(kprimarycolor)),
             ),
 
-            if (showAddButton)
-              Positioned(
-                bottom: 10,
-                right: 10,
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Color(kprimarycolor),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Icon(Icons.add, color: Colors.white),
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Color(kprimarycolor),
+                  borderRadius: BorderRadius.circular(20),
                 ),
+                child: const Icon(Icons.add, color: Colors.white),
               ),
+            ),
           ],
         ),
       ),
