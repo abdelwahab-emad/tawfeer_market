@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
+import 'package:tawfeer_market/pages/product_details_page.dart';
 import 'package:tawfeer_market/widgets/product_item.dart';
 
 class BulkView extends StatelessWidget {
@@ -39,6 +40,16 @@ class BulkView extends StatelessWidget {
                   oldPrice: product.oldPrice.toString(),
                   name: product.name,
                   hasDiscount: product.hasDiscount,
+                    onTap: () {
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                        builder: (context) => ProductDetailsPage(
+                          product: product,
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
             );

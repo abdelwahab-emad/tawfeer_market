@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
+import 'package:tawfeer_market/pages/product_details_page.dart';
 import 'package:tawfeer_market/widgets/product_item.dart';
 
 class DailyNeedsView extends StatelessWidget {
@@ -13,19 +14,16 @@ class DailyNeedsView extends StatelessWidget {
       create: (context) => ProductCubit()..getProductsByType('daily'),
       child: BlocBuilder<ProductCubit, ProductState>(
         builder: (context, state) {
-         Widget content;
+          Widget content;
           if (state is ProductLoading) {
             content = const Center(
-              child: CircularProgressIndicator(
-                color: Color(kprimarycolor),
-              ),
+              child: CircularProgressIndicator(color: Color(kprimarycolor)),
             );
           } else if (state is ProductSuccess) {
             content = GridView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: state.products.length,
-              gridDelegate:
-                  const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
                 mainAxisSpacing: 15,
                 crossAxisSpacing: 10,
@@ -39,17 +37,22 @@ class DailyNeedsView extends StatelessWidget {
                   oldPrice: product.oldPrice.toString(),
                   name: product.name,
                   hasDiscount: product.hasDiscount,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ProductDetailsPage(product: product),
+                      ),
+                    );
+                  },
                 );
               },
             );
           } else if (state is ProductError) {
-            content = Center(
-              child: Text(state.message),
-            );
+            content = Center(child: Text(state.message));
           } else {
-            content = const Center(
-              child: Text('No products found'),
-            );
+            content = const Center(child: Text('No products found'));
           }
 
           return Padding(
@@ -60,17 +63,11 @@ class DailyNeedsView extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Daily Needs',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                 ),
                 const SizedBox(height: 10),
-                SizedBox(
-                  height: 280,
-                  child: content,
-                ),
+                SizedBox(height: 280, child: content),
               ],
             ),
           );
