@@ -138,7 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 18.0),
                     child: state is RegisterLoading
-                        ? const Center(child: CircularProgressIndicator())
+                        ? const Center(child: CircularProgressIndicator(color: Color(kprimarycolor),))
                         : CustomButton(
                             onTap: () {
                               if (formKey.currentState!.validate()) {

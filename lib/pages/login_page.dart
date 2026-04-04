@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 18.0),
                     child: state is LoginLoading
-                        ? const Center(child: CircularProgressIndicator())
+                        ? const Center(child: CircularProgressIndicator(color: Color(kprimarycolor),))
                         : CustomButton(
                             onTap: () {
                               if (formkey.currentState!.validate()) {

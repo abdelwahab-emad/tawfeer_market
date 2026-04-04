@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/category_cubit/category_cubit.dart';
+import 'package:tawfeer_market/pages/all_products.dart';
 import 'package:tawfeer_market/pages/category_products.dart';
 import 'package:tawfeer_market/widgets/category_item.dart';
 
@@ -25,7 +26,12 @@ class CategoriesView extends StatelessWidget {
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AllProducts()),
+                    );
+                  },
                   child: const Text(
                     'View All Products',
                     style: TextStyle(

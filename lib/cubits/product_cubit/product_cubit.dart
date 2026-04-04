@@ -61,4 +61,32 @@ class ProductCubit extends Cubit<ProductState> {
       emit(ProductError(e.toString()));
     }
   }
+
+  void getAllProducts() async {
+    emit(ProductLoading());
+    try {
+      var snapshot = await FirebaseFirestore.instance
+          .collection('products')
+          .get();
+
+      List<ProductModel> productsList = snapshot.docs.map((doc) {
+        var data = doc.data();
+        return ProductModel(
+          id: doc.id,
+          name: data['name'] ?? '',
+          imageUrl: data['imageUrl'] ?? '',
+          price: (data['price'] ?? 0).toDouble(),
+          oldPrice: (data['oldPrice'] ?? 0).toDouble(),
+          hasDiscount: data['hasDiscount'] ?? false,
+          type: data['type'] ?? '',
+          categoryId: data['categoryId'] ?? '',
+        );
+      }).toList();
+
+      emit(ProductSuccess(productsList));
+    } catch (e) {
+      emit(ProductError(e.toString()));
+    }
+  }
+
 }

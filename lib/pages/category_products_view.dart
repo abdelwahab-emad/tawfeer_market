@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
 import 'package:tawfeer_market/pages/product_details_page.dart';
 import 'package:tawfeer_market/widgets/product_item.dart';
@@ -14,7 +15,7 @@ class CategoryProductsView extends StatelessWidget {
       child: BlocBuilder<ProductCubit, ProductState>(
         builder: (context, state) {
           if (state is ProductLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator(color: Color(kprimarycolor),),);
           } else if (state is ProductSuccess) {
             return GridView.builder(
               padding: const EdgeInsets.all(16),
