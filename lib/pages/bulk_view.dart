@@ -10,7 +10,7 @@ class BulkView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductCubit()..getProducts('bulk'),
+      create: (context) => ProductCubit()..getProductsByType('bulk'),
       child: BlocBuilder<ProductCubit, ProductState>(
         builder: (context, state) {
           Widget content;
@@ -38,6 +38,7 @@ class BulkView extends StatelessWidget {
                   price: product.price.toString(),
                   oldPrice: product.oldPrice.toString(),
                   name: product.name,
+                  hasDiscount: product.hasDiscount,
                 );
               },
             );

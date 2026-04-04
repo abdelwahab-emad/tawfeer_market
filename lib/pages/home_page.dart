@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
           CategoriesView(),
           const SizedBox(height: 30),
           DailyNeedsView(),
-          const SizedBox(height: 30,),
+          const SizedBox(height: 30),
           BulkView(),
         ],
       ),

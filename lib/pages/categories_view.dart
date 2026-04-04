@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/category_cubit/category_cubit.dart';
+import 'package:tawfeer_market/pages/category_products.dart';
 import 'package:tawfeer_market/widgets/category_item.dart';
 
 class CategoriesView extends StatelessWidget {
@@ -54,7 +55,9 @@ class CategoriesView extends StatelessWidget {
                     ),
                   );
                 } else if (state is CategorySuccess) {
-                  print("✅ عدد الأقسام اللي وصلت: ${state.categoriesList.length}");
+                  print(
+                    "✅ عدد الأقسام اللي وصلت: ${state.categoriesList.length}",
+                  );
                   return SizedBox(
                     height: 280,
                     child: GridView.builder(
@@ -72,6 +75,17 @@ class CategoriesView extends StatelessWidget {
                         return CategoryItem(
                           image: category.imageUrl,
                           label: category.name,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CategoryProducts(
+                                  categoryName: category.name,
+                                  categoryId: category.id,
+                                ),
+                              ),
+                            );
+                          },
                         );
                       },
                     ),

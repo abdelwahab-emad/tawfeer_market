@@ -10,7 +10,7 @@ class DailyNeedsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductCubit()..getProducts('daily'),
+      create: (context) => ProductCubit()..getProductsByType('daily'),
       child: BlocBuilder<ProductCubit, ProductState>(
         builder: (context, state) {
          Widget content;
@@ -38,6 +38,7 @@ class DailyNeedsView extends StatelessWidget {
                   price: product.price.toString(),
                   oldPrice: product.oldPrice.toString(),
                   name: product.name,
+                  hasDiscount: product.hasDiscount,
                 );
               },
             );

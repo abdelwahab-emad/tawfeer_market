@@ -8,12 +8,14 @@ class ProductItem extends StatelessWidget {
     required this.image,
     required this.price,
     required this.oldPrice,
+    required this.hasDiscount,
   });
 
   final String name;
   final String image;
   final String price;
   final String oldPrice;
+  final bool hasDiscount;
 
   @override
   Widget build(BuildContext context) {
@@ -58,14 +60,14 @@ class ProductItem extends StatelessWidget {
                         fontSize: 12,
                       ),
                     ),
-                    Text(
+                    hasDiscount ? Text(
                       '$oldPrice EGP',
                       style: const TextStyle(
                         color: Colors.grey,
                         decoration: TextDecoration.lineThrough,
                         fontSize: 12,
                       ),
-                    ),
+                    ) : const SizedBox(),
                   ],
                 ),
                 const SizedBox(height: 45),
