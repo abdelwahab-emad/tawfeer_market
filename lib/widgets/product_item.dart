@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/widgets/add_to_cart_page.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({
@@ -87,13 +88,26 @@ class ProductItem extends StatelessWidget {
             Positioned(
               bottom: 10,
               right: 10,
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Color(kprimarycolor),
-                  borderRadius: BorderRadius.circular(20),
+              child: GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(30),
+                      ),
+                    ),
+                    builder: (context) => const AddToCartPage(),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Color(kprimarycolor),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Icon(Icons.add, color: Colors.white),
                 ),
-                child: const Icon(Icons.add, color: Colors.white),
               ),
             ),
           ],

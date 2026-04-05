@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/cubits/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
 import 'package:tawfeer_market/pages/product_details_page.dart';
+import 'package:tawfeer_market/pages/user_main_layout_page.dart';
 import 'package:tawfeer_market/widgets/product_item.dart';
 
 class AllProducts extends StatelessWidget {
@@ -32,8 +33,11 @@ class AllProducts extends StatelessWidget {
               padding: const EdgeInsets.only(right: 16),
               child: IconButton(
                 onPressed: () {
-                  context.read<BottomNavCubit>().changeIndex(1);
-                  Navigator.popUntil(context, (route) => route.isFirst);
+                 context.read<BottomNavCubit>().changeIndex(1);
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const UserMainLayout()),
+                    (route) => false,
+                  );
                 },
                 icon: const Icon(Icons.shopping_cart, color: Colors.black),
               ),

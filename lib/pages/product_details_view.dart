@@ -4,6 +4,7 @@ import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
 import 'package:tawfeer_market/models/product_model.dart';
 import 'package:tawfeer_market/pages/product_details_page.dart';
+import 'package:tawfeer_market/widgets/add_to_cart_page.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
 import 'package:tawfeer_market/widgets/product_item.dart';
 
@@ -79,7 +80,17 @@ class ProductDetailsView extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   CustomButton(
-                    onTap: () {},
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(30),
+                          ),
+                        ),
+                        builder: (context) => const AddToCartPage(),
+                      );
+                    },
                     text: "Add to Cart",
                     textColor: Colors.white,
                     filledColor: const Color(kprimarycolor),
@@ -105,13 +116,13 @@ class ProductDetailsView extends StatelessWidget {
                           final related = state.products
                               .where((p) => p.id != product.id)
                               .toList();
-                          
+
                           if (related.isEmpty) {
                             return const Center(
                               child: Text('No related products found'),
                             );
                           }
-                          
+
                           return ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: related.length,
@@ -124,7 +135,8 @@ class ProductDetailsView extends StatelessWidget {
                                   child: ProductItem(
                                     image: relatedProduct.imageUrl,
                                     price: relatedProduct.price.toString(),
-                                    oldPrice: relatedProduct.oldPrice.toString(),
+                                    oldPrice: relatedProduct.oldPrice
+                                        .toString(),
                                     name: relatedProduct.name,
                                     hasDiscount: relatedProduct.hasDiscount,
                                     onTap: () {
@@ -132,7 +144,9 @@ class ProductDetailsView extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              ProductDetailsPage(product: relatedProduct),
+                                              ProductDetailsPage(
+                                                product: relatedProduct,
+                                              ),
                                         ),
                                       );
                                     },
