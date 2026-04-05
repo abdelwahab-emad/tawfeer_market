@@ -88,7 +88,7 @@ class ProductDetailsView extends StatelessWidget {
                             top: Radius.circular(30),
                           ),
                         ),
-                        builder: (context) => const AddToCartPage(),
+                        builder: (context) => AddToCartPage(product: product),
                       );
                     },
                     text: "Add to Cart",
@@ -139,6 +139,9 @@ class ProductDetailsView extends StatelessWidget {
                                         .toString(),
                                     name: relatedProduct.name,
                                     hasDiscount: relatedProduct.hasDiscount,
+                                    id: relatedProduct.id,
+                                    type: relatedProduct.type,
+                                    categoryId: relatedProduct.categoryId,
                                     onTap: () {
                                       Navigator.pushReplacement(
                                         context,

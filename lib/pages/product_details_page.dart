@@ -32,14 +32,16 @@ class ProductDetailsPage extends StatelessWidget {
           ),
           centerTitle: true,
           elevation: 0,
-          actions:  [
+          actions: [
             Padding(
               padding: EdgeInsets.only(right: 16),
               child: IconButton(
                 onPressed: () {
                   context.read<BottomNavCubit>().changeIndex(1);
                   Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => const UserMainLayout()),
+                    MaterialPageRoute(
+                      builder: (context) => const UserMainLayout(),
+                    ),
                     (route) => false,
                   );
                 },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/models/product_model.dart';
 import 'package:tawfeer_market/widgets/add_to_cart_page.dart';
 
 class ProductItem extends StatelessWidget {
@@ -11,13 +12,19 @@ class ProductItem extends StatelessWidget {
     required this.oldPrice,
     required this.hasDiscount,
     this.onTap,
+    required this.id,
+    required this.type,
+    required this.categoryId,
   });
 
+  final String id;
   final String name;
   final String image;
   final String price;
   final String oldPrice;
   final bool hasDiscount;
+  final String type;
+  final String categoryId;
   final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
@@ -97,7 +104,18 @@ class ProductItem extends StatelessWidget {
                         top: Radius.circular(30),
                       ),
                     ),
-                    builder: (context) => const AddToCartPage(),
+                    builder: (context) => AddToCartPage(
+                      product: ProductModel(
+                        id: id,
+                        name: name,
+                        imageUrl: image,
+                        price: double.tryParse(price) ?? 0.0,
+                        oldPrice: double.tryParse(oldPrice) ?? 0.0,
+                        hasDiscount: hasDiscount,
+                        type: type,
+                        categoryId: categoryId,
+                      ),
+                    ),
                   );
                 },
                 child: Container(

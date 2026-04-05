@@ -39,6 +39,9 @@ class BulkView extends StatelessWidget {
                   price: product.price.toString(),
                   oldPrice: product.oldPrice.toString(),
                   name: product.name,
+                  id: product.id,
+                  type: product.type,
+                  categoryId: product.categoryId,
                   hasDiscount: product.hasDiscount,
                     onTap: () {
                     Navigator.push(

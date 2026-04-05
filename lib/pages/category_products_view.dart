@@ -39,6 +39,9 @@ class CategoryProductsView extends StatelessWidget {
                   oldPrice: product.oldPrice.toString(),
                   name: product.name,
                   hasDiscount: product.hasDiscount,
+                  id: product.id,
+                  type: product.type,
+                  categoryId: product.categoryId,
                   onTap: () {
                     Navigator.push(
                       context, 
