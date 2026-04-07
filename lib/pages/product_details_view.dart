@@ -6,6 +6,7 @@ import 'package:tawfeer_market/models/product_model.dart';
 import 'package:tawfeer_market/pages/product_details_page.dart';
 import 'package:tawfeer_market/widgets/add_to_cart_page.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
+import 'package:tawfeer_market/widgets/favorite_button.dart';
 import 'package:tawfeer_market/widgets/product_item.dart';
 
 class ProductDetailsView extends StatelessWidget {
@@ -31,14 +32,10 @@ class ProductDetailsView extends StatelessWidget {
                     child: Image.network(product.imageUrl, fit: BoxFit.contain),
                   ),
                 ),
-                const Positioned(
+                Positioned(
                   top: 15,
                   right: 15,
-                  child: Icon(
-                    Icons.favorite_border,
-                    color: Color(kprimarycolor),
-                    size: 28,
-                  ),
+                  child: FavoriteButton(product: product),
                 ),
               ],
             ),

@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tawfeer_market/cubits/add_to_cart/add_to_cart_cubit.dart';
 import 'package:tawfeer_market/cubits/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:tawfeer_market/cubits/cart/cart_cubit.dart';
 import 'package:tawfeer_market/cubits/category_cubit/category_cubit.dart';
+import 'package:tawfeer_market/cubits/cubit/add_to_cart_cubit.dart';
 import 'package:tawfeer_market/cubits/favorite/favorite_cubit.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_cubit.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
@@ -13,7 +13,7 @@ import 'package:tawfeer_market/firebase_options.dart';
 import 'package:tawfeer_market/pages/cart_page.dart';
 import 'package:tawfeer_market/pages/home_page.dart';
 import 'package:tawfeer_market/pages/login_page.dart';
-import 'package:tawfeer_market/pages/profile_page.dart';
+import 'package:tawfeer_market/pages/more_page.dart';
 import 'package:tawfeer_market/pages/register_page.dart';
 import 'package:tawfeer_market/pages/splash_page.dart';
 import 'package:tawfeer_market/pages/user_main_layout_page.dart';
@@ -50,7 +50,7 @@ class TawfeerMarket extends StatelessWidget {
           HomePage.id: (context) => const HomePage(),
           CartPage.id: (context) => const CartPage(),
           FavoritesPage.id: (context) => const FavoritesPage(),
-          ProfilePage.id: (context) => const ProfilePage(),
+          MorePage.id: (context) => const MorePage(),
           UserMainLayout.id: (context) => const UserMainLayout(),
         },
         initialRoute: SplashPage.id,

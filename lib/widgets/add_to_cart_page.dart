@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tawfeer_market/cubits/add_to_cart/add_to_cart_cubit.dart';
+import 'package:tawfeer_market/cubits/cubit/add_to_cart_cubit.dart';
 import 'package:tawfeer_market/models/product_model.dart';
 import 'package:tawfeer_market/widgets/custom_confirmation_sheet.dart';
 import 'package:tawfeer_market/widgets/custom_snackbar.dart';

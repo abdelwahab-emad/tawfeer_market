@@ -61,9 +61,6 @@ class CategoriesView extends StatelessWidget {
                     ),
                   );
                 } else if (state is CategorySuccess) {
-                  print(
-                    "✅ عدد الأقسام اللي وصلت: ${state.categoriesList.length}",
-                  );
                   return SizedBox(
                     height: 280,
                     child: GridView.builder(
