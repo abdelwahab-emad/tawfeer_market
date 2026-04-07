@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tawfeer_market/cubits/cart/cart_cubit.dart';
 import 'package:tawfeer_market/pages/full_cart_view.dart';
 
 class CartPage extends StatefulWidget {
@@ -12,6 +14,7 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
+    context.read<CartCubit>().getCartProducts();
     return Scaffold(
       backgroundColor: Colors.white, 
       appBar: AppBar(

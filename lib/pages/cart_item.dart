@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/cubits/cart/cart_cubit.dart';
+import 'package:tawfeer_market/models/product_model.dart';
+import 'package:tawfeer_market/widgets/delete_from_cart_page.dart';
 
 class CartItem extends StatelessWidget {
-  const CartItem({super.key});
+  const CartItem({super.key, required this.product});
 
+  final ProductModel product;
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,28 +33,27 @@ class CartItem extends StatelessWidget {
             width: 70,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              image: const DecorationImage(
-                image: AssetImage('assets/lepton.jpeg'),
+              image: DecorationImage(
+                image: NetworkImage(product.imageUrl),
                 fit: BoxFit.cover,
               ),
             ),
           ),
           const SizedBox(width: 15),
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Lipton Dust Tea 40gm',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                Text(
+                  product.name,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  '11.5 EGP',
-                  style: TextStyle(
+                Text(
+                  '${product.price} EGP',
+                  style: const TextStyle(
                     color: Color(kprimarycolor),
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
@@ -57,40 +62,71 @@ class CartItem extends StatelessWidget {
               ],
             ),
           ),
-
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-            decoration: BoxDecoration(
-              color: const Color(kprimarycolor).withOpacity(0.05),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              children: [
-                InkWell(
-                  onTap: () {},
-                  child: const Icon(
-                    Icons.remove,
-                    size: 20,
-                    color: Color(kprimarycolor),
-                  ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) => DeleteFromCartSheet(product: product),
+                  );
+                },
+                child: const Icon(
+                  Icons.delete_outline,
+                  color: Colors.red,
+                  size: 24,
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    '1',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
+              ),
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                decoration: BoxDecoration(
+                  color: const Color(kprimarycolor).withOpacity(0.05),
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                InkWell(
-                  onTap: () {},
-                  child: const Icon(
-                    Icons.add,
-                    size: 20,
-                    color: Color(kprimarycolor),
-                  ),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        if (product.quantity > 1) {
+                          context.read<CartCubit>().updateQuantity(
+                                productId: product.id,
+                                quantity: product.quantity - 1,
+                              );
+                        }
+                      },
+                      child: const Icon(
+                        Icons.remove,
+                        size: 20,
+                        color: Color(kprimarycolor),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(
+                        '${product.quantity}',
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        context.read<CartCubit>().updateQuantity(
+                              productId: product.id,
+                              quantity: product.quantity + 1,
+                            );
+                      },
+                      child: const Icon(
+                        Icons.add,
+                        size: 20,
+                        color: Color(kprimarycolor),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

@@ -24,6 +24,7 @@ class AddToCartCubit extends Cubit<AddToCartState> {
         'hasDiscount': product.hasDiscount,
         'type': product.type,
         'categoryId': product.categoryId,
+        'quantity': 1,
       };
       await FirebaseFirestore.instance
       .collection('users')

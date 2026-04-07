@@ -114,6 +114,7 @@ class ProductItem extends StatelessWidget {
                         hasDiscount: hasDiscount,
                         type: type,
                         categoryId: categoryId,
+                        quantity: 1,
                       ),
                     ),
                   );
