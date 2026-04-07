@@ -6,7 +6,6 @@ import 'package:tawfeer_market/pages/cart_item.dart';
 import 'package:tawfeer_market/pages/empty_card_view.dart';
 import 'package:tawfeer_market/widgets/confirm_order_sheet.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
-import 'package:tawfeer_market/widgets/delete_from_cart_page.dart';
 
 class FullCartView extends StatelessWidget {
   const FullCartView({super.key});

@@ -70,6 +70,32 @@ class CartCubit extends Cubit<CartState> {
       print(e.toString());
     }
   }
+  Future<void> addProductToCart({required ProductModel product}) async{
+     try {
+      String uId = FirebaseAuth.instance.currentUser!.uid;
+      
+      Map<String, dynamic> productMap = {
+        'id': product.id,
+        'name': product.name,
+        'imageUrl': product.imageUrl,
+        'price': product.price,
+        'oldPrice': product.oldPrice,
+        'hasDiscount': product.hasDiscount,
+        'type': product.type,
+        'categoryId': product.categoryId,
+        'quantity': 1,
+      };
+      await FirebaseFirestore.instance
+      .collection('users')
+      .doc(uId)
+      .collection('cart')
+      .doc(product.id)
+      .set(productMap);
+    
+     } catch (e) {
+      print(e.toString());
+     }
+  }
 
   Future<void> deleteFromCart({required String productId}) async {
     try {
@@ -115,9 +141,7 @@ class CartCubit extends Cubit<CartState> {
             'orderDate': DateTime.now().toIso8601String(),
           });
 
-      await Future.wait(
-        products.map((product) => deleteFromCart(productId: product.id)),
-      );
+      await Future.wait(products.map((product) => deleteFromCart(productId: product.id)));
     } catch (e) {
       print(e.toString());
     }

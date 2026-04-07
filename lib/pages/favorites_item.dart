@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/models/product_model.dart';
+import 'package:tawfeer_market/widgets/add_to_cart_page.dart';
+import 'package:tawfeer_market/widgets/favorite_button.dart';
 
 class FavoritesItem extends StatelessWidget {
-  const FavoritesItem({super.key});
+  const FavoritesItem({super.key, required this.product});
 
+  final ProductModel product;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +28,7 @@ class FavoritesItem extends StatelessWidget {
             ),
             padding: const EdgeInsets.all(8.0),
             child: Center(
-              child: Image.asset('assets/Nescafe.jpeg', fit: BoxFit.contain),
+              child: Image.network(product.imageUrl, fit: BoxFit.contain),
             ),
           ),
           const SizedBox(width: 15),
@@ -32,22 +36,32 @@ class FavoritesItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Nescafe Gold Instant Coffee Pouch 190gm',
+                Text(
+                  product.name,
                   style: TextStyle(fontWeight: FontWeight.bold),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  '389.95 EGP',
+                Text(
+                  '${product.price} EGP',
                   style: TextStyle(
                     color: Color(kprimarycolor),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(30),
+                        ),
+                      ),
+                      builder: (context) => AddToCartPage(product: product),
+                    );
+                  },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero,
                     minimumSize: Size.zero,
@@ -65,14 +79,7 @@ class FavoritesItem extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.favorite,
-              color: Color(kprimarycolor),
-              size: 26,
-            ),
-          ),
+          FavoriteButton(product: product),
         ],
       ),
     );

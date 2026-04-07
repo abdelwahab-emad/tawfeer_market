@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/models/product_model.dart';
 import 'package:tawfeer_market/widgets/add_to_cart_page.dart';
+import 'package:tawfeer_market/widgets/favorite_button.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({
@@ -28,6 +29,17 @@ class ProductItem extends StatelessWidget {
   final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
+    final productModel = ProductModel(
+      id: id,
+      name: name,
+      imageUrl: image,
+      price: double.tryParse(price) ?? 0.0,
+      oldPrice: double.tryParse(oldPrice) ?? 0.0,
+      hasDiscount: hasDiscount,
+      type: type,
+      categoryId: categoryId,
+      quantity: 1,
+    );
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
@@ -86,10 +98,12 @@ class ProductItem extends StatelessWidget {
                 ],
               ),
             ),
-            const Positioned(
+            Positioned(
               top: 10,
               right: 10,
-              child: Icon(Icons.favorite_border, color: Color(kprimarycolor)),
+              child: FavoriteButton(
+                product: productModel,
+              ),
             ),
 
             Positioned(
@@ -105,17 +119,7 @@ class ProductItem extends StatelessWidget {
                       ),
                     ),
                     builder: (context) => AddToCartPage(
-                      product: ProductModel(
-                        id: id,
-                        name: name,
-                        imageUrl: image,
-                        price: double.tryParse(price) ?? 0.0,
-                        oldPrice: double.tryParse(oldPrice) ?? 0.0,
-                        hasDiscount: hasDiscount,
-                        type: type,
-                        categoryId: categoryId,
-                        quantity: 1,
-                      ),
+                        product: productModel,
                     ),
                   );
                 },
