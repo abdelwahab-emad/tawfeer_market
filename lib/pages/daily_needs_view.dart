@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
+import 'package:tawfeer_market/l10n/app_localizations.dart';
 import 'package:tawfeer_market/pages/product_details_page.dart';
 import 'package:tawfeer_market/widgets/product_item.dart';
 
@@ -10,6 +11,9 @@ class DailyNeedsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context)!;
+    bool isArabic = Localizations.localeOf(context).languageCode == 'ar';
+
     return BlocProvider(
       create: (context) => ProductCubit()..getProductsByType('daily'),
       child: BlocBuilder<ProductCubit, ProductState>(
@@ -55,22 +59,28 @@ class DailyNeedsView extends StatelessWidget {
           } else if (state is ProductError) {
             content = Center(child: Text(state.message));
           } else {
-            content = const Center(child: Text('No products found'));
+            content = Center(child: Text(locale.noProductsFound));
           }
 
           return Padding(
             padding: const EdgeInsets.only(left: 16, right: 10),
             child: Column(
               children: [
-                const Align(
-                  alignment: Alignment.centerLeft,
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
                   child: Text(
-                    'Daily Needs',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    locale.dailyNeeds,
+                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                 ),
                 const SizedBox(height: 10),
-                SizedBox(height: 280, child: content),
+                SizedBox(
+                  height: 280,
+                  child: Directionality(
+                    textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+                    child: content,
+                  ),
+                ),
               ],
             ),
           );

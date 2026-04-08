@@ -1,15 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tawfeer_market/cubits/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:tawfeer_market/cubits/cart/cart_cubit.dart';
 import 'package:tawfeer_market/cubits/category_cubit/category_cubit.dart';
-import 'package:tawfeer_market/cubits/cubit/add_to_cart_cubit.dart';
+import 'package:tawfeer_market/cubits/add_to_cart/add_to_cart_cubit.dart';
 import 'package:tawfeer_market/cubits/favorite/favorite_cubit.dart';
+import 'package:tawfeer_market/cubits/language/language_cubit.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_cubit.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_cubit.dart';
 import 'package:tawfeer_market/firebase_options.dart';
+import 'package:tawfeer_market/l10n/app_localizations.dart';
 import 'package:tawfeer_market/pages/cart_page.dart';
 import 'package:tawfeer_market/pages/home_page.dart';
 import 'package:tawfeer_market/pages/login_page.dart';
@@ -39,21 +42,40 @@ class TawfeerMarket extends StatelessWidget {
         BlocProvider(create: (context) => ProductCubit()),
         BlocProvider(create: (context) => AddToCartCubit()),
         BlocProvider(create: (context) => CartCubit()),
-        BlocProvider(create: (context) => FavoriteCubit()..getFavoriteProducts()),
+        BlocProvider(
+          create: (context) => FavoriteCubit()..getFavoriteProducts(),
+        ),
+        BlocProvider(create: (context) => LanguageCubit()..getSavedLanguage()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        routes: {
-          SplashPage.id: (context) => const SplashPage(),
-          LoginPage.id: (context) => const LoginPage(),
-          RegisterPage.id: (context) => const RegisterPage(),
-          HomePage.id: (context) => const HomePage(),
-          CartPage.id: (context) => const CartPage(),
-          FavoritesPage.id: (context) => const FavoritesPage(),
-          MorePage.id: (context) => const MorePage(),
-          UserMainLayout.id: (context) => const UserMainLayout(),
+      child: BlocBuilder<LanguageCubit, LanguageState>(
+        builder: (context, state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            locale: state.locale,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+
+            supportedLocales: const [
+              Locale('en'), 
+              Locale('ar'), 
+            ],
+            routes: {
+              SplashPage.id: (context) => const SplashPage(),
+              LoginPage.id: (context) => const LoginPage(),
+              RegisterPage.id: (context) => const RegisterPage(),
+              HomePage.id: (context) => const HomePage(),
+              CartPage.id: (context) => const CartPage(),
+              FavoritesPage.id: (context) => const FavoritesPage(),
+              MorePage.id: (context) => const MorePage(),
+              UserMainLayout.id: (context) => const UserMainLayout(),
+            },
+            initialRoute: SplashPage.id,
+          );
         },
-        initialRoute: SplashPage.id,
       ),
     );
   }

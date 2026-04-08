@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/cart/cart_cubit.dart';
+import 'package:tawfeer_market/l10n/app_localizations.dart';
 import 'package:tawfeer_market/pages/cart_item.dart';
 import 'package:tawfeer_market/pages/empty_card_view.dart';
 import 'package:tawfeer_market/widgets/confirm_order_sheet.dart';
@@ -12,6 +13,8 @@ class FullCartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context)!;
+
     return BlocBuilder<CartCubit, CartState>(
       builder: (context, state) {
         if (state is CartLoading) {
@@ -32,7 +35,6 @@ class FullCartView extends StatelessWidget {
                   },
                 ),
               ),
-
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -55,13 +57,13 @@ class FullCartView extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'Subtotal',
-                          style: TextStyle(color: Colors.grey, fontSize: 16),
+                        Text(
+                          locale.subtotal,
+                          style: const TextStyle(color: Colors.grey, fontSize: 16),
                         ),
                         Text(
-                          '${context.read<CartCubit>().totalCost} EGP',
-                          style: TextStyle(
+                          '${context.read<CartCubit>().totalCost} ${locale.egp}',
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
@@ -73,14 +75,14 @@ class FullCartView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Total',
-                          style: TextStyle(
+                          locale.total,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          '${context.read<CartCubit>().totalCost} EGP',
+                          '${context.read<CartCubit>().totalCost} ${locale.egp}',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -90,7 +92,6 @@ class FullCartView extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 20),
-
                     CustomButton(
                       onTap: () {
                         showModalBottomSheet(
@@ -99,7 +100,7 @@ class FullCartView extends StatelessWidget {
                           builder: (context) => ConfirmOrderSheet(products: state.products),
                         );
                       },
-                      text: 'Confirm Order',
+                      text: locale.confirmOrder,
                       textColor: Colors.white,
                       filledColor: const Color(kprimarycolor),
                       borderRadius: 30,

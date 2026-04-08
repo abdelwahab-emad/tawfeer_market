@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/bottom_nav_cubit/bottom_nav_cubit.dart';
+import 'package:tawfeer_market/l10n/app_localizations.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
 
 class EmptyCardView extends StatelessWidget {
@@ -11,12 +12,24 @@ class EmptyCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    var locale = AppLocalizations.of(context)!;
+
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset('assets/Cartphoto.jpeg'),
-          Text('Your cart is empty'),
-          SizedBox(height: 10,),
+          const SizedBox(height: 20),
+          Text(
+            locale.cartEmpty,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            ),
+          ),
+          const SizedBox(height: 20),
           CustomButton(
             width: 200,
             borderRadius: 30,
@@ -26,11 +39,12 @@ class EmptyCardView extends StatelessWidget {
             onTap: () {
               BlocProvider.of<BottomNavCubit>(context).changeIndex(0);
             },
-            text: 'Start Shopping',
+            text: locale.startShopping,
             textColor: const Color(kprimarycolor),
             filledColor: Colors.white,
           ),
         ],
+      ),
     );
   }
 }

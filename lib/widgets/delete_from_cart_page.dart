@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/cubits/cart/cart_cubit.dart';
+import 'package:tawfeer_market/l10n/app_localizations.dart';
 import 'package:tawfeer_market/models/product_model.dart';
 import 'package:tawfeer_market/widgets/custom_confirmation_sheet.dart';
 import 'package:tawfeer_market/widgets/custom_snackbar.dart';
@@ -12,18 +13,20 @@ class DeleteFromCartSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context)!;
+
     return CustomConfirmationSheet(
-      message: 'Are you sure you want to remove this item from your cart?',
+      message: locale.deleteFromCartConfirmation,
       messageColor: Colors.red,
-      leftButtonText: 'Cancel',
-      rightButtonText: 'Remove',
+      leftButtonText: locale.cancel,
+      rightButtonText: locale.remove,
       onLeftTap: () => Navigator.pop(context),
       onRightTap: () {
         context.read<CartCubit>().deleteFromCart(productId: product.id);
         Navigator.pop(context);
         showCustomSnackBar(
           context,
-          'Item removed from cart successfully!',
+          locale.deleteFromCartSuccess,
           color: Colors.red,
         );
       },

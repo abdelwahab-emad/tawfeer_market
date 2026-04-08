@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/category_cubit/category_cubit.dart';
+import 'package:tawfeer_market/l10n/app_localizations.dart';
 import 'package:tawfeer_market/pages/all_products.dart';
 import 'package:tawfeer_market/pages/category_products.dart';
 import 'package:tawfeer_market/widgets/category_item.dart';
@@ -11,19 +12,21 @@ class CategoriesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context)!;
+
     return Container(
       width: double.infinity,
       color: Color(kprimarycolor).withOpacity(0.05),
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsetsGeometry.only(left: 16, right: 10),
+            padding: const EdgeInsets.only(left: 16, right: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Categories',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                Text(
+                  locale.categories,
+                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 TextButton(
                   onPressed: () {
@@ -32,9 +35,9 @@ class CategoriesView extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => AllProducts()),
                     );
                   },
-                  child: const Text(
-                    'View All Products',
-                    style: TextStyle(
+                  child: Text(
+                    locale.viewAllProducts,
+                    style: const TextStyle(
                       color: Color(kprimarycolor),
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -68,11 +71,11 @@ class CategoriesView extends StatelessWidget {
                       itemCount: state.categoriesList.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 15,
-                            crossAxisSpacing: 10,
-                            childAspectRatio: 1.3,
-                          ),
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 15,
+                        crossAxisSpacing: 10,
+                        childAspectRatio: 1.3,
+                      ),
                       itemBuilder: (context, index) {
                         var category = state.categoriesList[index];
                         return CategoryItem(

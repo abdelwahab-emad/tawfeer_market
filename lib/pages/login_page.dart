@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_cubit.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_states.dart';
+import 'package:tawfeer_market/l10n/app_localizations.dart';
 import 'package:tawfeer_market/pages/register_page.dart';
 import 'package:tawfeer_market/pages/user_main_layout_page.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
@@ -20,18 +21,34 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> formkey = GlobalKey();
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isPasswordObscure = true;
+
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context)!;
+
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
           Navigator.pushReplacementNamed(context, UserMainLayout.id);
         } else if (state is LoginFailure) {
-          showCustomSnackBar(context, state.errorMessage);
+          String message;
+          switch (state.errorMessage) {
+            case 'userNotFound':
+              message = locale.userNotFound;
+              break;
+            case 'wrongPassword':
+              message = locale.wrongPassword;
+              break;
+            case 'invalidCredentials':
+              message = locale.invalidCredentials;
+              break;
+            default:
+              message = locale.loginFailed;
+          }
+          showCustomSnackBar(context, message);
         }
       },
       builder: (context, state) {
@@ -55,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
+                      const Text(
                         'Market',
                         style: TextStyle(
                           fontSize: 36,
@@ -68,13 +85,13 @@ class _LoginPageState extends State<LoginPage> {
                   CustomTextField(
                     controller: emailController,
                     prefixIcon: Icons.email_outlined,
-                    labelText: 'Email Address',
+                    labelText: locale.loginEmailLabel,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
+                        return locale.loginEmailHint;
                       }
                       if (!value.contains('@')) {
-                        return 'Please enter a valid email';
+                        return locale.loginEmailValid;
                       }
                       return null;
                     },
@@ -92,23 +109,25 @@ class _LoginPageState extends State<LoginPage> {
                         isPasswordObscure = !isPasswordObscure;
                       });
                     },
-                    labelText: 'Password',
+                    labelText: locale.loginPasswordLabel,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter your password';
+                        return locale.loginPasswordHint;
                       }
                       if (value.length < 6) {
-                        return 'Password must be at least 6 characters';
+                        return locale.loginPasswordLength;
                       }
                       return null;
                     },
                   ),
-
                   const SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 18.0),
                     child: state is LoginLoading
-                        ? const Center(child: CircularProgressIndicator(color: Color(kprimarycolor),))
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                            color: Color(kprimarycolor),
+                          ))
                         : CustomButton(
                             onTap: () {
                               if (formkey.currentState!.validate()) {
@@ -118,25 +137,23 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                               }
                             },
-                            text: 'Sign in',
+                            text: locale.signIn,
                             textColor: Colors.white,
                             filledColor: Color(kprimarycolor),
                           ),
                   ),
                   const SizedBox(height: 15),
                   Text(
-                    "Don't have an Account?",
+                    locale.dontHaveAccount,
                     style: TextStyle(color: Colors.grey[800], fontSize: 16),
                   ),
                   const SizedBox(height: 15),
-
                   GestureDetector(
                     onTap: () {
                       Navigator.pushReplacementNamed(context, RegisterPage.id);
                     },
-
                     child: Text(
-                      "Sign Up",
+                      locale.signUp,
                       style: TextStyle(
                         color: Color(kprimarycolor),
                         fontSize: 20,

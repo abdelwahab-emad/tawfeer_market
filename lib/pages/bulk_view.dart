@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
+import 'package:tawfeer_market/l10n/app_localizations.dart';
 import 'package:tawfeer_market/pages/product_details_page.dart';
 import 'package:tawfeer_market/widgets/product_item.dart';
 
@@ -10,6 +11,9 @@ class BulkView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context)!;
+    bool isArabic = Localizations.localeOf(context).languageCode == 'ar';
+
     return BlocProvider(
       create: (context) => ProductCubit()..getProductsByType('bulk'),
       child: BlocBuilder<ProductCubit, ProductState>(
@@ -43,9 +47,9 @@ class BulkView extends StatelessWidget {
                   type: product.type,
                   categoryId: product.categoryId,
                   hasDiscount: product.hasDiscount,
-                    onTap: () {
+                  onTap: () {
                     Navigator.push(
-                      context, 
+                      context,
                       MaterialPageRoute(
                         builder: (context) => ProductDetailsPage(
                           product: product,
@@ -61,8 +65,8 @@ class BulkView extends StatelessWidget {
               child: Text(state.message),
             );
           } else {
-            content = const Center(
-              child: Text('No products found'),
+            content = Center(
+              child: Text(locale.noProductsFound),
             );
           }
 
@@ -70,11 +74,11 @@ class BulkView extends StatelessWidget {
             padding: const EdgeInsets.only(left: 16, right: 10),
             child: Column(
               children: [
-                const Align(
-                  alignment: Alignment.centerLeft,
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
                   child: Text(
-                    'Bulk',
-                    style: TextStyle(
+                    locale.bulk,
+                    style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
@@ -83,7 +87,10 @@ class BulkView extends StatelessWidget {
                 const SizedBox(height: 10),
                 SizedBox(
                   height: 280,
-                  child: content,
+                  child: Directionality(
+                    textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+                    child: content,
+                  ),
                 ),
               ],
             ),

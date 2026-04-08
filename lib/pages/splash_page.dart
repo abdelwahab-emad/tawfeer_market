@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/cubits/language/language_cubit.dart';
 import 'package:tawfeer_market/pages/login_page.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
 
@@ -45,6 +47,7 @@ class SplashPage extends StatelessWidget {
                   Expanded(
                     child: CustomButton(
                       onTap: () {
+                        context.read<LanguageCubit>().changeLanguage('en');
                         Navigator.pushNamed(context, LoginPage.id);
                       },
                       text: 'English',
@@ -56,6 +59,7 @@ class SplashPage extends StatelessWidget {
                   Expanded(
                     child: CustomButton(
                       onTap: () {
+                        context.read<LanguageCubit>().changeLanguage('ar');
                         Navigator.pushNamed(context, LoginPage.id);
                       },
                       text: 'العربيه',

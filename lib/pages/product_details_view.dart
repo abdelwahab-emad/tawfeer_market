@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
+import 'package:tawfeer_market/l10n/app_localizations.dart';
 import 'package:tawfeer_market/models/product_model.dart';
 import 'package:tawfeer_market/pages/product_details_page.dart';
 import 'package:tawfeer_market/widgets/add_to_cart_page.dart';
@@ -16,6 +17,8 @@ class ProductDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context)!;
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -56,7 +59,7 @@ class ProductDetailsView extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        '${product.price} EGP',
+                        '${product.price} ${locale.currency}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 24,
@@ -66,7 +69,7 @@ class ProductDetailsView extends StatelessWidget {
                       const SizedBox(width: 15),
                       if (product.hasDiscount)
                         Text(
-                          '${product.oldPrice} EGP',
+                          '${product.oldPrice} ${locale.currency}',
                           style: const TextStyle(
                             color: Colors.grey,
                             decoration: TextDecoration.lineThrough,
@@ -88,15 +91,15 @@ class ProductDetailsView extends StatelessWidget {
                         builder: (context) => AddToCartPage(product: product),
                       );
                     },
-                    text: "Add to Cart",
+                    text: locale.addToCart,
                     textColor: Colors.white,
                     filledColor: const Color(kprimarycolor),
                     borderRadius: 30,
                   ),
                   const SizedBox(height: 25),
-                  const Text(
-                    'Related Products',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  Text(
+                    locale.relatedProducts,
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 15),
                   SizedBox(
@@ -115,8 +118,8 @@ class ProductDetailsView extends StatelessWidget {
                               .toList();
 
                           if (related.isEmpty) {
-                            return const Center(
-                              child: Text('No related products found'),
+                            return Center(
+                              child: Text(locale.noRelatedProducts),
                             );
                           }
 
@@ -132,8 +135,7 @@ class ProductDetailsView extends StatelessWidget {
                                   child: ProductItem(
                                     image: relatedProduct.imageUrl,
                                     price: relatedProduct.price.toString(),
-                                    oldPrice: relatedProduct.oldPrice
-                                        .toString(),
+                                    oldPrice: relatedProduct.oldPrice.toString(),
                                     name: relatedProduct.name,
                                     hasDiscount: relatedProduct.hasDiscount,
                                     id: relatedProduct.id,
@@ -145,8 +147,8 @@ class ProductDetailsView extends StatelessWidget {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               ProductDetailsPage(
-                                                product: relatedProduct,
-                                              ),
+                                            product: relatedProduct,
+                                          ),
                                         ),
                                       );
                                     },
