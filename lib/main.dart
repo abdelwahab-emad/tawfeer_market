@@ -9,6 +9,7 @@ import 'package:tawfeer_market/cubits/add_to_cart/add_to_cart_cubit.dart';
 import 'package:tawfeer_market/cubits/favorite/favorite_cubit.dart';
 import 'package:tawfeer_market/cubits/language/language_cubit.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_cubit.dart';
+import 'package:tawfeer_market/cubits/orders/orders_cubit.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_cubit.dart';
 import 'package:tawfeer_market/firebase_options.dart';
@@ -17,6 +18,8 @@ import 'package:tawfeer_market/pages/cart_page.dart';
 import 'package:tawfeer_market/pages/home_page.dart';
 import 'package:tawfeer_market/pages/login_page.dart';
 import 'package:tawfeer_market/pages/more_page.dart';
+import 'package:tawfeer_market/pages/orders_page.dart';
+import 'package:tawfeer_market/pages/order_details_page.dart';
 import 'package:tawfeer_market/pages/register_page.dart';
 import 'package:tawfeer_market/pages/splash_page.dart';
 import 'package:tawfeer_market/pages/user_main_layout_page.dart';
@@ -46,6 +49,7 @@ class TawfeerMarket extends StatelessWidget {
           create: (context) => FavoriteCubit()..getFavoriteProducts(),
         ),
         BlocProvider(create: (context) => LanguageCubit()..getSavedLanguage()),
+        BlocProvider(create: (context) => OrdersCubit()),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, state) {
@@ -72,6 +76,7 @@ class TawfeerMarket extends StatelessWidget {
               FavoritesPage.id: (context) => const FavoritesPage(),
               MorePage.id: (context) => const MorePage(),
               UserMainLayout.id: (context) => const UserMainLayout(),
+              OrdersPage.id: (context) => const OrdersPage(),
             },
             initialRoute: SplashPage.id,
           );

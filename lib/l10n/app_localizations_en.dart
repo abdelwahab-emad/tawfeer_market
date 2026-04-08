@@ -190,4 +190,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logoutConfirmation => 'Are you sure you want to logout?';
+
+  @override
+  String get orderDetails => 'Order Details';
+
+  @override
+  String get noOrdersFound => 'No orders found';
+
+  @override
+  String get orderId => 'Order ID';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get products => 'Products';
+
+  @override
+  String get quantity => 'Quantity';
+
+  @override
+  String get pending => 'Pending';
 }

@@ -156,7 +156,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get noRelatedProducts => 'لا توجد منتجات ذات صلة';
 
   @override
-  String get currency => 'جنيه';
+  String get currency => 'جنية';
 
   @override
   String get addToCartConfirmation =>
@@ -189,4 +189,28 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get logoutConfirmation => 'هل أنت متأكد من انك تريد تسجيل الخروج؟';
+
+  @override
+  String get orderDetails => 'تفاصيل الطلب';
+
+  @override
+  String get noOrdersFound => 'لا يوجد طلبات حالياً';
+
+  @override
+  String get orderId => 'رقم الطلب';
+
+  @override
+  String get date => 'التاريخ';
+
+  @override
+  String get status => 'الحالة';
+
+  @override
+  String get products => 'المنتجات';
+
+  @override
+  String get quantity => 'الكمية';
+
+  @override
+  String get pending => 'قيد الانتظار';
 }

@@ -12,6 +12,7 @@ class CartCubit extends Cubit<CartState> {
 
   StreamSubscription? _cartSubscription;
   double totalCost = 0.0;
+
   void getCartProducts() {
     emit(CartLoading());
     try {
@@ -23,32 +24,32 @@ class CartCubit extends Cubit<CartState> {
           .collection('cart')
           .snapshots()
           .listen(
-            (snapshot) {
-              List<ProductModel> cartList = snapshot.docs.map((doc) {
-                var data = doc.data();
-                return ProductModel(
-                  id: doc.id,
-                  name: data['name'] ?? '',
-                  imageUrl: data['imageUrl'] ?? '',
-                  price: (data['price'] ?? 0).toDouble(),
-                  oldPrice: (data['oldPrice'] ?? 0).toDouble(),
-                  hasDiscount: data['hasDiscount'] ?? false,
-                  type: data['type'] ?? '',
-                  categoryId: data['categoryId'] ?? '',
-                  quantity: data['quantity'] ?? 1,
-                );
-              }).toList();
+        (snapshot) {
+          List<ProductModel> cartList = snapshot.docs.map((doc) {
+            var data = doc.data();
+            return ProductModel(
+              id: doc.id,
+              name: data['name'] ?? '',
+              imageUrl: data['imageUrl'] ?? '',
+              price: (data['price'] ?? 0).toDouble(),
+              oldPrice: (data['oldPrice'] ?? 0).toDouble(),
+              hasDiscount: data['hasDiscount'] ?? false,
+              type: data['type'] ?? '',
+              categoryId: data['categoryId'] ?? '',
+              quantity: data['quantity'] ?? 1,
+            );
+          }).toList();
 
-              totalCost = 0.0;
-              for (var product in cartList) {
-                totalCost += (product.price * product.quantity);
-              }
-              emit(CartSuccess(products: cartList));
-            },
-            onError: (e) {
-              emit(CartFailure(errorMessage: e.toString()));
-            },
-          );
+          totalCost = 0.0;
+          for (var product in cartList) {
+            totalCost += (product.price * product.quantity);
+          }
+          emit(CartSuccess(products: cartList));
+        },
+        onError: (e) {
+          emit(CartFailure(errorMessage: e.toString()));
+        },
+      );
     } catch (e) {
       emit(CartFailure(errorMessage: e.toString()));
     }
@@ -70,10 +71,11 @@ class CartCubit extends Cubit<CartState> {
       print(e.toString());
     }
   }
-  Future<void> addProductToCart({required ProductModel product}) async{
-     try {
+
+  Future<void> addProductToCart({required ProductModel product}) async {
+    try {
       String uId = FirebaseAuth.instance.currentUser!.uid;
-      
+
       Map<String, dynamic> productMap = {
         'id': product.id,
         'name': product.name,
@@ -86,15 +88,14 @@ class CartCubit extends Cubit<CartState> {
         'quantity': 1,
       };
       await FirebaseFirestore.instance
-      .collection('users')
-      .doc(uId)
-      .collection('cart')
-      .doc(product.id)
-      .set(productMap);
-    
-     } catch (e) {
+          .collection('users')
+          .doc(uId)
+          .collection('cart')
+          .doc(product.id)
+          .set(productMap);
+    } catch (e) {
       print(e.toString());
-     }
+    }
   }
 
   Future<void> deleteFromCart({required String productId}) async {
@@ -114,6 +115,8 @@ class CartCubit extends Cubit<CartState> {
   Future<void> confirmOrder({required List<ProductModel> products}) async {
     try {
       String uId = FirebaseAuth.instance.currentUser!.uid;
+      DocumentReference orderRef = FirebaseFirestore.instance.collection('orders').doc();
+      String orderId = orderRef.id;
 
       List<Map<String, dynamic>> orderProducts = products.map((product) {
         return {
@@ -129,17 +132,14 @@ class CartCubit extends Cubit<CartState> {
         };
       }).toList();
 
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(uId)
-          .collection('orders')
-          .add({
-            'uId': uId,
-            'products': orderProducts,
-            'totalCost': totalCost,
-            'status': 'pending',
-            'orderDate': DateTime.now().toIso8601String(),
-          });
+      await orderRef.set({
+        'orderId': orderId,
+        'userId': uId,
+        'items': orderProducts,
+        'totalPrice': totalCost,
+        'status': 'pending',
+        'orderDate': DateTime.now().toIso8601String(),
+      });
 
       await Future.wait(products.map((product) => deleteFromCart(productId: product.id)));
     } catch (e) {

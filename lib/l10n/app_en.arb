@@ -60,5 +60,16 @@
   "deleteFromCartSuccess": "Item removed from cart successfully!",
   "logoutConfirmation": "Are you sure you want to logout?",
   "cancel": "Cancel",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "myOrders": "My Orders",
+  "orderDetails": "Order Details",
+  "noOrdersFound": "No orders found",
+  "orderId": "Order ID",
+  "total": "Total",
+  "currency": "EGP",
+  "date": "Date",
+  "status": "Status",
+  "products": "Products",
+  "quantity": "Quantity",
+  "pending": "Pending"
 }

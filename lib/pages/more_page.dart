@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/l10n/app_localizations.dart';
+import 'package:tawfeer_market/pages/orders_page.dart';
 import 'package:tawfeer_market/widgets/language_sheet.dart';
 import 'package:tawfeer_market/widgets/log_out_sheet.dart';
 import 'package:tawfeer_market/widgets/more_app_bar.dart';
@@ -40,7 +41,7 @@ class _ProfilePageState extends State<MorePage> {
                       icon: Icons.shopping_bag_outlined,
                       title: locale.myOrders,
                       onTap: () {
-                        
+                         Navigator.pushNamed(context, OrdersPage.id);
                       },
                     ),
                     const Divider(

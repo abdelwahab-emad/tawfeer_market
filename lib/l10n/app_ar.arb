@@ -60,5 +60,16 @@
   "deleteFromCartSuccess": "تم حذف المنتج من السلة بنجاح!",
   "logoutConfirmation": "هل أنت متأكد من انك تريد تسجيل الخروج؟",
   "cancel": "إلغاء",
-  "confirm": "تأكيد"
+  "confirm": "تأكيد",
+  "myOrders": "طلباتي",
+  "orderDetails": "تفاصيل الطلب",
+  "noOrdersFound": "لا يوجد طلبات حالياً",
+  "orderId": "رقم الطلب",
+  "total": "الإجمالي",
+  "currency": "جنية",
+  "date": "التاريخ",
+  "status": "الحالة",
+  "products": "المنتجات",
+  "quantity": "الكمية",
+  "pending": "قيد الانتظار"
 }
