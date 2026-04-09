@@ -195,7 +195,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get orderDetails => 'Order Details';
 
   @override
-  String get noOrdersFound => 'No orders found';
+  String get noOrdersFound => 'You have no orders yet.';
 
   @override
   String get orderId => 'Order ID';

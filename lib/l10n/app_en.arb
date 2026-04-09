@@ -92,5 +92,6 @@
   "deleteAccountWarning": "By Deleting the Account All Your Data will Be Lost",
   "deleteAccountSuccess": "Account Deleted!",
   "enterPassword": "Please enter your password",
-  "delete": "Delete"
+  "delete": "Delete",
+  "noOrdersFound": "You have no orders yet."
 }

@@ -5,6 +5,7 @@ import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/orders/orders_cubit.dart';
 import 'package:tawfeer_market/cubits/orders/orders_state.dart';
 import 'package:tawfeer_market/l10n/app_localizations.dart';
+import 'package:tawfeer_market/pages/empty_orders_page.dart';
 import 'package:tawfeer_market/pages/order_details_page.dart';
 
 class OrdersPage extends StatefulWidget {
@@ -49,7 +50,7 @@ class _OrdersPageState extends State<OrdersPage> {
             );
           } else if (state is OrdersSuccess) {
             if (state.orders.isEmpty) {
-              return Center(child: Text(locale.noOrdersFound));
+              return const EmptyOrdersPage();
             }
             return ListView.builder(
               padding: const EdgeInsets.all(16),

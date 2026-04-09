@@ -61,7 +61,7 @@
   "logoutConfirmation": "هل أنت متأكد من انك تريد تسجيل الخروج؟",
   "cancel": "إلغاء",
   "confirm": "تأكيد",
-  "myOrders": "طلباتي",
+  "myOrders": "سجل الطلبات",
   "orderDetails": "تفاصيل الطلب",
   "noOrdersFound": "لا يوجد طلبات حالياً",
   "orderId": "رقم الطلب",
@@ -95,5 +95,6 @@
   "deleteAccountWarning": "عند حذف الحساب سيتم فقدان جميع بياناتك نهائياً",
   "deleteAccountSuccess": "تم حذف الحساب بنجاح!",
   "enterPassword": "من فضلك أدخل كلمة المرور",
-  "delete": "حذف"
+  "delete": "حذف",
+  "noOrdersFound": "ليس لديك أي طلبات بعد."
 }

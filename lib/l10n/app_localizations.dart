@@ -467,7 +467,7 @@ abstract class AppLocalizations {
   /// No description provided for @noOrdersFound.
   ///
   /// In en, this message translates to:
-  /// **'No orders found'**
+  /// **'You have no orders yet.'**
   String get noOrdersFound;
 
   /// No description provided for @orderId.

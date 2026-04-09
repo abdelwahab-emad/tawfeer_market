@@ -105,7 +105,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get noFavorites => 'لم يتم اضافه اي منتجات';
 
   @override
-  String get myOrders => 'طلباتي';
+  String get myOrders => 'سجل الطلبات';
 
   @override
   String get editProfile => 'تعديل الملف الشخصي';
@@ -194,7 +194,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get orderDetails => 'تفاصيل الطلب';
 
   @override
-  String get noOrdersFound => 'لا يوجد طلبات حالياً';
+  String get noOrdersFound => 'ليس لديك أي طلبات بعد.';
 
   @override
   String get orderId => 'رقم الطلب';
