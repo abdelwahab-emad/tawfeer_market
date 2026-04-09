@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/pages/edit_profile_page.dart';
 
 class MoreAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MoreAppBar({super.key});
@@ -63,10 +64,7 @@ class MoreAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                     Text(
                       userEmail,
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 14,
-                      ),
+                      style: const TextStyle(color: Colors.grey, fontSize: 14),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -74,7 +72,14 @@ class MoreAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EditProfilePage(),
+                    ),
+                  );
+                },
                 icon: const Icon(
                   Icons.settings_outlined,
                   color: Color(kprimarycolor),

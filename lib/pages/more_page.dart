@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/l10n/app_localizations.dart';
+import 'package:tawfeer_market/pages/edit_profile_page.dart';
 import 'package:tawfeer_market/pages/orders_page.dart';
 import 'package:tawfeer_market/widgets/language_sheet.dart';
 import 'package:tawfeer_market/widgets/log_out_sheet.dart';
@@ -52,7 +53,9 @@ class _ProfilePageState extends State<MorePage> {
                     MoreItem(
                       icon: Icons.person_outline,
                       title: locale.editProfile,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfilePage()));
+                      },
                     ),
                   ],
                 ),

@@ -164,8 +164,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                     .registerUser(
                                   email: emailController.text,
                                   password: passwordController.text,
-                                  name:
-                                      '${firstNameController.text} ${lastNameController.text}',
+                                  firstName: firstNameController.text,
+                                  lastName: lastNameController.text,
                                 );
                               }
                             },

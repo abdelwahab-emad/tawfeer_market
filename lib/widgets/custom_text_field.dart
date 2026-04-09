@@ -38,6 +38,7 @@ class CustomTextField extends StatelessWidget {
       child: TextFormField(
         onChanged: onChanged,
         controller: controller,
+        readOnly: readOnly,
         validator: validator,
         obscureText: obscureText,
         cursorColor: kazyonOrange,

@@ -12,14 +12,15 @@ import 'package:tawfeer_market/cubits/login_cubit/login_cubit.dart';
 import 'package:tawfeer_market/cubits/orders/orders_cubit.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_cubit.dart';
+import 'package:tawfeer_market/cubits/user/user_cubit.dart';
 import 'package:tawfeer_market/firebase_options.dart';
 import 'package:tawfeer_market/l10n/app_localizations.dart';
 import 'package:tawfeer_market/pages/cart_page.dart';
+import 'package:tawfeer_market/pages/change_password_page.dart';
 import 'package:tawfeer_market/pages/home_page.dart';
 import 'package:tawfeer_market/pages/login_page.dart';
 import 'package:tawfeer_market/pages/more_page.dart';
 import 'package:tawfeer_market/pages/orders_page.dart';
-import 'package:tawfeer_market/pages/order_details_page.dart';
 import 'package:tawfeer_market/pages/register_page.dart';
 import 'package:tawfeer_market/pages/splash_page.dart';
 import 'package:tawfeer_market/pages/user_main_layout_page.dart';
@@ -50,6 +51,7 @@ class TawfeerMarket extends StatelessWidget {
         ),
         BlocProvider(create: (context) => LanguageCubit()..getSavedLanguage()),
         BlocProvider(create: (context) => OrdersCubit()),
+        BlocProvider(create: (context) => UserCubit()),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, state) {
@@ -77,6 +79,7 @@ class TawfeerMarket extends StatelessWidget {
               MorePage.id: (context) => const MorePage(),
               UserMainLayout.id: (context) => const UserMainLayout(),
               OrdersPage.id: (context) => const OrdersPage(),
+              ChangePasswordPage.id: (context) => const ChangePasswordPage(),
             },
             initialRoute: SplashPage.id,
           );

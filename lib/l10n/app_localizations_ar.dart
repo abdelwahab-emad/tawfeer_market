@@ -213,4 +213,50 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get pending => 'قيد الانتظار';
+
+  @override
+  String get changePassword => 'تغيير كلمة المرور';
+
+  @override
+  String get oldPassword => 'كلمة المرور القديمة';
+
+  @override
+  String get newPassword => 'كلمة المرور الجديدة';
+
+  @override
+  String get oldPasswordEmpty => 'من فضلك أدخل كلمة المرور القديمة';
+
+  @override
+  String get newPasswordEmpty => 'من فضلك أدخل كلمة المرور الجديدة';
+
+  @override
+  String get passwordTooShort => 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+
+  @override
+  String get updatePassword => 'تحديث كلمة المرور';
+
+  @override
+  String get passwordChanged => 'تم تغيير كلمة المرور!';
+
+  @override
+  String get change => 'تغيير';
+
+  @override
+  String get profileUpdated => 'تم تحديث الملف الشخصي!';
+
+  @override
+  String get deleteAccount => 'حذف الحساب';
+
+  @override
+  String get deleteAccountWarning =>
+      'عند حذف الحساب سيتم فقدان جميع بياناتك نهائياً';
+
+  @override
+  String get deleteAccountSuccess => 'تم حذف الحساب بنجاح!';
+
+  @override
+  String get enterPassword => 'من فضلك أدخل كلمة المرور';
+
+  @override
+  String get delete => 'حذف';
 }

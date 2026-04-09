@@ -214,4 +214,50 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pending => 'Pending';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
+  String get oldPassword => 'Old Password';
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get oldPasswordEmpty => 'Please enter your old password';
+
+  @override
+  String get newPasswordEmpty => 'Please enter your new password';
+
+  @override
+  String get passwordTooShort => 'Password must be at least 6 characters';
+
+  @override
+  String get updatePassword => 'Update Password';
+
+  @override
+  String get passwordChanged => 'Password Changed!';
+
+  @override
+  String get change => 'Change';
+
+  @override
+  String get profileUpdated => 'Profile Updated!';
+
+  @override
+  String get deleteAccount => 'Delete Account';
+
+  @override
+  String get deleteAccountWarning =>
+      'By Deleting the Account All Your Data will Be Lost';
+
+  @override
+  String get deleteAccountSuccess => 'Account Deleted!';
+
+  @override
+  String get enterPassword => 'Please enter your password';
+
+  @override
+  String get delete => 'Delete';
 }

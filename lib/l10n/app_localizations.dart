@@ -505,6 +505,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pending'**
   String get pending;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePassword;
+
+  /// No description provided for @oldPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Old Password'**
+  String get oldPassword;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// No description provided for @oldPasswordEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your old password'**
+  String get oldPasswordEmpty;
+
+  /// No description provided for @newPasswordEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your new password'**
+  String get newPasswordEmpty;
+
+  /// No description provided for @passwordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get passwordTooShort;
+
+  /// No description provided for @updatePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Password'**
+  String get updatePassword;
+
+  /// No description provided for @passwordChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Password Changed!'**
+  String get passwordChanged;
+
+  /// No description provided for @change.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get change;
+
+  /// No description provided for @profileUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Updated!'**
+  String get profileUpdated;
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
+
+  /// No description provided for @deleteAccountWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'By Deleting the Account All Your Data will Be Lost'**
+  String get deleteAccountWarning;
+
+  /// No description provided for @deleteAccountSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Deleted!'**
+  String get deleteAccountSuccess;
+
+  /// No description provided for @enterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your password'**
+  String get enterPassword;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
 }
 
 class _AppLocalizationsDelegate
