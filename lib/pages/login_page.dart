@@ -4,6 +4,7 @@ import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_cubit.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_states.dart';
 import 'package:tawfeer_market/l10n/app_localizations.dart';
+import 'package:tawfeer_market/pages/admin_layout.dart';
 import 'package:tawfeer_market/pages/register_page.dart';
 import 'package:tawfeer_market/pages/user_main_layout_page.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
@@ -35,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
           if (state.role == 'user') {
             Navigator.pushReplacementNamed(context, UserMainLayout.id);
           } else {
-          //  Navigator.pushReplacementNamed(context, RegisterPage.id);
+            Navigator.pushReplacementNamed(context, AdminMainLayout.id);
           }
         } else if (state is LoginFailure) {
           String message;
