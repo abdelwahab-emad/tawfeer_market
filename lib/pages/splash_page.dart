@@ -18,23 +18,29 @@ class SplashPage extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Tawfeer ',
-                  style: TextStyle(
-                    fontSize: 26,
-                    color: Color(kprimarycolor),
-                    fontWeight: FontWeight.bold,
+             Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Tawfeer ',
+                        style: TextStyle(
+                          fontSize: 36,
+                          color: Color(kprimarycolor),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Text(
+                        'Market',
+                        style: TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Text(
-                  'Market',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
             const Spacer(flex: 1),
             Image.asset(
               'assets/splashphoto.png',

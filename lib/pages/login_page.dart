@@ -61,25 +61,28 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 130),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Tawfeer ',
-                        style: TextStyle(
-                          fontSize: 36,
-                          color: Color(kprimarycolor),
-                          fontWeight: FontWeight.bold,
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Tawfeer ',
+                          style: TextStyle(
+                            fontSize: 36,
+                            color: Color(kprimarycolor),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const Text(
-                        'Market',
-                        style: TextStyle(
-                          fontSize: 36,
-                          fontWeight: FontWeight.bold,
+                        const Text(
+                          'Market',
+                          style: TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 100),
                   CustomTextField(
@@ -126,8 +129,9 @@ class _LoginPageState extends State<LoginPage> {
                     child: state is LoginLoading
                         ? const Center(
                             child: CircularProgressIndicator(
-                            color: Color(kprimarycolor),
-                          ))
+                              color: Color(kprimarycolor),
+                            ),
+                          )
                         : CustomButton(
                             onTap: () {
                               if (formkey.currentState!.validate()) {
@@ -139,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                             },
                             text: locale.signIn,
                             textColor: Colors.white,
-                            filledColor: Color(kprimarycolor),
+                            filledColor: const Color(kprimarycolor),
                           ),
                   ),
                   const SizedBox(height: 15),
@@ -154,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text(
                       locale.signUp,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(kprimarycolor),
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

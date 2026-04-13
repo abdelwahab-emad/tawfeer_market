@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/l10n/app_localizations.dart'; 
 import 'package:tawfeer_market/models/product_model.dart';
 import 'package:tawfeer_market/widgets/add_to_cart_page.dart';
 import 'package:tawfeer_market/widgets/favorite_button.dart';
@@ -27,8 +28,11 @@ class ProductItem extends StatelessWidget {
   final String type;
   final String categoryId;
   final void Function()? onTap;
+
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context)!;
+
     final productModel = ProductModel(
       id: id,
       name: name,
@@ -40,6 +44,7 @@ class ProductItem extends StatelessWidget {
       categoryId: categoryId,
       quantity: 1,
     );
+
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
@@ -76,39 +81,37 @@ class ProductItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '$price EGP',
+                        '$price ${locale.currency}', 
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                         ),
                       ),
-                      hasDiscount
-                          ? Text(
-                              '$oldPrice EGP',
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                decoration: TextDecoration.lineThrough,
-                                fontSize: 12,
-                              ),
-                            )
-                          : const SizedBox(),
+                      if (hasDiscount)
+                        Text(
+                          '$oldPrice ${locale.currency}', 
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            decoration: TextDecoration.lineThrough,
+                            fontSize: 12,
+                          ),
+                        ),
                     ],
                   ),
                   const SizedBox(height: 45),
                 ],
               ),
             ),
-            Positioned(
+            PositionedDirectional(
               top: 10,
-              right: 10,
+              end: 10,
               child: FavoriteButton(
                 product: productModel,
               ),
             ),
-
-            Positioned(
+            PositionedDirectional(
               bottom: 10,
-              right: 10,
+              end: 10,
               child: GestureDetector(
                 onTap: () {
                   showModalBottomSheet(
@@ -119,7 +122,7 @@ class ProductItem extends StatelessWidget {
                       ),
                     ),
                     builder: (context) => AddToCartPage(
-                        product: productModel,
+                      product: productModel,
                     ),
                   );
                 },

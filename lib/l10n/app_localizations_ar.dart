@@ -259,4 +259,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get delete => 'حذف';
+
+  @override
+  String get allProducts => 'جميع المنتجات';
 }

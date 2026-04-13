@@ -93,5 +93,6 @@
   "deleteAccountSuccess": "Account Deleted!",
   "enterPassword": "Please enter your password",
   "delete": "Delete",
-  "noOrdersFound": "You have no orders yet."
+  "noOrdersFound": "You have no orders yet.",
+  "allProducts": "All Products"
 }

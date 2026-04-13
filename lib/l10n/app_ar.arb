@@ -96,5 +96,6 @@
   "deleteAccountSuccess": "تم حذف الحساب بنجاح!",
   "enterPassword": "من فضلك أدخل كلمة المرور",
   "delete": "حذف",
-  "noOrdersFound": "ليس لديك أي طلبات بعد."
+  "noOrdersFound": "ليس لديك أي طلبات بعد.",
+  "allProducts": "جميع المنتجات"
 }

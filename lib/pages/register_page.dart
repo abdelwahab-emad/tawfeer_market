@@ -66,7 +66,9 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 children: [
                   const SizedBox(height: 100),
-                  Row(
+                 Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
@@ -86,6 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ],
                   ),
+                ),
                   const SizedBox(height: 50),
                   CustomTextField(
                     controller: firstNameController,
