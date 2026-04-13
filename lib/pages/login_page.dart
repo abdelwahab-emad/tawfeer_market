@@ -32,7 +32,11 @@ class _LoginPageState extends State<LoginPage> {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          Navigator.pushReplacementNamed(context, UserMainLayout.id);
+          if (state.role == 'user') {
+            Navigator.pushReplacementNamed(context, UserMainLayout.id);
+          } else {
+          //  Navigator.pushReplacementNamed(context, RegisterPage.id);
+          }
         } else if (state is LoginFailure) {
           String message;
           switch (state.errorMessage) {

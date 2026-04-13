@@ -28,6 +28,7 @@ class RegisterCubit extends Cubit<RegisterState> {
             'email': email,
             'uId': userCredential.user!.uid,
             'createdAt': DateTime.now().toIso8601String(),
+            'role': 'user',
           });
       await userCredential.user!.updateDisplayName('${firstName} ${lastName}');
 
