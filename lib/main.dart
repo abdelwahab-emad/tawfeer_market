@@ -15,7 +15,7 @@ import 'package:tawfeer_market/cubits/register_cubit/register_cubit.dart';
 import 'package:tawfeer_market/cubits/user/user_cubit.dart';
 import 'package:tawfeer_market/firebase_options.dart';
 import 'package:tawfeer_market/l10n/app_localizations.dart';
-import 'package:tawfeer_market/pages/admin_layout.dart';
+import 'package:tawfeer_market/pages/admin_hub_page.dart';
 import 'package:tawfeer_market/pages/cart_page.dart';
 import 'package:tawfeer_market/pages/change_password_page.dart';
 import 'package:tawfeer_market/pages/home_page.dart';
@@ -81,7 +81,7 @@ class TawfeerMarket extends StatelessWidget {
               UserMainLayout.id: (context) => const UserMainLayout(),
               OrdersPage.id: (context) => const OrdersPage(),
               ChangePasswordPage.id: (context) => const ChangePasswordPage(),
-              AdminMainLayout.id : (context) => const AdminMainLayout(),
+              AdminHubPage.id : (context) => const AdminHubPage(),
             },
             initialRoute: SplashPage.id,
           );

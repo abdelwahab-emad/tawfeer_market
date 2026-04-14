@@ -8,7 +8,7 @@ class AdminNavCubit extends Cubit<AdminNavState> {
   AdminNavCubit() : super(AdminNavInitial());
 
   int currentIndex = 0;
-  bool isCollapsed = false; 
+  bool isCollapsed = true; 
 
   void changePage(int index) {
     currentIndex = index;
