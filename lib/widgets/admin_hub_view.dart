@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tawfeer_market/pages/dashboard_page.dart';
 import 'package:tawfeer_market/widgets/hub_card.dart';
 
 class AdminHubView extends StatelessWidget {
@@ -17,7 +18,9 @@ class AdminHubView extends StatelessWidget {
             title: 'Dashboard',
             icon: Icons.grid_view_rounded,
             color: Colors.orange,
-            onTap: () {}
+            onTap: () {
+              Navigator.pushNamed(context, DashboardPage.id);
+            }
           ),
           HubCard(
             title: 'Products',
