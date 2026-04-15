@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/widgets/state_card.dart';
 
-class DashboardStatsGrid extends StatelessWidget {
-  const DashboardStatsGrid({super.key});
+class DashboardStatesGrid extends StatelessWidget {
+  const DashboardStatesGrid({super.key});
 
   @override
   Widget build(BuildContext context) {

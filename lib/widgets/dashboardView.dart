@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/widgets/dashboard_view.dart';
+import 'package:tawfeer_market/widgets/recent_orders_list.dart';
 import 'package:tawfeer_market/widgets/sales_analystics_chart.dart';
 
 class DashboardView extends StatelessWidget {
@@ -12,10 +13,11 @@ class DashboardView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
-          DashboardStatsGrid(), 
+          DashboardStatesGrid(),
           SizedBox(height: 30),
           SalesAnalyticsChart(),
-          SizedBox(height: 20),
+          SizedBox(height: 30),
+          RecentOrdersList(),
         ],
       ),
     );
