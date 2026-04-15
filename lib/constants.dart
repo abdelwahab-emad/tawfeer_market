@@ -1,1 +1,3 @@
-const kprimarycolor = 0xFFFF7900;
+const kprimarycolor = 0xFFFF7900
+
+;

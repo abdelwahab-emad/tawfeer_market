@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tawfeer_market/widgets/sales_analystics_chart.dart';
 import 'package:tawfeer_market/widgets/state_card.dart';
 
 class DashboardView extends StatelessWidget {
@@ -63,6 +64,27 @@ class DashboardView extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 30),
+          const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Orders Analytics",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF2D3436),
+                ),
+              ),
+              Text(
+                "Weekly order volume overview",
+                style: TextStyle(fontSize: 13, color: Colors.grey),
+              ),
+            ],
+          ),
+          const SizedBox(height: 15),
+          const SalesAnalyticsChart(),
+          const SizedBox(height: 20),
         ],
       ),
     );
