@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tawfeer_market/widgets/dashboard_view.dart';
 import 'package:tawfeer_market/widgets/sales_analystics_chart.dart';
-import 'package:tawfeer_market/widgets/state_card.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
@@ -11,80 +11,11 @@ class DashboardView extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Sales Overview",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF2D3436),
-            ),
-          ),
-          const SizedBox(height: 15),
-          Row(
-            children: [
-              const Expanded(
-                child: StateCard(
-                  title: 'Total Sales',
-                  value: '125,750 EGP',
-                  percentage: '↑ 12.5%',
-                  icon: Icons.account_balance_wallet_outlined,
-                ),
-              ),
-              const SizedBox(width: 15),
-              const Expanded(
-                child: StateCard(
-                  title: 'Orders',
-                  value: '1,450',
-                  percentage: '↑ 8.2%',
-                  icon: Icons.shopping_cart_outlined,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          Row(
-            children: [
-              const Expanded(
-                child: StateCard(
-                  title: 'Customers',
-                  value: '120',
-                  percentage: '↑ 5.1%',
-                  icon: Icons.people_outline,
-                ),
-              ),
-              const SizedBox(width: 15),
-              const Expanded(
-                child: StateCard(
-                  title: 'Stock Alerts',
-                  value: '15',
-                  percentage: '↓ 2.4%',
-                  icon: Icons.warning_amber_rounded,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 30),
-          const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Orders Analytics",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF2D3436),
-                ),
-              ),
-              Text(
-                "Weekly order volume overview",
-                style: TextStyle(fontSize: 13, color: Colors.grey),
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          const SalesAnalyticsChart(),
-          const SizedBox(height: 20),
+        children: const [
+          DashboardStatsGrid(), 
+          SizedBox(height: 30),
+          SalesAnalyticsChart(),
+          SizedBox(height: 20),
         ],
       ),
     );
