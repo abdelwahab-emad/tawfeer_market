@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:tawfeer_market/widgets/add_product.dart';
 import 'package:tawfeer_market/widgets/custom_admin_app_bar.dart';
-import 'package:tawfeer_market/widgets/dashboardView.dart';
+import 'package:tawfeer_market/widgets/products_view.dart';
 
-class DashboardPage extends StatelessWidget {
-  static const String id = 'dashboard_page';
-  const DashboardPage({super.key});
+class ProductsPage extends StatelessWidget {
+  const ProductsPage({super.key});
+
+  static String id = 'products_page';
 
   @override
   Widget build(BuildContext context) {
@@ -13,18 +15,16 @@ class DashboardPage extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
         child: CustomAdminAppBar(
-          title: 'DASHBOARD',
+          title: 'Products Managment',
           actionIcon: IconButton(
+            icon: const Icon(Icons.filter_list_rounded, color: Colors.black),
             onPressed: () {},
-            icon: const Icon(
-              Icons.settings_outlined,
-              color: Colors.grey,
-              size: 22,
-            ),
           ),
         ),
       ),
-      body: DashboardView(),
+      floatingActionButton: AddProduct(onPressed: () {}),
+
+      body: ProductsView(),
     );
   }
 }

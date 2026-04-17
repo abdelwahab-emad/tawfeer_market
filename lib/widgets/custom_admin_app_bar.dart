@@ -3,10 +3,12 @@ import 'package:tawfeer_market/constants.dart';
 
 class CustomAdminAppBar extends StatelessWidget {
   final String title;
+  final Widget? actionIcon;
 
   const CustomAdminAppBar({
     super.key,
     required this.title,
+    this.actionIcon,
   });
 
   @override
@@ -44,14 +46,8 @@ class CustomAdminAppBar extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.settings_outlined,
-                color: Colors.grey,
-                size: 22,
-              ),
-            ),
+            if (actionIcon != null) actionIcon!,
+          
             const CircleAvatar(
               radius: 16,
               backgroundColor: Color(kprimarycolor),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/pages/dashboard_page.dart';
+import 'package:tawfeer_market/pages/product_details_page.dart';
+import 'package:tawfeer_market/pages/products_page.dart';
 import 'package:tawfeer_market/widgets/hub_card.dart';
 
 class AdminHubView extends StatelessWidget {
@@ -20,13 +22,15 @@ class AdminHubView extends StatelessWidget {
             color: Colors.orange,
             onTap: () {
               Navigator.pushNamed(context, DashboardPage.id);
-            }
+            },
           ),
           HubCard(
             title: 'Products',
             icon: Icons.shopping_bag_outlined,
             color: Colors.blue,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, ProductsPage.id);
+            },
           ),
           HubCard(
             title: 'Orders',
