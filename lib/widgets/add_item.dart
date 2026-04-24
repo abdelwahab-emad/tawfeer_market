@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class AddProduct extends StatelessWidget {
+class AddItem extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const AddProduct({super.key, required this.onPressed});
+  const AddItem({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

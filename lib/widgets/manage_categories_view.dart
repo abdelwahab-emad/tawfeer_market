@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:tawfeer_market/widgets/categories_card.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
 import 'package:tawfeer_market/widgets/product_card.dart';
 
-class ProductsView extends StatelessWidget {
-  const ProductsView({super.key});
+class ManageCategoriesView extends StatelessWidget {
+  const ManageCategoriesView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
+    return Column(
         children: [
           SearchBar(),
           const SizedBox(height: 10),
@@ -24,12 +23,11 @@ class ProductsView extends StatelessWidget {
               ),
               itemCount: 8,
               itemBuilder: (context, index) {
-                return const ProductCard();
+                return const CategoriesCard();
               },
             ),
           ),
         ],
-      ),
     );
   }
 }
@@ -46,3 +44,4 @@ class SearchBar extends StatelessWidget {
     );
   }
 }
+

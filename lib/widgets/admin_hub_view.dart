@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/pages/dashboard_page.dart';
-import 'package:tawfeer_market/pages/product_details_page.dart';
+import 'package:tawfeer_market/pages/manage_categories_page.dart';
 import 'package:tawfeer_market/pages/products_page.dart';
 import 'package:tawfeer_market/widgets/hub_card.dart';
 
@@ -48,7 +48,9 @@ class AdminHubView extends StatelessWidget {
             title: 'Categories',
             icon: Icons.category_outlined,
             color: Colors.teal,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, ManageCategoriesPage.id);
+            },
           ),
           HubCard(
             title: 'Settings',
