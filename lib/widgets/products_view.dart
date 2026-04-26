@@ -15,14 +15,14 @@ class ProductsView extends StatelessWidget {
           const SizedBox(height: 10),
           Expanded(
             child: GridView.builder(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 16),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 0.72,
                 crossAxisSpacing: 15,
                 mainAxisSpacing: 15,
               ),
-              itemCount: 8,
+              itemCount: 10,
               itemBuilder: (context, index) {
                 return const ProductCard();
               },

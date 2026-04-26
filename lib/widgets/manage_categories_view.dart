@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/widgets/categories_card.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
-import 'package:tawfeer_market/widgets/product_card.dart';
 
 class ManageCategoriesView extends StatelessWidget {
   const ManageCategoriesView({super.key});
@@ -38,7 +37,7 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
-      labelText: 'Search Products...',
+      labelText: 'Search Category...',
       prefixIcon: Icons.search_rounded,
       borderRadius: 20,
     );

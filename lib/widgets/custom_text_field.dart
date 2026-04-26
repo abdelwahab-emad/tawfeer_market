@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -14,6 +15,8 @@ class CustomTextField extends StatelessWidget {
     this.borderRadius = 15.0,
     this.readOnly = false,
     this.prefixIconSize = 22.0,
+    this.inputFormatters,
+    this.keyboardType,
   });
 
   final String labelText;
@@ -27,6 +30,8 @@ class CustomTextField extends StatelessWidget {
   final double borderRadius;
   final bool readOnly;
   final double prefixIconSize;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -42,24 +47,27 @@ class CustomTextField extends StatelessWidget {
         validator: validator,
         obscureText: obscureText,
         cursorColor: kazyonOrange,
+        keyboardType: keyboardType,
+        inputFormatters: inputFormatters,
         style: const TextStyle(color: Colors.black, fontSize: 16),
         decoration: InputDecoration(
           labelText: labelText,
-          floatingLabelBehavior: readOnly ? FloatingLabelBehavior.never : FloatingLabelBehavior.auto,
+          floatingLabelBehavior: readOnly
+              ? FloatingLabelBehavior.never
+              : FloatingLabelBehavior.auto,
           labelStyle: TextStyle(color: Colors.grey[700], fontSize: 18),
           floatingLabelStyle: const TextStyle(color: hintGrey),
           hintStyle: const TextStyle(color: hintGrey, fontSize: 14),
           prefixIcon: prefixIcon != null
-              ? Icon(prefixIcon, color: Colors.grey[700], size: prefixIconSize)
+              ? Icon(prefixIcon,
+                  color: Colors.grey[700], size: prefixIconSize)
               : null,
-
           suffixIcon: suffixIcon != null
               ? IconButton(
-                  icon: Icon(suffixIcon, color: Colors.grey[700], size: 22),
-                  onPressed:
-                      onSuffixPressed, 
-                  splashColor: Colors
-                      .transparent,
+                  icon: Icon(suffixIcon,
+                      color: Colors.grey[700], size: 22),
+                  onPressed: onSuffixPressed,
+                  splashColor: Colors.transparent,
                 )
               : null,
           filled: true,
