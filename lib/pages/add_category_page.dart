@@ -1,0 +1,79 @@
+import 'package:flutter/material.dart';
+import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/widgets/custom_admin_app_bar.dart';
+import 'package:tawfeer_market/widgets/custom_button.dart';
+import 'package:tawfeer_market/widgets/custom_text_field.dart';
+
+class AddCategoryPage extends StatefulWidget {
+  const AddCategoryPage({super.key});
+
+  @override
+  State<AddCategoryPage> createState() => _AddCategoryPageState();
+}
+
+class _AddCategoryPageState extends State<AddCategoryPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF8F9FA),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70),
+        child: CustomAdminAppBar(
+          title: 'Add Category',
+          actionIcon: IconButton(
+            icon: const Icon(Icons.category, color: Colors.black),
+            onPressed: () {},
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Column(
+          children: [
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                height: 150,
+                width: 150,
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                ),
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.add_a_photo_outlined,
+                        size: 40, color: Colors.grey),
+                    SizedBox(height: 10),
+                    Text('Upload Image',
+                        style: TextStyle(color: Colors.grey)),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            CustomTextField(
+              labelText: 'Category Name',
+              prefixIcon: Icons.category_outlined,
+            ),
+
+            const SizedBox(height: 30),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: CustomButton(
+                onTap: () {},
+                text: 'Add Category',
+                textColor: Colors.white,
+                filledColor: Color(kprimarycolor),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

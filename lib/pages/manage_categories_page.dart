@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tawfeer_market/pages/add_category_page.dart';
 import 'package:tawfeer_market/widgets/add_item.dart';
 import 'package:tawfeer_market/widgets/custom_admin_app_bar.dart';
 import 'package:tawfeer_market/widgets/manage_categories_view.dart';
@@ -20,7 +21,9 @@ class ManageCategoriesPage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: AddItem(onPressed: () {}),
+      floatingActionButton: AddItem(onPressed: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => AddCategoryPage()));
+      }),
       body: ManageCategoriesView(),
     );
   }
