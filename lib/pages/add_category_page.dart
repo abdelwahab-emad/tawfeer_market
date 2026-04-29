@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/cubits/add_category/add_category_cubit.dart';
 import 'package:tawfeer_market/widgets/custom_admin_app_bar.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
 import 'package:tawfeer_market/widgets/custom_snackbar.dart';
@@ -17,150 +18,136 @@ class AddCategoryPage extends StatefulWidget {
 class _AddCategoryPageState extends State<AddCategoryPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
-  final ImagePicker picker = ImagePicker();
-
-  bool hasImage = false;
-  bool isLoading = false;
-  File? imageFile;
-
-  Future<void> pickImage() async {
-    final picked = await picker.pickImage(source: ImageSource.gallery);
-
-    if (picked != null) {
-      setState(() {
-        imageFile = File(picked.path);
-        hasImage = true;
-      });
-    }
-  }
-
-  void submit() async {
-    if (!formKey.currentState!.validate()) return;
-
-    if (!hasImage) {
-      showCustomSnackBar(
-        context,
-        'Please upload category image',
-        color: Colors.red,
-      );
-      return;
-    }
-
-    setState(() {
-      isLoading = true;
-    });
-
-    try {
-      await Future.delayed(const Duration(seconds: 1));
-
-      setState(() {
-        isLoading = false;
-        imageFile = null;
-        hasImage = false;
-        nameController.clear();
-      });
-
-      showCustomSnackBar(
-        context,
-        'Category added successfully',
-        color: Colors.green,
-      );
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-
-      showCustomSnackBar(context, 'Something went wrong', color: Colors.red);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: CustomAdminAppBar(
-          title: 'Add Category',
-          actionIcon: IconButton(
-            icon: const Icon(Icons.category, color: Colors.black),
-            onPressed: () {},
+    return BlocConsumer<AddCategoryCubit, AddCategoryState>(
+      listener: (context, state) {
+        if (state is AddCategorySuccess) {
+          showCustomSnackBar(
+            context,
+            'Category added successfully',
+            color: Colors.green,
+          );
+          Future.delayed(const Duration(milliseconds: 300), () {
+            Navigator.pop(context);
+          });
+        }
+        if (state is AddCategoryFailure) {
+          showCustomSnackBar(context, state.errMessage);
+        }
+      },
+      builder: (context, state) {
+        final cubit = context.read<AddCategoryCubit>();
+
+        File? imageFile;
+        if (state is AddCategoryImagePicked) {
+          imageFile = state.image;
+        }
+        return Scaffold(
+          backgroundColor: const Color(0xFFF8F9FA),
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(70),
+            child: CustomAdminAppBar(
+              title: 'Add Category',
+              actionIcon: IconButton(
+                icon: const Icon(Icons.category, color: Colors.black),
+                onPressed: () {},
+              ),
+            ),
           ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        child: Form(
-          key: formKey,
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: pickImage,
-                child: Container(
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.grey.withOpacity(0.3)),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      cubit.pickImage();
+                    },
+                    child: Container(
+                      height: 150,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                      ),
+                      child: imageFile != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.file(
+                                imageFile,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: double.infinity,
+                              ),
+                            )
+                          : const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.add_a_photo_outlined,
+                                  size: 40,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  'Upload Image',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                    ),
                   ),
-                  child: imageFile != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.file(
-                            imageFile!,
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: double.infinity,
+
+                  const SizedBox(height: 30),
+
+                  CustomTextField(
+                    controller: nameController,
+                    labelText: 'Category Name',
+                    prefixIcon: Icons.category_outlined,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Category name is required";
+                      }
+                      return null;
+                    },
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: state is AddCategoryLoading
+                        ? const CircularProgressIndicator(
+                            color: Color(kprimarycolor),
+                          )
+                        : CustomButton(
+                            onTap: () {
+                              if (!formKey.currentState!.validate()) return;
+
+                              if (imageFile == null) {
+                                showCustomSnackBar(
+                                  context,
+                                  'Please select image',
+                                );
+                                return;
+                              }
+                              cubit.addCategory(name: nameController.text);
+                            },
+                            text: 'Add Category',
+                            textColor: Colors.white,
+                            filledColor: Color(kprimarycolor),
                           ),
-                        )
-                      : const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.add_a_photo_outlined,
-                              size: 40,
-                              color: Colors.grey,
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              'Upload Image',
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                ),
+                  ),
+                ],
               ),
-
-              const SizedBox(height: 30),
-
-              CustomTextField(
-                controller: nameController,
-                labelText: 'Category Name',
-                prefixIcon: Icons.category_outlined,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return "Category name is required";
-                  }
-                  return null;
-                },
-              ),
-
-              const SizedBox(height: 30),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: CustomButton(
-                  onTap: submit,
-                  text: 'Add Category',
-                  textColor: Colors.white,
-                  filledColor: Color(kprimarycolor),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
