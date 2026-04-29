@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/cubits/category_cubit/category_cubit.dart';
 import 'package:tawfeer_market/widgets/categories_card.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
 
@@ -7,26 +10,52 @@ class ManageCategoriesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: [
-          SearchBar(),
-          const SizedBox(height: 10),
-          Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.72,
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
+    return BlocBuilder<CategoryCubit, CategoryState>(
+      builder: (context, state) {
+        if (state is CategoryLoading) {
+          return const Center(
+            child: CircularProgressIndicator(color: Color(kprimarycolor)),
+          );
+        }
+
+        if (state is CategoryError) {
+          return Center(child: Text(state.message));
+        }
+
+        if (state is CategorySuccess) {
+          if(state.categoriesList.isEmpty) {
+            return const Center(child: Text("No Categories yes"),);
+          }
+          final categories = state.categoriesList;
+          return Column(
+            children: [
+              SearchBar(),
+              const SizedBox(height: 10),
+              Expanded(
+                child: GridView.builder(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.72,
+                    crossAxisSpacing: 15,
+                    mainAxisSpacing: 15,
+                  ),
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) {
+                    final category = categories[index];
+
+                    return CategoriesCard(
+                      name: category.name,
+                      imageUrl: category.imageUrl,
+                    );
+                  },
+                ),
               ),
-              itemCount: 8,
-              itemBuilder: (context, index) {
-                return const CategoriesCard();
-              },
-            ),
-          ),
-        ],
+            ],
+          );
+        }
+        return const SizedBox();
+      },
     );
   }
 }
@@ -43,4 +72,3 @@ class SearchBar extends StatelessWidget {
     );
   }
 }
-

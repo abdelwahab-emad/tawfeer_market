@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
 
 class CategoriesCard extends StatelessWidget {
-  const CategoriesCard({super.key});
+  const CategoriesCard({
+    super.key,
+    required this.name,
+    required this.imageUrl,
+    this.onEdit,
+    this.onDelete,
+    this.onTap,
+  });
 
+  final String name;
+  final String imageUrl;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
+  final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -17,7 +29,7 @@ class CategoriesCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 3, 
+              flex: 3,
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -27,10 +39,8 @@ class CategoriesCard extends StatelessWidget {
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30),
                   ),
-                  image: const DecorationImage(
-                    image: NetworkImage(
-                      'https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=500',
-                    ),
+                  image: DecorationImage(
+                    image: NetworkImage(imageUrl),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -45,8 +55,8 @@ class CategoriesCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Fresh Products',
+                    Text(
+                      name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -61,12 +71,12 @@ class CategoriesCard extends StatelessWidget {
                         _buildActionButton(
                           icon: Icons.edit_outlined,
                           color: Colors.blue,
-                          onTap: () {},
+                          onTap: onEdit ?? () {},
                         ),
                         _buildActionButton(
                           icon: Icons.delete_outline_rounded,
                           color: Colors.red,
-                          onTap: () {},
+                          onTap: onDelete ?? () {},
                         ),
                       ],
                     ),
