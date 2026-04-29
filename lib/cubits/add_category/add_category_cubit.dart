@@ -43,10 +43,14 @@ class AddCategoryCubit extends Cubit<AddCategoryState> {
         'createdAt': Timestamp.now(),
       });
 
-      selectedImage = null;
       emit(AddCategorySuccess());
     } catch (e) {
       emit(AddCategoryFailure(errMessage: e.toString()));
     }
+  }
+
+  void clearImage() {
+    selectedImage = null;
+    emit(AddCategoryInitial());
   }
 }

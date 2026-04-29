@@ -30,6 +30,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
             color: Colors.green,
           );
           Future.delayed(const Duration(milliseconds: 300), () {
+            context.read<AddCategoryCubit>().clearImage();
             Navigator.pop(context);
           });
         }
@@ -40,10 +41,8 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
       builder: (context, state) {
         final cubit = context.read<AddCategoryCubit>();
 
-        File? imageFile;
-        if (state is AddCategoryImagePicked) {
-          imageFile = state.image;
-        }
+        final imageFile = cubit.selectedImage;
+
         return Scaffold(
           backgroundColor: const Color(0xFFF8F9FA),
           appBar: PreferredSize(
