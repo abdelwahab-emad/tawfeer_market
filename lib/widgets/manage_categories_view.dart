@@ -4,6 +4,7 @@ import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/category_cubit/category_cubit.dart';
 import 'package:tawfeer_market/widgets/categories_card.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
+import 'package:tawfeer_market/widgets/delete_category_sheet.dart';
 
 class ManageCategoriesView extends StatelessWidget {
   const ManageCategoriesView({super.key});
@@ -23,8 +24,8 @@ class ManageCategoriesView extends StatelessWidget {
         }
 
         if (state is CategorySuccess) {
-          if(state.categoriesList.isEmpty) {
-            return const Center(child: Text("No Categories yes"),);
+          if (state.categoriesList.isEmpty) {
+            return const Center(child: Text("No Categories yes"));
           }
           final categories = state.categoriesList;
           return Column(
@@ -47,6 +48,18 @@ class ManageCategoriesView extends StatelessWidget {
                     return CategoriesCard(
                       name: category.name,
                       imageUrl: category.imageUrl,
+                      onDelete: () {
+                        showModalBottomSheet(
+                          context: context,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(30),
+                            ),
+                          ),
+                          builder: (context) =>
+                              DeleteCategorySheet(docId: category.id,),
+                        );
+                      },
                     );
                   },
                 ),

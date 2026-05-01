@@ -10,7 +10,7 @@ class CategoryCubit extends Cubit<CategoryState> {
   CategoryCubit() : super(CategoryInitial());
 
   StreamSubscription? _subscription;
-
+  List<CategoryModel> _categories = [];
   void getCategories() {
     emit(CategoryLoading());
 
@@ -18,24 +18,46 @@ class CategoryCubit extends Cubit<CategoryState> {
         .collection('categories')
         .snapshots()
         .listen(
-      (snapshot) {
-        final categoriesList = snapshot.docs.map((doc) {
-          final data = doc.data();
+          (snapshot) {
+            _categories = snapshot.docs.map((doc) {
+              final data = doc.data();
 
-          return CategoryModel(
-            id: doc.id,
-            name: data['name'] ?? '',
-            imageUrl: data['imageUrl'] ?? '',
-          );
-        }).toList();
+              return CategoryModel(
+                id: doc.id,
+                name: data['name'] ?? '',
+                imageUrl: data['imageUrl'] ?? '',
+              );
+            }).toList();
 
-        emit(CategorySuccess(categoriesList));
-      },
-      onError: (e) {
-        emit(CategoryError(e.toString()));
-      },
-    );
+            emit(CategorySuccess(_categories));
+          },
+          onError: (e) {
+            emit(CategoryError(e.toString()));
+          },
+        );
   }
+
+ Future<void> deleteCategory(String docId) async {
+  if (state is CategorySuccess) {
+    final currentState = state as CategorySuccess;
+
+    final updatedList =
+        currentState.categoriesList.where((e) => e.id != docId).toList();
+
+    emit(CategorySuccess(updatedList));
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('categories')
+          .doc(docId)
+          .delete();
+
+    } catch (e) {
+      emit(CategoryError(e.toString()));
+      getCategories();
+    }
+  }
+}
 
   @override
   Future<void> close() {

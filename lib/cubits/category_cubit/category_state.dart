@@ -17,3 +17,13 @@ class CategoryError extends CategoryState {
   final String message;
   CategoryError(this.message);
 }
+
+
+class CategoryDeleteLoading extends CategoryState {}
+
+class CategoryDeleteSuccess extends CategoryState {}
+
+class CategoryDeleteError extends CategoryState {
+  final String message;
+  CategoryDeleteError(this.message);
+}
