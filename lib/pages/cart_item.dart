@@ -90,10 +90,10 @@ class CartItem extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        if (product.quantity > 1) {
+                        if (product.stock > 1) {
                           context.read<CartCubit>().updateQuantity(
                                 productId: product.id,
-                                quantity: product.quantity - 1,
+                                quantity: product.stock - 1,
                               );
                         }
                       },
@@ -106,7 +106,7 @@ class CartItem extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text(
-                        '${product.quantity}',
+                        '${product.stock}',
                         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -114,7 +114,7 @@ class CartItem extends StatelessWidget {
                       onTap: () {
                         context.read<CartCubit>().updateQuantity(
                               productId: product.id,
-                              quantity: product.quantity + 1,
+                              quantity: product.stock + 1,
                             );
                       },
                       child: const Icon(

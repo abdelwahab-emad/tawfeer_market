@@ -42,7 +42,7 @@ class ProductItem extends StatelessWidget {
       hasDiscount: hasDiscount,
       type: type,
       categoryId: categoryId,
-      quantity: 1,
+      stock: 1,
     );
 
     return GestureDetector(

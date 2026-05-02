@@ -36,7 +36,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
                   hasDiscount: data['hasDiscount'] ?? false,
                   type: data['type'] ?? '',
                   categoryId: data['categoryId'] ?? '',
-                  quantity: data['quantity'] ?? 1,
+                  stock: data['quantity'] ?? 1,
                 );
               }).toList();
 

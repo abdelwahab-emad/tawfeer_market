@@ -7,8 +7,8 @@ class ProductModel {
   final bool hasDiscount;
   final String type;
   final String categoryId;
-  final int quantity;
-
+  final int stock;
+ 
   ProductModel({
     required this.id,
     required this.name,
@@ -18,6 +18,7 @@ class ProductModel {
     required this.hasDiscount,
     required this.type,
     required this.categoryId,
-    required this.quantity,
+    required this.stock,
+
   });
 }

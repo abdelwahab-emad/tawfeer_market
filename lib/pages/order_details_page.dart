@@ -127,7 +127,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                             item.name,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          subtitle: Text('${locale.quantity}: ${item.quantity}'),
+                          subtitle: Text('${locale.quantity}: ${item.stock}'),
                           trailing: Text(
                             '${item.price} ${locale.currency}',
                             style: const TextStyle(

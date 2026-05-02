@@ -36,13 +36,13 @@ class CartCubit extends Cubit<CartState> {
               hasDiscount: data['hasDiscount'] ?? false,
               type: data['type'] ?? '',
               categoryId: data['categoryId'] ?? '',
-              quantity: data['quantity'] ?? 1,
+              stock: data['quantity'] ?? 1,
             );
           }).toList();
 
           totalCost = 0.0;
           for (var product in cartList) {
-            totalCost += (product.price * product.quantity);
+            totalCost += (product.price * product.stock);
           }
           emit(CartSuccess(products: cartList));
         },
@@ -128,7 +128,7 @@ class CartCubit extends Cubit<CartState> {
           'hasDiscount': product.hasDiscount,
           'type': product.type,
           'categoryId': product.categoryId,
-          'quantity': product.quantity,
+          'quantity': product.stock,
         };
       }).toList();
 

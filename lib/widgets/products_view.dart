@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
 import 'package:tawfeer_market/widgets/product_card.dart';
 
-class ProductsView extends StatelessWidget {
+class ProductsView extends StatefulWidget {
   const ProductsView({super.key});
+
+  @override
+  State<ProductsView> createState() => _ProductsViewState();
+}
+
+class _ProductsViewState extends State<ProductsView> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProductCubit>().getAllProducts();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,17 +28,39 @@ class ProductsView extends StatelessWidget {
           SearchBar(),
           const SizedBox(height: 10),
           Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 16),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.72,
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-              ),
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return const ProductCard();
+            child: BlocBuilder<ProductCubit, ProductState>(
+              builder: (context, state) {
+                if (state is ProductLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Color(kprimarycolor),
+                    ),
+                  );
+                }
+                if (state is ProductError) {
+                  return Center(child: Text(state.message));
+                }
+                if (state is ProductSuccess) {
+                  final products = state.products;
+                  if (products.isEmpty) {
+                    return const Center(child: Text("No products found"));
+                  }
+                  return GridView.builder(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 16),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.72,
+                          crossAxisSpacing: 15,
+                          mainAxisSpacing: 15,
+                        ),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      return ProductCard(product: products[index]);
+                    },
+                  );
+                }
+                return const SizedBox();
               },
             ),
           ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/models/product_model.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key});
-
+  const ProductCard({super.key, required this.product});
+  final ProductModel product;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -25,14 +26,14 @@ class ProductCard extends StatelessWidget {
                   Expanded(
                     child: Center(
                       child: Image.network(
-                        'https://cdn.mafrservices.com/pim-content/EGY/media/product/649696/1741516204/649696_main.jpg?im=Resize=400',
+                        product.imageUrl,
                         fit: BoxFit.contain,
                       ),
                     ),
                   ),
                   const SizedBox(height: 15),
                   Text(
-                    'Nescafe Gold Instant Coffee Pouch 190 gm',
+                    product.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -40,8 +41,8 @@ class ProductCard extends StatelessWidget {
                       fontSize: 15,
                     ),
                   ),
-                  const Text(
-                    "Hot Drinks",
+                  Text(
+                    product.type,
                     style: TextStyle(color: Colors.grey, fontSize: 12),
                   ),
                   const SizedBox(height: 20),
@@ -49,7 +50,7 @@ class ProductCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '398.95 EGP',
+                        '${product.price} EGP',
                         style: const TextStyle(
                           color: Color(kprimarycolor),
                           fontWeight: FontWeight.bold,
@@ -57,7 +58,7 @@ class ProductCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '404.95 EGP',
+                        '${product.oldPrice} EGP',
                         style: const TextStyle(
                           color: Colors.grey,
                           decoration: TextDecoration.lineThrough,
@@ -94,8 +95,8 @@ class ProductCard extends StatelessWidget {
                   color: Colors.green.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Text(
-                  "In Stock: 50",
+                child: Text(
+                  "In Stock: ${product.stock}",
                   style: TextStyle(
                     color: Colors.green,
                     fontSize: 10,

@@ -56,7 +56,7 @@ class OrdersCubit extends Cubit<OrdersState> {
             hasDiscount: item['hasDiscount'],
             type: item['type'],
             categoryId: item['categoryId'],
-            quantity: item['quantity'],
+            stock: item['quantity'],
           );
         }).toList();
 

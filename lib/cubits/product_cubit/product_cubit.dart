@@ -27,7 +27,7 @@ class ProductCubit extends Cubit<ProductState> {
           hasDiscount: data['hasDiscount'] ?? false,
           type: data['type'] ?? '',
           categoryId: data['categoryId'] ?? '',
-          quantity: 1,
+          stock: 1,
         );
       }).toList();
 
@@ -55,7 +55,7 @@ class ProductCubit extends Cubit<ProductState> {
           hasDiscount: data['hasDiscount'] ?? false,
           type: data['type'] ?? '',
           categoryId: data['categoryId'] ?? '',
-          quantity: 1,
+          stock: 1,
         );
       }).toList();
       emit(ProductSuccess(productsList));
@@ -82,7 +82,7 @@ class ProductCubit extends Cubit<ProductState> {
           hasDiscount: data['hasDiscount'] ?? false,
           type: data['type'] ?? '',
           categoryId: data['categoryId'] ?? '',
-          quantity: 1,
+          stock: 1,
         );
       }).toList();
 
