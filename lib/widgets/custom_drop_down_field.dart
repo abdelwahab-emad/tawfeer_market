@@ -1,34 +1,38 @@
 import 'package:flutter/material.dart';
 
-class CustomDropdownField extends StatelessWidget {
+class CustomDropdownField<T> extends StatelessWidget {
+  final String labelText;
+  final List<T> items;
+  final T? value;
+  final Function(T?) onChanged;
+  final String Function(T) itemLabel;
+  final IconData? prefixIcon;
+  final String? Function(T?)? validator;
+
   const CustomDropdownField({
     super.key,
     required this.labelText,
     required this.items,
     required this.value,
     required this.onChanged,
+    required this.itemLabel,
     this.prefixIcon,
+    this.validator,
   });
-
-  final String labelText;
-  final List<String> items;
-  final String? value;
-  final Function(String?) onChanged;
-  final IconData? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      child: DropdownButtonFormField<String>(
+      child: DropdownButtonFormField<T>(
         value: value,
         onChanged: onChanged,
+        validator: validator,
         icon: const Icon(Icons.arrow_drop_down_rounded, size: 30),
         decoration: InputDecoration(
           labelText: labelText,
           labelStyle: TextStyle(color: Colors.grey[700], fontSize: 18),
 
-          /// 👇 هنا prefix icon (زي category icon)
           prefixIcon: prefixIcon != null
               ? Icon(prefixIcon, color: Colors.grey[700])
               : null,
@@ -52,14 +56,9 @@ class CustomDropdownField extends StatelessWidget {
           ),
         ),
 
-        items: items
-            .map(
-              (item) => DropdownMenuItem(
-                value: item,
-                child: Text(item),
-              ),
-            )
-            .toList(),
+        items: items.map((item) {
+          return DropdownMenuItem<T>(value: item, child: Text(itemLabel(item)));
+        }).toList(),
       ),
     );
   }
