@@ -22,3 +22,13 @@ final class AddCategoryImagePicked extends AddCategoryState {
   AddCategoryImagePicked({required this.image});
 
 }
+
+
+final class UpdateCateogryLoading extends AddCategoryState {}
+
+final class UpdateCateogrySuccess extends AddCategoryState {}
+
+final class UpdateCateogryFailure extends AddCategoryState {
+  final String errMessage;
+  UpdateCateogryFailure({required this.errMessage});
+}

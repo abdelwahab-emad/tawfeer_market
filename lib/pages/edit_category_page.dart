@@ -7,47 +7,57 @@ import 'package:tawfeer_market/widgets/custom_button.dart';
 import 'package:tawfeer_market/widgets/custom_snackbar.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
 
-class AddCategoryPage extends StatefulWidget {
-  const AddCategoryPage({super.key});
+class EditCategoryPage extends StatefulWidget {
+  const EditCategoryPage({
+    super.key,
+    required this.name,
+    required this.imageUrl,
+    required this.docId,
+  });
+  final String name;
+  final String imageUrl;
+  final String docId;
 
   @override
-  State<AddCategoryPage> createState() => _AddCategoryPageState();
+  State<EditCategoryPage> createState() => _AddCategoryPageState();
 }
 
-class _AddCategoryPageState extends State<AddCategoryPage> {
+class _AddCategoryPageState extends State<EditCategoryPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    nameController.text = widget.name;
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AddCategoryCubit, AddCategoryState>(
       listener: (context, state) {
-        if (state is AddCategorySuccess) {
+        if (state is UpdateCateogrySuccess) {
           showCustomSnackBar(
             context,
-            'Category added successfully',
+            'Category updated successfully',
             color: Colors.green,
           );
-          Future.delayed(const Duration(milliseconds: 300), () {
-            context.read<AddCategoryCubit>().clearImage();
-            Navigator.pop(context);
-          });
+          Navigator.pop(context);
+          context.read<AddCategoryCubit>().clearImage();
         }
-        if (state is AddCategoryFailure) {
+        if (state is UpdateCateogryFailure) {
           showCustomSnackBar(context, state.errMessage);
         }
       },
       builder: (context, state) {
         final cubit = context.read<AddCategoryCubit>();
 
-        final imageFile = cubit.selectedImage;
-
         return Scaffold(
           backgroundColor: const Color(0xFFF8F9FA),
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(70),
             child: CustomAdminAppBar(
-              title: 'Add Category',
+              title: 'Edit Category',
               actionIcon: IconButton(
                 icon: const Icon(Icons.category, color: Colors.black),
                 onPressed: () {},
@@ -72,31 +82,22 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(color: Colors.grey.withOpacity(0.3)),
                       ),
-                      child: imageFile != null
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.file(
-                                imageFile,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: cubit.selectedImage != null
+                            ? Image.file(
+                                cubit.selectedImage!,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: double.infinity,
+                              )
+                            : Image.network(
+                                widget.imageUrl,
                                 fit: BoxFit.cover,
                                 width: double.infinity,
                                 height: double.infinity,
                               ),
-                            )
-                          : const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.add_a_photo_outlined,
-                                  size: 40,
-                                  color: Colors.grey,
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  'Upload Image',
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                              ],
-                            ),
+                      ),
                     ),
                   ),
 
@@ -118,24 +119,23 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: state is AddCategoryLoading
-                        ? const CircularProgressIndicator(
-                            color: Color(kprimarycolor),
+                    child: state is UpdateCateogryLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Color(kprimarycolor),
+                            ),
                           )
                         : CustomButton(
                             onTap: () {
-                              if (!formKey.currentState!.validate()) return;
-
-                              if (imageFile == null) {
-                                showCustomSnackBar(
-                                  context,
-                                  'Please select image',
+                              if (formKey.currentState!.validate()) {
+                                cubit.updateCategory(
+                                  name: nameController.text,
+                                  docId: widget.docId,
+                                  url: widget.imageUrl,
                                 );
-                                return;
                               }
-                              cubit.addCategory(name: nameController.text);
                             },
-                            text: 'Add Category',
+                            text: 'Update Category',
                             textColor: Colors.white,
                             filledColor: Color(kprimarycolor),
                           ),

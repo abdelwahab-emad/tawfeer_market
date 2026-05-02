@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/category_cubit/category_cubit.dart';
+import 'package:tawfeer_market/pages/edit_category_page.dart';
 import 'package:tawfeer_market/widgets/categories_card.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
 import 'package:tawfeer_market/widgets/delete_category_sheet.dart';
@@ -57,7 +58,15 @@ class ManageCategoriesView extends StatelessWidget {
                             ),
                           ),
                           builder: (context) =>
-                              DeleteCategorySheet(docId: category.id,),
+                              DeleteCategorySheet(docId: category.id),
+                        );
+                      },
+                      onEdit: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditCategoryPage(name: category.name, imageUrl: category.imageUrl, docId: category.id,),
+                          ),
                         );
                       },
                     );

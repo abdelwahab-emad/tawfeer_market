@@ -49,6 +49,31 @@ class AddCategoryCubit extends Cubit<AddCategoryState> {
     }
   }
 
+  Future<void> updateCategory({
+    required String name,
+    required String docId,
+    required String url,
+  }) async {
+    try {
+      emit(UpdateCateogryLoading());
+      String imageUrl = url;
+      if (selectedImage != null) {
+        final response = await cloudinary.uploadFile(
+          CloudinaryFile.fromFile(selectedImage!.path),
+        );
+
+        imageUrl = response.secureUrl;
+      }
+      await _firestore.collection('categories').doc(docId).update({
+        'name': name.trim(),
+        'imageUrl': imageUrl,
+      });
+      emit(UpdateCateogrySuccess());
+    } catch (e) {
+      emit(UpdateCateogryFailure(errMessage: e.toString()));
+    }
+  }
+
   void clearImage() {
     selectedImage = null;
     emit(AddCategoryInitial());
