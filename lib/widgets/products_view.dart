@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
+import 'package:tawfeer_market/pages/edit_product_page.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
 import 'package:tawfeer_market/widgets/delete_product_sheet.dart';
 import 'package:tawfeer_market/widgets/product_card.dart';
@@ -71,6 +72,14 @@ class _ProductsViewState extends State<ProductsView> {
                                 DeleteProductSheet(docId: products[index].id),
                           );
                         },
+                        onEdit: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditProductPage(product: products[index]),
+                            ),
+                          );
+                        },
                       );
                     },
                   );
@@ -97,3 +106,5 @@ class SearchBar extends StatelessWidget {
     );
   }
 }
+
+

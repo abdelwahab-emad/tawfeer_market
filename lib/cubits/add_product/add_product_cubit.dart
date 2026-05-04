@@ -30,6 +30,7 @@ class AddProductCubit extends Cubit<AddProductState> {
     required double price,
     required double discount,
     required int initialStock,
+    required String type,
   }) async {
     try {
       emit(AddProductLoading());
@@ -51,6 +52,7 @@ class AddProductCubit extends Cubit<AddProductState> {
         'oldPrice': discount > 0.0 ? price : 0.0,
         'hasDiscount': discount > 0.0 ? true : false,
         'stock': initialStock,
+        'type': type,
         'createdAt': Timestamp.now(),
       });
 
@@ -59,9 +61,47 @@ class AddProductCubit extends Cubit<AddProductState> {
       emit(AddProductFailure(errMessage: e.toString()));
     }
   }
+  
+  Future<void> updateProduct({
+    required String name,
+    required String categoryId,
+    required double price,
+    required double discount,
+    required int initialStock,
+    required String docId,
+    required String url,
+    required String type,
+  }) async {
+    try {
+      emit(UpdateProductLoading());
+      String imageUrl = url;
+      if (selectedImage != null) {
+        final response = await cloudinary.uploadFile(
+          CloudinaryFile.fromFile(selectedImage!.path),
+        );
+        imageUrl = response.secureUrl;
+      }
 
+      await _firestore.collection('products').doc(docId).update({
+        'name': name.trim(),
+        'imageUrl': imageUrl,
+        'categoryId': categoryId,
+        'price': discount > 0.0 ? discount : price,
+        'oldPrice': discount > 0.0 ? price : 0.0,
+        'hasDiscount': discount > 0.0 ? true : false,
+        'stock': initialStock,
+        'type': type,
+      });
+
+      emit(UpdateProductSuccess());
+    } catch (e) {
+      emit(AddProductFailure(errMessage: e.toString()));
+    }
+  }
   void clearImage() {
     selectedImage = null;
     emit(AddProductInitial());
   }
 }
+
+

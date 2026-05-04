@@ -22,3 +22,14 @@ final class AddProductImagePicked extends AddProductState {
   AddProductImagePicked({required this.image});
 
 }
+
+
+final class UpdateProductLoading extends AddProductState {}
+
+final class UpdateProductSuccess extends AddProductState {}
+
+final class UpdateProductFailure extends AddProductState {
+  final String errMessage;
+
+  UpdateProductFailure({required this.errMessage});
+}
