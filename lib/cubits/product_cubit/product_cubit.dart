@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
@@ -7,7 +9,7 @@ part 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
   ProductCubit() : super(ProductInitial());
-
+  StreamSubscription? _subscription;
   void getProductsByType(String productType) async {
     emit(ProductLoading());
     try {
@@ -27,7 +29,7 @@ class ProductCubit extends Cubit<ProductState> {
           hasDiscount: data['hasDiscount'] ?? false,
           type: data['type'] ?? '',
           categoryId: data['categoryId'] ?? '',
-          stock: 1,
+          stock: data['stock'] ?? 1,
         );
       }).toList();
 
@@ -37,7 +39,7 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
-   Future<void> getProductsByCategoryId({required String categoryId}) async {
+  Future<void> getProductsByCategoryId({required String categoryId}) async {
     emit(ProductLoading());
     try {
       var snapshot = await FirebaseFirestore.instance
@@ -55,7 +57,7 @@ class ProductCubit extends Cubit<ProductState> {
           hasDiscount: data['hasDiscount'] ?? false,
           type: data['type'] ?? '',
           categoryId: data['categoryId'] ?? '',
-          stock: 1,
+          stock: data['stock'] ?? 1,
         );
       }).toList();
       emit(ProductSuccess(productsList));
@@ -64,40 +66,44 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
-  void getAllProducts() async {
+  void getAllProducts() {
     emit(ProductLoading());
-    try {
-      var snapshot = await FirebaseFirestore.instance
-          .collection('products')
-          .get();
 
-      List<ProductModel> productsList = snapshot.docs.map((doc) {
-        var data = doc.data();
-        return ProductModel(
-          id: doc.id,
-          name: data['name'] ?? '',
-          imageUrl: data['imageUrl'] ?? '',
-          price: (data['price'] ?? 0).toDouble(),
-          oldPrice: (data['oldPrice'] ?? 0).toDouble(),
-          hasDiscount: data['hasDiscount'] ?? false,
-          type: data['type'] ?? '',
-          categoryId: data['categoryId'] ?? '',
-          stock: 1,
-        );
-      }).toList();
+    _subscription?.cancel(); 
+    _subscription = FirebaseFirestore.instance
+        .collection('products')
+        .snapshots()
+        .listen((snapshot) {
+          try {
+            List<ProductModel> productsList = snapshot.docs.map((doc) {
+              var data = doc.data();
+              return ProductModel(
+                id: doc.id,
+                name: data['name'] ?? '',
+                imageUrl: data['imageUrl'] ?? '',
+                price: (data['price'] ?? 0).toDouble(),
+                oldPrice: (data['oldPrice'] ?? 0).toDouble(),
+                hasDiscount: data['hasDiscount'] ?? false,
+                type: data['type'] ?? '',
+                categoryId: data['categoryId'] ?? '',
+                stock: data['stock'] ?? 1,
+              );
+            }).toList();
 
-      emit(ProductSuccess(productsList));
-    } catch (e) {
-      emit(ProductError(e.toString()));
-    }
+            emit(ProductSuccess(productsList));
+          } catch (e) {
+            emit(ProductError(e.toString()));
+          }
+        });
   }
 
   Future<void> deleteProduct(String docId) async {
     if (state is ProductSuccess) {
       final currentState = state as ProductSuccess;
 
-      final updatedList =
-          currentState.products.where((e) => e.id != docId).toList();
+      final updatedList = currentState.products
+          .where((e) => e.id != docId)
+          .toList();
 
       emit(ProductSuccess(updatedList));
 
@@ -111,5 +117,11 @@ class ProductCubit extends Cubit<ProductState> {
         getAllProducts();
       }
     }
+  }
+
+  @override
+  Future<void> close() {
+    _subscription?.cancel();
+    return super.close();
   }
 }
