@@ -92,4 +92,24 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
+  Future<void> deleteProduct(String docId) async {
+    if (state is ProductSuccess) {
+      final currentState = state as ProductSuccess;
+
+      final updatedList =
+          currentState.products.where((e) => e.id != docId).toList();
+
+      emit(ProductSuccess(updatedList));
+
+      try {
+        await FirebaseFirestore.instance
+            .collection('products')
+            .doc(docId)
+            .delete();
+      } catch (e) {
+        emit(ProductError(e.toString()));
+        getAllProducts();
+      }
+    }
+  }
 }

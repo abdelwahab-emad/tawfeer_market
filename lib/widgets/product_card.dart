@@ -3,8 +3,11 @@ import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/models/product_model.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key, required this.product});
+  const ProductCard({super.key, required this.product, this.onEdit, this.onDelete});
   final ProductModel product;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -74,12 +77,12 @@ class ProductCard extends StatelessWidget {
                       _buildActionButton(
                         icon: Icons.edit_outlined,
                         color: Colors.blue,
-                        onTap: () {},
+                        onTap: onEdit ?? () {},
                       ),
                       _buildActionButton(
                         icon: Icons.delete_outline_rounded,
                         color: Colors.red,
-                        onTap: () {},
+                        onTap: onDelete ?? () {},
                       ),
                     ],
                   ),

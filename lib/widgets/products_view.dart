@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
+import 'package:tawfeer_market/widgets/delete_product_sheet.dart';
 import 'package:tawfeer_market/widgets/product_card.dart';
 
 class ProductsView extends StatefulWidget {
@@ -56,7 +57,21 @@ class _ProductsViewState extends State<ProductsView> {
                         ),
                     itemCount: products.length,
                     itemBuilder: (context, index) {
-                      return ProductCard(product: products[index]);
+                      return ProductCard(
+                        product: products[index],
+                        onDelete: () {
+                          showModalBottomSheet(
+                            context: context,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(30),
+                              ),
+                            ),
+                            builder: (context) =>
+                                DeleteProductSheet(docId: products[index].id),
+                          );
+                        },
+                      );
                     },
                   );
                 }
