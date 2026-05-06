@@ -22,13 +22,15 @@ class RegisterCubit extends Cubit<RegisterState> {
           .collection('users')
           .doc(userCredential.user!.uid)
           .set({
+            'uId': userCredential.user!.uid,
             'firstName': firstName,
             'lastName': lastName,
-            'password': password,
             'email': email,
-            'uId': userCredential.user!.uid,
-            'createdAt': DateTime.now().toIso8601String(),
+            'password': password,
             'role': 'user',
+            'status': 'active',
+            'createdAt': DateTime.now().toIso8601String(),
+            'image' : null,
           });
       await userCredential.user!.updateDisplayName('${firstName} ${lastName}');
 
