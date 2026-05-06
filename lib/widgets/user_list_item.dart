@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:tawfeer_market/constants.dart';
 
 class UserListItem extends StatelessWidget {
-  const UserListItem({super.key, required this.name, required this.email, required this.createdAt, required this.status});
-  
+  const UserListItem({
+    super.key,
+    required this.name,
+    required this.email,
+    required this.createdAt,
+    required this.status,
+  });
+
   final String name;
   final String email;
   final String createdAt;
   final String status;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,35 +33,42 @@ class UserListItem extends StatelessWidget {
             child: Icon(Icons.person, color: Colors.grey, size: 25),
           ),
           const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                email,
-                style: TextStyle(fontSize: 14, color: Colors.grey),
-              ),
-              const SizedBox(height: 4),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.calendar_today_outlined,
-                    size: 12,
-                    color: Color(kprimarycolor),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(width: 4),
-                  Text(
-                    createdAt,
-                    style: TextStyle(fontSize: 12, color: Color(kprimarycolor)),
-                  ),
-                ],
-              ),
-            ],
+                ),
+                Text(
+                  email,
+                  style: const TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.calendar_today_outlined,
+                      size: 12,
+                      color: Color(kprimarycolor),
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      createdAt,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Color(kprimarycolor),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          const Spacer(),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -66,17 +80,80 @@ class UserListItem extends StatelessWidget {
                 ),
                 child: Text(
                   status,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.green,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
-              const Icon(Icons.more_vert, color: Colors.grey),
+              const SizedBox(height: 4),
+              PopupMenuButton<String>(
+                color: Colors.white,
+                padding: EdgeInsets.zero,
+                elevation: 0,
+                icon: const Icon(Icons.more_vert, color: Colors.grey),
+                onSelected: (value) {
+                  if (value == 'orders') {
+                  } else if (value == 'edit') {
+                  } else if (value == 'block') {
+                  } else if (value == 'delete') {}
+                },
+                itemBuilder: (context) => [
+                  buildPopupMenuItem(
+                    context,
+                    value: 'orders',
+                    text: 'Orders',
+                    icon: Icons.shopping_bag_outlined,
+                    color: Colors.blue,
+                  ),
+                  buildPopupMenuItem(
+                    context,
+                    value: 'edit',
+                    text: 'Edit',
+                    icon: Icons.edit_outlined,
+                    color: Colors.green,
+                  ),
+                  buildPopupMenuItem(
+                    context,
+                    value: 'block',
+                    text: 'Block User',
+                    icon: Icons.block_outlined,
+                    color: Colors.orange,
+                  ),
+                  const PopupMenuDivider(),
+                  buildPopupMenuItem(
+                    context,
+                    value: 'delete',
+                    text: 'Delete',
+                    icon: Icons.delete_outline,
+                    color: Colors.red,
+                    textColor: Colors.red,
+                  ),
+                ],
+              ),
             ],
           ),
+        ],
+      ),
+    );
+  }
+
+  PopupMenuItem<String> buildPopupMenuItem(
+    BuildContext context, {
+    required String value,
+    required String text,
+    required IconData icon,
+    required Color color,
+    Color? textColor,
+  }) {
+    return PopupMenuItem<String>(
+      value: value,
+      child: Row(
+        children: [
+          Icon(icon, color: color, size: 20),
+          const SizedBox(width: 10),
+          Text(text, style: TextStyle(color: textColor ?? Colors.black)),
         ],
       ),
     );
