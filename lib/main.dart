@@ -61,6 +61,7 @@ class TawfeerMarket extends StatelessWidget {
         BlocProvider(create: (context) => UserCubit()),
         BlocProvider(create : (context) => AddCategoryCubit()),
         BlocProvider(create: (context) => AddProductCubit()),
+        BlocProvider(create:  (context) => UserCubit()),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, state) {
