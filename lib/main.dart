@@ -15,6 +15,7 @@ import 'package:tawfeer_market/cubits/orders/orders_cubit.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_cubit.dart';
 import 'package:tawfeer_market/cubits/user/user_cubit.dart';
+import 'package:tawfeer_market/cubits/users_cubit/users_cubit.dart';
 import 'package:tawfeer_market/firebase_options.dart';
 import 'package:tawfeer_market/l10n/app_localizations.dart';
 import 'package:tawfeer_market/pages/admin_hub_page.dart';
@@ -61,7 +62,7 @@ class TawfeerMarket extends StatelessWidget {
         BlocProvider(create: (context) => UserCubit()),
         BlocProvider(create : (context) => AddCategoryCubit()),
         BlocProvider(create: (context) => AddProductCubit()),
-        BlocProvider(create:  (context) => UserCubit()),
+        BlocProvider(create:  (context) => UsersCubit()..getUsers()),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, state) {

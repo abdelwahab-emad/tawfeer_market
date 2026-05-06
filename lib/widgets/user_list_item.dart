@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:tawfeer_market/constants.dart';
 
 class UserListItem extends StatelessWidget {
-  const UserListItem({super.key});
-
+  const UserListItem({super.key, required this.name, required this.email, required this.createdAt, required this.status});
+  
+  final String name;
+  final String email;
+  final String createdAt;
+  final String status;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,11 +30,11 @@ class UserListItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Ahmed hany',
+                name,
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Text(
-                'ahmed_hany@gmail.com',
+                email,
                 style: TextStyle(fontSize: 14, color: Colors.grey),
               ),
               const SizedBox(height: 4),
@@ -43,7 +47,7 @@ class UserListItem extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    'Created: May 6, 2026',
+                    createdAt,
                     style: TextStyle(fontSize: 12, color: Color(kprimarycolor)),
                   ),
                 ],
@@ -61,7 +65,7 @@ class UserListItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
-                  "Active",
+                  status,
                   style: TextStyle(
                     color: Colors.green,
                     fontSize: 12,

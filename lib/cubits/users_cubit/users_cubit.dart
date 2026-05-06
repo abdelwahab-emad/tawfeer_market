@@ -5,11 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 import 'package:tawfeer_market/models/user_model.dart';
 
-part 'user_state.dart';
+part 'users_state.dart';
 
-class UserCubit extends Cubit<UserState> {
-  UserCubit() : super(UserInitial());
-
+class UsersCubit extends Cubit<UsersState> {
+  UsersCubit() : super(UserInitial());
   StreamSubscription? subscription;
   List<UserModel> usersList = [];
   Future<void> getUsers() async {
@@ -37,7 +36,6 @@ class UserCubit extends Cubit<UserState> {
                 image: data['image'],
               );
             }).toList();
-
             emit(UserSuccess(usersList));
           },
           onError: (e) {
