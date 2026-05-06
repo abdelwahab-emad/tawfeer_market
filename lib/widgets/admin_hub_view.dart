@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tawfeer_market/pages/dashboard_page.dart';
 import 'package:tawfeer_market/pages/manage_categories_page.dart';
 import 'package:tawfeer_market/pages/products_page.dart';
+import 'package:tawfeer_market/pages/users_managment_page.dart';
 import 'package:tawfeer_market/widgets/hub_card.dart';
 
 class AdminHubView extends StatelessWidget {
@@ -42,7 +43,9 @@ class AdminHubView extends StatelessWidget {
             title: 'Users',
             icon: Icons.people_outline,
             color: Colors.purple,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, UsersManagmentPage.id);
+            },
           ),
           HubCard(
             title: 'Categories',

@@ -31,6 +31,7 @@ import 'package:tawfeer_market/pages/register_page.dart';
 import 'package:tawfeer_market/pages/splash_page.dart';
 import 'package:tawfeer_market/pages/user_main_layout_page.dart';
 import 'package:tawfeer_market/pages/Favorites_page.dart';
+import 'package:tawfeer_market/pages/users_managment_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -92,6 +93,7 @@ class TawfeerMarket extends StatelessWidget {
               DashboardPage.id : (context) => const DashboardPage(),
               ProductsPage.id : (context) => const ProductsPage(),
               ManageCategoriesPage.id : (context) => const ManageCategoriesPage(),
+              UsersManagmentPage.id : (context) => const UsersManagmentPage(),
             },
             initialRoute: SplashPage.id,
           );
