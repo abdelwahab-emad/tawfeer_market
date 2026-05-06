@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tawfeer_market/constants.dart';
 
 class UserListItem extends StatelessWidget {
   const UserListItem({super.key});
@@ -7,19 +8,11 @@ class UserListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xffF8F9FA),
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.shade100),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
       ),
       child: Row(
         children: [
@@ -40,10 +33,26 @@ class UserListItem extends StatelessWidget {
                 'ahmed_hany@gmail.com',
                 style: TextStyle(fontSize: 14, color: Colors.grey),
               ),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.calendar_today_outlined,
+                    size: 12,
+                    color: Color(kprimarycolor),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Created: May 6, 2026',
+                    style: TextStyle(fontSize: 12, color: Color(kprimarycolor)),
+                  ),
+                ],
+              ),
             ],
           ),
           const Spacer(),
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

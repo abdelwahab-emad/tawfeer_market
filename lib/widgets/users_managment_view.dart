@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
-import 'package:tawfeer_market/widgets/user_list_item.dart';
 import 'package:tawfeer_market/widgets/users_count_card.dart';
+import 'package:tawfeer_market/widgets/users_list_view.dart';
 
 class UsersManagmentView extends StatelessWidget {
   const UsersManagmentView({super.key});
@@ -16,13 +16,12 @@ class UsersManagmentView extends StatelessWidget {
           const SizedBox(height: 10),
           UsersCountCard(),
           const SizedBox(height: 10),
-          UserListItem(),
+          Expanded(child: UsersListView()),
         ],
       ),
     );
   }
 }
-
 
 
 class SearchBar extends StatelessWidget {

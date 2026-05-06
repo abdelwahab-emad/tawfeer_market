@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
   const CustomTextField({
     super.key,
     this.onChanged,
@@ -17,6 +17,7 @@ class CustomTextField extends StatelessWidget {
     this.prefixIconSize = 22.0,
     this.inputFormatters,
     this.keyboardType,
+    this.focusColor = Colors.white,
   });
 
   final String labelText;
@@ -32,7 +33,31 @@ class CustomTextField extends StatelessWidget {
   final double prefixIconSize;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
+  final Color? focusColor;
 
+  @override
+  State<CustomTextField> createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  late FocusNode focusNode;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    focusNode = FocusNode();
+
+    focusNode.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+  
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     const Color hintGrey = Color(0xFF9E9E9E);
@@ -41,52 +66,55 @@ class CustomTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: TextFormField(
-        onChanged: onChanged,
-        controller: controller,
-        readOnly: readOnly,
-        validator: validator,
-        obscureText: obscureText,
+        onChanged: widget.onChanged,
+        controller: widget.controller,
+        readOnly: widget.readOnly,
+        validator: widget.validator,
+        obscureText: widget.obscureText,
         cursorColor: kazyonOrange,
-        keyboardType: keyboardType,
-        inputFormatters: inputFormatters,
+        keyboardType: widget.keyboardType,
+        inputFormatters: widget.inputFormatters,
+        focusNode: focusNode,
         style: const TextStyle(color: Colors.black, fontSize: 16),
         decoration: InputDecoration(
-          labelText: labelText,
-          floatingLabelBehavior: readOnly
+          
+          labelText: widget.labelText,
+          floatingLabelBehavior: widget.readOnly
               ? FloatingLabelBehavior.never
               : FloatingLabelBehavior.auto,
           labelStyle: TextStyle(color: Colors.grey[700], fontSize: 18),
           floatingLabelStyle: const TextStyle(color: hintGrey),
           hintStyle: const TextStyle(color: hintGrey, fontSize: 14),
-          prefixIcon: prefixIcon != null
-              ? Icon(prefixIcon,
-                  color: Colors.grey[700], size: prefixIconSize)
+          prefixIcon: widget.prefixIcon != null
+              ? Icon(widget.prefixIcon,
+                  color: Colors.grey[700], size: widget.prefixIconSize)
               : null,
-          suffixIcon: suffixIcon != null
+          suffixIcon: widget.suffixIcon != null
               ? IconButton(
-                  icon: Icon(suffixIcon,
+                  icon: Icon(widget.suffixIcon,
                       color: Colors.grey[700], size: 22),
-                  onPressed: onSuffixPressed,
+                  onPressed: widget.onSuffixPressed,
                   splashColor: Colors.transparent,
                 )
               : null,
           filled: true,
-          fillColor: Colors.white,
+          fillColor: focusNode.hasFocus ? widget.focusColor : Colors.white,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade200, width: 1),
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: hintGrey, width: 1.5),
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
+            
           ),
           errorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.red),
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.red, width: 1.5),
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
           ),
           contentPadding: const EdgeInsets.symmetric(
             vertical: 16,

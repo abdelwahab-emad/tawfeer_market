@@ -16,7 +16,7 @@ class UsersCountCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xffF8F9FA),
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.shade300, width: 1),
+    //    border: Border.all(color: Colors.grey.shade300, width: 1),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
