@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tawfeer_market/pages/admin_settings_page.dart';
 import 'package:tawfeer_market/pages/dashboard_page.dart';
-import 'package:tawfeer_market/pages/edit_profile_page.dart';
 import 'package:tawfeer_market/pages/manage_categories_page.dart';
 import 'package:tawfeer_market/pages/products_page.dart';
 import 'package:tawfeer_market/pages/users_managment_page.dart';
@@ -64,7 +64,7 @@ class AdminHubView extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const EditProfilePage(),
+                  builder: (context) => const AdminSettingsPage(),
                 ),
               );
             },
