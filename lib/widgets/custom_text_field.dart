@@ -18,6 +18,7 @@ class CustomTextField extends StatefulWidget {
     this.inputFormatters,
     this.keyboardType,
     this.focusColor = Colors.white,
+    this.horizontalPadding = true,
   });
 
   final String labelText;
@@ -34,6 +35,7 @@ class CustomTextField extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
   final Color? focusColor;
+  final bool? horizontalPadding;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -64,7 +66,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
     const Color kazyonOrange = Color(0xFFFF7900);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      padding: widget.horizontalPadding == true
+          ? const EdgeInsets.symmetric(horizontal: 20, vertical: 8)
+          : const EdgeInsets.symmetric(vertical: 8),
       child: TextFormField(
         onChanged: widget.onChanged,
         controller: widget.controller,

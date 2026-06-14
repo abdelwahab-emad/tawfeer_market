@@ -14,6 +14,8 @@ class CustomButton extends StatelessWidget {
     this.icon,
     this.borderWidth = 2.5,
     this.fontWeight = FontWeight.bold,
+    this.height = 55,
+    this.fontSize = 20,
   });
 
   final String text;
@@ -26,6 +28,8 @@ class CustomButton extends StatelessWidget {
   final double borderRadius;
   final double borderWidth;
   final FontWeight fontWeight;
+  final double height;
+  final double fontSize;
   
   @override
   Widget build(BuildContext context) {
@@ -37,20 +41,20 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
           border: Border.all(color: borderColor, width: borderWidth),
         ),
-        height: 55,
+        height: height,
         width: width,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (icon != null) ...[
-              Icon(icon, color: textColor),
+              Icon(icon, color: textColor, size: 18),
               const SizedBox(width: 10),
             ],
             Text(
               text,
               style: TextStyle(
                 color: textColor,
-                fontSize: 20,
+                fontSize: fontSize,
                 fontWeight: fontWeight,
               ),
             ),
