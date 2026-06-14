@@ -76,7 +76,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          '${locale.status}: ${order.status == 'pending' ? locale.pending : order.status}',
+                          '${locale.status}: ${order.status == 'Pending' ? locale.pending : order.status}',
                           style: const TextStyle(
                             color: Color(kprimarycolor),
                             fontWeight: FontWeight.bold,

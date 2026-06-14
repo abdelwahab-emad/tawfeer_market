@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/cubits/admin_orders/admin_orders_cubit.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
 import 'package:tawfeer_market/widgets/orders_state_grid.dart';
 import 'package:tawfeer_market/widgets/single_order_card.dart';
@@ -22,43 +24,43 @@ class _AdminOrdersViewState extends State<AdminOrdersView> {
     'Cancelled',
   ];
 
-  final List<Map<String, dynamic>> allOrders = [
-    {
-      'id': '#TF9EkIVr',
-      'date': '2026-06-14 - 09:46',
-      'status': 'Pending',
-      'items': '1 Item · Almarai Skinned Milk',
-      'price': '46.5 EGP',
-    },
-    {
-      'id': '#TF7MnXpQ',
-      'date': '2026-06-14 - 08:30',
-      'status': 'Confirmed',
-      'items': '3 Items · Nutella, Coffee...',
-      'price': '312 EGP',
-    },
-    {
-      'id': '#TF5XyZ21',
-      'date': '2026-06-14 - 07:15',
-      'status': 'Delivered',
-      'items': '2 Items · Potato Chips, Cola',
-      'price': '85 EGP',
-    },
-     {
-      'id': '#TF5XyZ21',
-      'date': '2026-06-14 - 07:15',
-      'status': 'Cancelled',
-      'items': '2 Items · Potato Chips, Cola',
-      'price': '85 EGP',
-    },
-  ];
+  // final List<Map<String, dynamic>> allOrders = [
+  //   {
+  //     'id': '#TF9EkIVr',
+  //     'date': '2026-06-14 - 09:46',
+  //     'status': 'Pending',
+  //     'items': '1 Item · Almarai Skinned Milk',
+  //     'price': '46.5 EGP',
+  //   },
+  //   {
+  //     'id': '#TF7MnXpQ',
+  //     'date': '2026-06-14 - 08:30',
+  //     'status': 'Confirmed',
+  //     'items': '3 Items · Nutella, Coffee...',
+  //     'price': '312 EGP',
+  //   },
+  //   {
+  //     'id': '#TF5XyZ21',
+  //     'date': '2026-06-14 - 07:15',
+  //     'status': 'Delivered',
+  //     'items': '2 Items · Potato Chips, Cola',
+  //     'price': '85 EGP',
+  //   },
+  //   {
+  //     'id': '#TF5XyZ21',
+  //     'date': '2026-06-14 - 07:15',
+  //     'status': 'Cancelled',
+  //     'items': '2 Items · Potato Chips, Cola',
+  //     'price': '85 EGP',
+  //   },
+  // ];
   @override
   Widget build(BuildContext context) {
-    final filterdOrders = selectedStatus == 'All'
-        ? allOrders
-        : allOrders
-              .where((order) => order['status'] == selectedStatus)
-              .toList();
+    // final filterdOrders = selectedStatus == 'All'
+    //     ? allOrders
+    //     : allOrders
+    //           .where((order) => order['status'] == selectedStatus)
+    //           .toList();
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -88,10 +90,14 @@ class _AdminOrdersViewState extends State<AdminOrdersView> {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: isSelected
-                            ? Color(kprimarycolor)
-                            : const Color(0xFFE0E0E0),
+                        color: isSelected ? Color(kprimarycolor) : Colors.white,
                         borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: isSelected
+                              ? Colors.transparent
+                              : Colors.black.withOpacity(0.08),
+                          width: 0.8,
+                        ),
                       ),
                       child: Center(
                         child: Text(
@@ -121,24 +127,43 @@ class _AdminOrdersViewState extends State<AdminOrdersView> {
             ),
           ),
           const SizedBox(height: 16),
-          filterdOrders.isEmpty
-              ? const Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 40.0),
-                    child: Text(
-                      'No orders found in this section',
-                      style: TextStyle(color: Colors.white54),
+          BlocBuilder<AdminOrdersCubit, AdminOrdersState>(
+            builder: (context, state) {
+              if (state is AdminOrdersLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(color: Color(kprimarycolor)),
+                );
+              } else if (state is AdminOrdersSuccess) {
+                final filteredOrders = selectedStatus == 'All'
+                    ? state.orders
+                    : state.orders
+                          .where((order) => order.status == selectedStatus)
+                          .toList();
+                if (filteredOrders.isEmpty) {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 40.0),
+                      child: Text(
+                        'No orders found in this section',
+                        style: TextStyle(color: Colors.black38),
+                      ),
                     ),
-                  ),
-                )
-              : ListView.builder(
+                  );
+                }
+                return ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: filterdOrders.length,
+                  itemCount: filteredOrders.length,
                   itemBuilder: (context, index) {
-                    return SingleOrderCard(order: filterdOrders[index]);
+                    return SingleOrderCard(order: filteredOrders[index]);
                   },
-                ),
+                );
+              } else if (state is AdminOrdersFailure) {
+                return Center(child: Text(state.error));
+              }
+              return const SizedBox();
+            },
+          ),
         ],
       ),
     );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tawfeer_market/cubits/admin_orders/admin_orders_cubit.dart';
 import 'package:tawfeer_market/pages/admin_orders_view.dart';
 import 'package:tawfeer_market/widgets/custom_admin_app_bar.dart';
 
@@ -21,7 +23,10 @@ class AdminOrdersPage extends StatelessWidget {
           ),
         ),
       ),
-      body : AdminOrdersView(),
+      body : BlocProvider(
+        create: (context) => AdminOrdersCubit()..getOrders(),
+        child: AdminOrdersView()
+        ),
     );
   }
 }

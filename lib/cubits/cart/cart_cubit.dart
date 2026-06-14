@@ -137,7 +137,7 @@ class CartCubit extends Cubit<CartState> {
         'userId': uId,
         'items': orderProducts,
         'totalPrice': totalCost,
-        'status': 'pending',
+        'status': 'Pending',
         'orderDate': DateTime.now().toIso8601String(),
       });
 

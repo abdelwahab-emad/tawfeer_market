@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tawfeer_market/cubits/add_category/add_category_cubit.dart';
 import 'package:tawfeer_market/cubits/add_product/add_product_cubit.dart';
+import 'package:tawfeer_market/cubits/admin_orders/admin_orders_cubit.dart';
 import 'package:tawfeer_market/cubits/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:tawfeer_market/cubits/cart/cart_cubit.dart';
 import 'package:tawfeer_market/cubits/category_cubit/category_cubit.dart';
@@ -64,6 +65,7 @@ class TawfeerMarket extends StatelessWidget {
         BlocProvider(create : (context) => AddCategoryCubit()),
         BlocProvider(create: (context) => AddProductCubit()),
         BlocProvider(create:  (context) => UsersCubit()..getUsers()),
+        BlocProvider(create: (context) => AdminOrdersCubit()),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, state) {

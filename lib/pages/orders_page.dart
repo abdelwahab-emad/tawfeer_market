@@ -131,7 +131,7 @@ class _OrdersPageState extends State<OrdersPage> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
-                            order.status == 'pending'
+                            order.status == 'Pending'
                                 ? locale.pending
                                 : order.status,
                             style: const TextStyle(

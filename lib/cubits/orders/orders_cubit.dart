@@ -27,7 +27,7 @@ class OrdersCubit extends Cubit<OrdersState> {
               items: [],
               totalPrice: (data['totalPrice'] as num).toDouble(),
               orderDate: DateTime.parse(data['orderDate']),
-              status: data['status'] ?? 'pending',
+              status: data['status'] ?? 'Pending',
             ),
           );
         }
@@ -66,7 +66,7 @@ class OrdersCubit extends Cubit<OrdersState> {
             items: productItems,
             totalPrice: (data['totalPrice'] as num).toDouble(),
             orderDate: DateTime.parse(data['orderDate']),
-            status: data['status'] ?? 'pending',
+            status: data['status'] ?? 'Pending',
           ),
         ));
       }

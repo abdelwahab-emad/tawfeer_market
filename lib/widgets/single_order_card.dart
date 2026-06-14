@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/models/order_model.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
 
 class SingleOrderCard extends StatelessWidget {
-  final Map<String, dynamic> order;
+  final OrderModel order;
 
   const SingleOrderCard({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
-    final String status = order['status'] ?? 'Pending';
+    final String status = order.status ?? 'Pending';
 
     Color badgeBgColor;
     Color badgeTextColor;
@@ -54,7 +55,7 @@ class SingleOrderCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    order['id'],
+                    order.orderId,
                     style: const TextStyle(
                       color: Color(0xFF212529),
                       fontWeight: FontWeight.bold,
@@ -63,7 +64,7 @@ class SingleOrderCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 3),
                   Text(
-                    order['date'],
+                    "sfdga",
                     style: const TextStyle(color: Colors.black38, fontSize: 12),
                   ),
                 ],
@@ -96,13 +97,13 @@ class SingleOrderCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  order['items'],
+                  "dsgas",
                   style: const TextStyle(color: Colors.black54, fontSize: 13),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               Text(
-                order['price'],
+                order.totalPrice.toString(),
                 style: const TextStyle(
                   color: Color(kprimarycolor),
                   fontWeight: FontWeight.bold,
