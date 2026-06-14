@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tawfeer_market/pages/admin_orders_page.dart';
 import 'package:tawfeer_market/pages/admin_settings_page.dart';
 import 'package:tawfeer_market/pages/dashboard_page.dart';
 import 'package:tawfeer_market/pages/manage_categories_page.dart';
@@ -38,7 +39,9 @@ class AdminHubView extends StatelessWidget {
             title: 'Orders',
             icon: Icons.assignment_outlined,
             color: Colors.green,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, AdminOrdersPage.id);
+            },
           ),
           HubCard(
             title: 'Users',
