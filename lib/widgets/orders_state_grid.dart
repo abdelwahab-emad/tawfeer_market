@@ -2,19 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:tawfeer_market/widgets/orders_state_card.dart';
 
 class OrdersStateGrid extends StatelessWidget {
-  const OrdersStateGrid({super.key});
-
+  const OrdersStateGrid({
+    super.key,
+    required this.total,
+    required this.pending,
+    required this.delivered,
+    required this.cancelled,
+  });
+  final int total;
+  final int pending;
+  final int delivered;
+  final int cancelled;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          children: const [
+          children: [
             Expanded(
               child: OrdersStateCard(
                 title: 'Total Orders',
-                value: '1,450',
+                value: total.toString(),
                 percentage: '↑ 8.2%',
               ),
             ),
@@ -22,7 +31,7 @@ class OrdersStateGrid extends StatelessWidget {
             Expanded(
               child: OrdersStateCard(
                 title: 'Pending',
-                value: '38',
+                value: pending.toString(),
                 percentage: '↑ 2.4%',
               ),
             ),
@@ -34,7 +43,7 @@ class OrdersStateGrid extends StatelessWidget {
             Expanded(
               child: OrdersStateCard(
                 title: 'Delivered',
-                value: '1,380',
+                value: delivered.toString(),
                 percentage: '↑ 5.1%',
               ),
             ),
@@ -42,7 +51,7 @@ class OrdersStateGrid extends StatelessWidget {
             Expanded(
               child: OrdersStateCard(
                 title: 'Cancelled',
-                value: '32',
+                value: cancelled.toString(),
                 percentage: '↓ 2.4%',
               ),
             ),

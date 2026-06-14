@@ -24,148 +24,132 @@ class _AdminOrdersViewState extends State<AdminOrdersView> {
     'Cancelled',
   ];
 
-  // final List<Map<String, dynamic>> allOrders = [
-  //   {
-  //     'id': '#TF9EkIVr',
-  //     'date': '2026-06-14 - 09:46',
-  //     'status': 'Pending',
-  //     'items': '1 Item · Almarai Skinned Milk',
-  //     'price': '46.5 EGP',
-  //   },
-  //   {
-  //     'id': '#TF7MnXpQ',
-  //     'date': '2026-06-14 - 08:30',
-  //     'status': 'Confirmed',
-  //     'items': '3 Items · Nutella, Coffee...',
-  //     'price': '312 EGP',
-  //   },
-  //   {
-  //     'id': '#TF5XyZ21',
-  //     'date': '2026-06-14 - 07:15',
-  //     'status': 'Delivered',
-  //     'items': '2 Items · Potato Chips, Cola',
-  //     'price': '85 EGP',
-  //   },
-  //   {
-  //     'id': '#TF5XyZ21',
-  //     'date': '2026-06-14 - 07:15',
-  //     'status': 'Cancelled',
-  //     'items': '2 Items · Potato Chips, Cola',
-  //     'price': '85 EGP',
-  //   },
-  // ];
   @override
   Widget build(BuildContext context) {
-    // final filterdOrders = selectedStatus == 'All'
-    //     ? allOrders
-    //     : allOrders
-    //           .where((order) => order['status'] == selectedStatus)
-    //           .toList();
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          OrdersStateGrid(),
-          SearchBar(),
-          SizedBox(
-            height: 38,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: statuses.length,
-              itemBuilder: (context, index) {
-                final status = statuses[index];
-                final isSelected = status == selectedStatus;
-                return Padding(
-                  padding: const EdgeInsets.only(right: 12.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedStatus = status;
-                      });
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: isSelected ? Color(kprimarycolor) : Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: isSelected
-                              ? Colors.transparent
-                              : Colors.black.withOpacity(0.08),
-                          width: 0.8,
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          status,
-                          style: TextStyle(
-                            color: isSelected
-                                ? Colors.white
-                                : const Color(0xFF616161),
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
+    return BlocBuilder<AdminOrdersCubit, AdminOrdersState>(
+      builder: (context, state) {
+        if (state is AdminOrdersLoading) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.all(40.0),
+              child: CircularProgressIndicator(color: Color(kprimarycolor)),
+            ),
+          );
+        } 
+        else if (state is AdminOrdersFailure) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                state.error,
+                style: const TextStyle(color: Colors.red, fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        } 
+        else if (state is AdminOrdersSuccess) {
+          final filteredOrders = selectedStatus == 'All'
+              ? state.orders
+              : state.orders.where((order) {
+                  return order.status.toLowerCase() == selectedStatus.toLowerCase();
+                }).toList();
+
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                OrdersStateGrid(
+                  total: state.totalCount,
+                  pending: state.pendingCount,
+                  delivered: state.deliveredCount,
+                  cancelled: state.cancelledCount,
+                ),
+                const SizedBox(height: 20),
+                const SearchBar(),
+                const SizedBox(height: 14),
+                SizedBox(
+                  height: 42,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: statuses.length,
+                    itemBuilder: (context, index) {
+                      final status = statuses[index];
+                      final isSelected = status == selectedStatus;
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 12.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedStatus = status;
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: isSelected ? Color(kprimarycolor) : Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: isSelected
+                                    ? Colors.transparent
+                                    : Colors.black.withOpacity(0.08),
+                                width: 0.8,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                status,
+                                style: TextStyle(
+                                  color: isSelected ? Colors.white : const Color(0xFF616161),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 20),
-          const Text(
-            'Recent Orders',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF2D3436),
-            ),
-          ),
-          const SizedBox(height: 16),
-          BlocBuilder<AdminOrdersCubit, AdminOrdersState>(
-            builder: (context, state) {
-              if (state is AdminOrdersLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(color: Color(kprimarycolor)),
-                );
-              } else if (state is AdminOrdersSuccess) {
-                final filteredOrders = selectedStatus == 'All'
-                    ? state.orders
-                    : state.orders
-                          .where((order) => order.status == selectedStatus)
-                          .toList();
-                if (filteredOrders.isEmpty) {
-                  return const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 40.0),
-                      child: Text(
-                        'No orders found in this section',
-                        style: TextStyle(color: Colors.black38),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Recent Orders',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF2D3436),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                filteredOrders.isEmpty
+                    ? const Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 40.0),
+                          child: Text(
+                            'No orders found in this section',
+                            style: TextStyle(color: Colors.black38, fontSize: 14),
+                          ),
+                        ),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: filteredOrders.length,
+                        itemBuilder: (context, index) {
+                          return SingleOrderCard(order: filteredOrders[index]);
+                        },
                       ),
-                    ),
-                  );
-                }
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: filteredOrders.length,
-                  itemBuilder: (context, index) {
-                    return SingleOrderCard(order: filteredOrders[index]);
-                  },
-                );
-              } else if (state is AdminOrdersFailure) {
-                return Center(child: Text(state.error));
-              }
-              return const SizedBox();
-            },
-          ),
-        ],
-      ),
+              ],
+            ),
+          );
+        }
+        return const SizedBox();
+      },
     );
   }
 }
@@ -175,7 +159,7 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomTextField(
+    return const CustomTextField(
       labelText: 'Search Orders...',
       prefixIcon: Icons.search_rounded,
       borderRadius: 20,

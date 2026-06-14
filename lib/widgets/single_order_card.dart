@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/cubits/admin_orders/admin_orders_cubit.dart';
 import 'package:tawfeer_market/models/order_model.dart';
+import 'package:tawfeer_market/pages/order_details_page.dart';
 import 'package:tawfeer_market/widgets/custom_button.dart';
 
 class SingleOrderCard extends StatelessWidget {
@@ -10,7 +13,7 @@ class SingleOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String status = order.status ?? 'Pending';
+    final String status = order.status;
 
     Color badgeBgColor;
     Color badgeTextColor;
@@ -64,13 +67,16 @@ class SingleOrderCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 3),
                   Text(
-                    "sfdga",
+                    "${order.orderDate.day}/${order.orderDate.month}/${order.orderDate.year}",
                     style: const TextStyle(color: Colors.black38, fontSize: 12),
                   ),
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: badgeBgColor,
                   borderRadius: BorderRadius.circular(12),
@@ -86,7 +92,7 @@ class SingleOrderCard extends StatelessWidget {
               ),
             ],
           ),
-          
+
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 12.0),
             child: Divider(color: Color(0xFFF1F3F5), height: 1),
@@ -97,13 +103,13 @@ class SingleOrderCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  "dsgas",
+                  "${order.items.length} Items",
                   style: const TextStyle(color: Colors.black54, fontSize: 13),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               Text(
-                order.totalPrice.toString(),
+                "${order.totalPrice} EGP",
                 style: const TextStyle(
                   color: Color(kprimarycolor),
                   fontWeight: FontWeight.bold,
@@ -114,16 +120,23 @@ class SingleOrderCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          _buildActionButtons(status),
+          _buildActionButtons(context, status),
         ],
       ),
     );
   }
 
-  Widget _buildActionButtons(String status) {
+  Widget _buildActionButtons(BuildContext context, String status) {
     if (status == 'Cancelled') {
       return CustomButton(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OrderDetailsPage(orderId: order.orderId),
+            ),
+          );
+        },
         text: 'View',
         textColor: const Color(0xFF212529),
         filledColor: Colors.white,
@@ -138,7 +151,8 @@ class SingleOrderCard extends StatelessWidget {
 
     String secondaryButtonText = '';
     IconData secondaryButtonIcon = Icons.check;
-    
+    String nextStatus = '';
+
     Color secondaryFilledColor = const Color(kprimarycolor);
     Color secondaryTextColor = Colors.white;
     Color secondaryBorderColor = Colors.transparent;
@@ -147,9 +161,11 @@ class SingleOrderCard extends StatelessWidget {
     if (status == 'Pending') {
       secondaryButtonText = 'Confirm';
       secondaryButtonIcon = Icons.check;
+      nextStatus = 'Confirmed';
     } else if (status == 'Confirmed') {
       secondaryButtonText = 'Mark Delivered';
       secondaryButtonIcon = Icons.local_shipping_outlined;
+      nextStatus = 'Delivered';
     } else if (status == 'Delivered') {
       secondaryButtonText = 'Refund';
       secondaryButtonIcon = Icons.keyboard_return_rounded;
@@ -157,13 +173,21 @@ class SingleOrderCard extends StatelessWidget {
       secondaryTextColor = const Color(0xFF212529);
       secondaryBorderColor = Colors.black12;
       secondaryBorderWidth = 1.0;
+      nextStatus = 'Cancelled';
     }
 
     return Row(
       children: [
         Expanded(
           child: CustomButton(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OrderDetailsPage(orderId: order.orderId),
+                ),
+              );
+            },
             text: 'View',
             textColor: const Color(0xFF212529),
             filledColor: Colors.white,
@@ -176,10 +200,15 @@ class SingleOrderCard extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 12),
-        
+
         Expanded(
           child: CustomButton(
-            onTap: () {},
+            onTap: () {
+              context.read<AdminOrdersCubit>().updateOrderStatus(
+                    orderId: order.orderId,
+                    newStatus: nextStatus,
+                  );
+            },
             text: secondaryButtonText,
             textColor: secondaryTextColor,
             filledColor: secondaryFilledColor,
