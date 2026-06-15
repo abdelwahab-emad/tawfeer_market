@@ -15,6 +15,7 @@ class AdminOrdersView extends StatefulWidget {
 
 class _AdminOrdersViewState extends State<AdminOrdersView> {
   String selectedStatus = 'All';
+  String searchQuery = '';
 
   final List<String> statuses = [
     'All',
@@ -49,11 +50,18 @@ class _AdminOrdersViewState extends State<AdminOrdersView> {
           );
         } 
         else if (state is AdminOrdersSuccess) {
-          final filteredOrders = selectedStatus == 'All'
-              ? state.orders
-              : state.orders.where((order) {
-                  return order.status.toLowerCase() == selectedStatus.toLowerCase();
-                }).toList();
+          final filteredOrders = state.orders.where((order){
+            final matchesStatus = selectedStatus == 'All' || 
+                order.status.toLowerCase() == selectedStatus.toLowerCase();
+
+            final orderDateStr = "${order.orderDate.day}/${order.orderDate.month}/${order.orderDate.year}";
+
+            final query = searchQuery.toLowerCase();
+
+            final matchesSearch = order.orderId.toLowerCase().contains(query) || orderDateStr.contains(query);
+
+            return matchesStatus && matchesSearch;
+          }).toList();
 
           return SingleChildScrollView(
             padding: const EdgeInsets.all(20.0),
@@ -67,7 +75,13 @@ class _AdminOrdersViewState extends State<AdminOrdersView> {
                   cancelled: state.cancelledCount,
                 ),
                 const SizedBox(height: 20),
-                const SearchBar(),
+                SearchBar(
+                  onChanged: (value) {
+                    setState(() {
+                      searchQuery = value;
+                    });
+                  },
+                ),
                 const SizedBox(height: 14),
                 SizedBox(
                   height: 42,
@@ -155,15 +169,16 @@ class _AdminOrdersViewState extends State<AdminOrdersView> {
 }
 
 class SearchBar extends StatelessWidget {
-  const SearchBar({super.key});
-
+  const SearchBar({super.key, required this.onChanged});
+  final ValueChanged<String> onChanged;
   @override
   Widget build(BuildContext context) {
-    return const CustomTextField(
+    return CustomTextField(
       labelText: 'Search Orders...',
       prefixIcon: Icons.search_rounded,
       borderRadius: 20,
       horizontalPadding: false,
+      onChanged: onChanged,
     );
   }
 }

@@ -7,9 +7,16 @@ import 'package:tawfeer_market/widgets/categories_card.dart';
 import 'package:tawfeer_market/widgets/custom_text_field.dart';
 import 'package:tawfeer_market/widgets/delete_category_sheet.dart';
 
-class ManageCategoriesView extends StatelessWidget {
+class ManageCategoriesView extends StatefulWidget {
   const ManageCategoriesView({super.key});
 
+  @override
+  State<ManageCategoriesView> createState() => _ManageCategoriesViewState();
+}
+
+class _ManageCategoriesViewState extends State<ManageCategoriesView> {
+  String searchQuery = '';
+  
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CategoryCubit, CategoryState>(
@@ -25,26 +32,35 @@ class ManageCategoriesView extends StatelessWidget {
         }
 
         if (state is CategorySuccess) {
-          if (state.categoriesList.isEmpty) {
-            return const Center(child: Text("No Categories yes"));
-          }
-          final categories = state.categoriesList;
+         final filteredCategories = state.categoriesList.where((category) {
+            return category.name
+                .toLowerCase()
+                .contains(searchQuery.toLowerCase());
+          }).toList();
           return Column(
             children: [
-              SearchBar(),
+              SearchBar(
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value;
+                  });
+                },
+              ),
               const SizedBox(height: 10),
               Expanded(
-                child: GridView.builder(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.72,
-                    crossAxisSpacing: 15,
-                    mainAxisSpacing: 15,
-                  ),
-                  itemCount: categories.length,
-                  itemBuilder: (context, index) {
-                    final category = categories[index];
+                child: filteredCategories.isEmpty
+                    ? const Center(child: Text("No categories found"))
+                    : GridView.builder(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.72,
+                          crossAxisSpacing: 15,
+                          mainAxisSpacing: 15,
+                        ),
+                        itemCount: filteredCategories.length,
+                        itemBuilder: (context, index) {
+                          final category = filteredCategories[index];
 
                     return CategoriesCard(
                       name: category.name,
@@ -83,7 +99,9 @@ class ManageCategoriesView extends StatelessWidget {
 }
 
 class SearchBar extends StatelessWidget {
-  const SearchBar({super.key});
+  final ValueChanged<String> onChanged;
+
+  const SearchBar({super.key, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +109,7 @@ class SearchBar extends StatelessWidget {
       labelText: 'Search Category...',
       prefixIcon: Icons.search_rounded,
       borderRadius: 20,
+      onChanged: onChanged,
     );
   }
 }

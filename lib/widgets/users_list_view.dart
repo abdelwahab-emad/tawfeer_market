@@ -5,7 +5,8 @@ import 'package:tawfeer_market/cubits/users_cubit/users_cubit.dart';
 import 'package:tawfeer_market/widgets/user_list_item.dart';
 
 class UsersListView extends StatelessWidget {
-  const UsersListView({super.key});
+  const UsersListView({super.key, required this.searchQuery});
+  final String searchQuery;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +23,20 @@ class UsersListView extends StatelessWidget {
         }
 
         if (state is UserSuccess) {
-          if (state.usersList.isEmpty) {
-            return const Center(child: Text("No Users yet"));
+          final filteredUsers = state.usersList.where((user) {
+            final fullName = '${user.firstName} ${user.lastName}'.toLowerCase();
+            final email = user.email.toLowerCase();
+            final query = searchQuery.toLowerCase();
+
+            return fullName.contains(query) || email.contains(query);
+          }).toList();
+          if (filteredUsers.isEmpty) {
+            return const Center(child: Text("No Users found"));
           }
-          final users = state.usersList;
           return ListView.builder(
-            itemCount: users.length,
+            itemCount: filteredUsers.length,
             itemBuilder: (context, index) {
-              final user = users[index];
+              final user = filteredUsers[index];
               return UserListItem(
                 name: '${user.firstName} ${user.lastName}',
                 email: user.email,
