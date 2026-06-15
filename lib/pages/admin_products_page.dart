@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:tawfeer_market/pages/add_product_page.dart';
 import 'package:tawfeer_market/widgets/add_item.dart';
 import 'package:tawfeer_market/widgets/custom_admin_app_bar.dart';
-import 'package:tawfeer_market/widgets/products_view.dart';
+import 'package:tawfeer_market/widgets/admin_products_view.dart';
 
-class ProductsPage extends StatelessWidget {
-  const ProductsPage({super.key});
+class AdminProductsPage extends StatelessWidget {
+  const AdminProductsPage({super.key});
 
   static String id = 'products_page';
 
@@ -27,7 +27,7 @@ class ProductsPage extends StatelessWidget {
          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddProductPage()));
       }),
 
-      body: ProductsView(),
+      body: AdminProductsView(),
     );
   }
 }

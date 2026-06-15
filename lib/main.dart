@@ -29,7 +29,7 @@ import 'package:tawfeer_market/pages/login_page.dart';
 import 'package:tawfeer_market/pages/manage_categories_page.dart';
 import 'package:tawfeer_market/pages/more_page.dart';
 import 'package:tawfeer_market/pages/orders_page.dart';
-import 'package:tawfeer_market/pages/products_page.dart';
+import 'package:tawfeer_market/pages/admin_products_page.dart';
 import 'package:tawfeer_market/pages/register_page.dart';
 import 'package:tawfeer_market/pages/splash_page.dart';
 import 'package:tawfeer_market/pages/user_main_layout_page.dart';
@@ -96,7 +96,7 @@ class TawfeerMarket extends StatelessWidget {
               ChangePasswordPage.id: (context) => const ChangePasswordPage(),
               AdminHubPage.id : (context) => const AdminHubPage(),
               DashboardPage.id : (context) => const DashboardPage(),
-              ProductsPage.id : (context) => const ProductsPage(),
+              AdminProductsPage.id : (context) => const AdminProductsPage(),
               ManageCategoriesPage.id : (context) => const ManageCategoriesPage(),
               UsersManagmentPage.id : (context) => const UsersManagmentPage(),
               AdminOrdersPage.id : (context) => const AdminOrdersPage(),

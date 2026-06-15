@@ -3,7 +3,7 @@ import 'package:tawfeer_market/pages/admin_orders_page.dart';
 import 'package:tawfeer_market/pages/admin_settings_page.dart';
 import 'package:tawfeer_market/pages/dashboard_page.dart';
 import 'package:tawfeer_market/pages/manage_categories_page.dart';
-import 'package:tawfeer_market/pages/products_page.dart';
+import 'package:tawfeer_market/pages/admin_products_page.dart';
 import 'package:tawfeer_market/pages/users_managment_page.dart';
 import 'package:tawfeer_market/widgets/hub_card.dart';
 
@@ -32,7 +32,7 @@ class AdminHubView extends StatelessWidget {
             icon: Icons.shopping_bag_outlined,
             color: Colors.blue,
             onTap: () {
-              Navigator.pushNamed(context, ProductsPage.id);
+              Navigator.pushNamed(context, AdminProductsPage.id);
             },
           ),
           HubCard(

@@ -7,14 +7,16 @@ import 'package:tawfeer_market/widgets/custom_text_field.dart';
 import 'package:tawfeer_market/widgets/delete_product_sheet.dart';
 import 'package:tawfeer_market/widgets/product_card.dart';
 
-class ProductsView extends StatefulWidget {
-  const ProductsView({super.key});
+class AdminProductsView extends StatefulWidget {
+  const AdminProductsView({super.key});
 
   @override
-  State<ProductsView> createState() => _ProductsViewState();
+  State<AdminProductsView> createState() => _AdminProductsViewState();
 }
 
-class _ProductsViewState extends State<ProductsView> {
+class _AdminProductsViewState extends State<AdminProductsView> {
+  String searchQuery = '';
+
   @override
   void initState() {
     super.initState();
@@ -27,7 +29,13 @@ class _ProductsViewState extends State<ProductsView> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          SearchBar(),
+          SearchBar(
+            onChanged: (value) {
+              setState(() {
+                searchQuery = value;
+              });
+            },
+          ),
           const SizedBox(height: 10),
           Expanded(
             child: BlocBuilder<ProductCubit, ProductState>(
@@ -43,8 +51,12 @@ class _ProductsViewState extends State<ProductsView> {
                   return Center(child: Text(state.message));
                 }
                 if (state is ProductSuccess) {
-                  final products = state.products;
-                  if (products.isEmpty) {
+                  final filteredProducts = state.products.where((product) {
+                    return product.name.toLowerCase().contains(
+                      searchQuery.toLowerCase(),
+                    );
+                  }).toList();
+                  if (filteredProducts.isEmpty) {
                     return const Center(child: Text("No products found"));
                   }
                   return GridView.builder(
@@ -56,10 +68,10 @@ class _ProductsViewState extends State<ProductsView> {
                           crossAxisSpacing: 15,
                           mainAxisSpacing: 15,
                         ),
-                    itemCount: products.length,
+                    itemCount: filteredProducts.length,
                     itemBuilder: (context, index) {
                       return ProductCard(
-                        product: products[index],
+                        product: filteredProducts[index],
                         onDelete: () {
                           showModalBottomSheet(
                             context: context,
@@ -69,14 +81,15 @@ class _ProductsViewState extends State<ProductsView> {
                               ),
                             ),
                             builder: (context) =>
-                                DeleteProductSheet(docId: products[index].id),
+                                DeleteProductSheet(docId: filteredProducts[index].id),
                           );
                         },
                         onEdit: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => EditProductPage(product: products[index]),
+                              builder: (context) =>
+                                  EditProductPage(product: filteredProducts[index]),
                             ),
                           );
                         },
@@ -95,16 +108,16 @@ class _ProductsViewState extends State<ProductsView> {
 }
 
 class SearchBar extends StatelessWidget {
-  const SearchBar({super.key});
+  const SearchBar({super.key, required this.onChanged});
 
+  final ValueChanged<String> onChanged;
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
       labelText: 'Search Products...',
       prefixIcon: Icons.search_rounded,
       borderRadius: 20,
+      onChanged: onChanged,
     );
   }
 }
-
-
