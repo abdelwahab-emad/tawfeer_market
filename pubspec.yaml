@@ -28,6 +28,7 @@ dependencies:
   uuid: ^4.5.3
   http: ^1.6.0
   cloudinary_public: ^0.23.1
+  rxdart: ^0.28.0
 
 dev_dependencies:
   flutter_test:

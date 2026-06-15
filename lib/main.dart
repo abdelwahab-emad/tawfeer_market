@@ -9,6 +9,7 @@ import 'package:tawfeer_market/cubits/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:tawfeer_market/cubits/cart/cart_cubit.dart';
 import 'package:tawfeer_market/cubits/category_cubit/category_cubit.dart';
 import 'package:tawfeer_market/cubits/add_to_cart/add_to_cart_cubit.dart';
+import 'package:tawfeer_market/cubits/dashboard/dashboard_cubit.dart';
 import 'package:tawfeer_market/cubits/favorite/favorite_cubit.dart';
 import 'package:tawfeer_market/cubits/language/language_cubit.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_cubit.dart';
@@ -65,7 +66,11 @@ class TawfeerMarket extends StatelessWidget {
         BlocProvider(create : (context) => AddCategoryCubit()),
         BlocProvider(create: (context) => AddProductCubit()),
         BlocProvider(create:  (context) => UsersCubit()..getUsers()),
-        BlocProvider(create: (context) => AdminOrdersCubit()),
+        BlocProvider(create:  (context) => DashboardCubit()..listenToDashboardData()),
+        BlocProvider(create: (context) => AdminOrdersCubit(
+              dashboardCubit: context.read<DashboardCubit>(),
+          )..getOrders()
+        ),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, state) {

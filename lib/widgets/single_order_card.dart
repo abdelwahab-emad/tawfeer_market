@@ -207,6 +207,8 @@ class SingleOrderCard extends StatelessWidget {
               context.read<AdminOrdersCubit>().updateOrderStatus(
                     orderId: order.orderId,
                     newStatus: nextStatus,
+                    currentStatus: status,
+                    totalPrice: order.totalPrice,
                   );
             },
             text: secondaryButtonText,

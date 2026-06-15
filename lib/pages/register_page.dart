@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/cubits/dashboard/dashboard_cubit.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_cubit.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_states.dart';
 import 'package:tawfeer_market/l10n/app_localizations.dart';
@@ -35,6 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) {
         if (state is RegisterSuccess) {
+          context.read<DashboardCubit>().incrementCustomersCount();
           Navigator.pushReplacementNamed(context, UserMainLayout.id);
         } else if (state is RegisterFailure) {
           String message;

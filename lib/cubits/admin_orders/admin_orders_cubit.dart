@@ -3,14 +3,16 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:tawfeer_market/cubits/dashboard/dashboard_cubit.dart';
 import 'package:tawfeer_market/models/order_model.dart';
 import 'package:tawfeer_market/models/product_model.dart';
 
 part 'admin_orders_state.dart';
 
 class AdminOrdersCubit extends Cubit<AdminOrdersState> {
-  AdminOrdersCubit() : super(AdminOrdersInitial());
+  AdminOrdersCubit({required this.dashboardCubit}) : super(AdminOrdersInitial());
 
+  final DashboardCubit dashboardCubit;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   StreamSubscription? _ordersSubscription;
 
@@ -89,10 +91,15 @@ class AdminOrdersCubit extends Cubit<AdminOrdersState> {
     }
   }
 
-  Future<void> updateOrderStatus({required String orderId, required String newStatus}) async {
+  Future<void> updateOrderStatus({required String orderId, required String currentStatus, required String newStatus, required double totalPrice}) async {
     try {
       await _firestore.collection('orders').doc(orderId).update({'status': newStatus});
-    } catch (e) {
+      if (newStatus == 'Delivered') {
+        dashboardCubit.incrementTotalSales(orderPrice: totalPrice);
+      } else if (newStatus == 'Cancelled' && currentStatus == 'Delivered') {
+        dashboardCubit.incrementTotalSales(orderPrice: -totalPrice);
+      }
+     } catch (e) {
       emit(AdminOrdersFailure(e.toString()));
     }
   }

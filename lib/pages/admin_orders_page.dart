@@ -23,10 +23,7 @@ class AdminOrdersPage extends StatelessWidget {
           ),
         ),
       ),
-      body : BlocProvider(
-        create: (context) => AdminOrdersCubit()..getOrders(),
-        child: AdminOrdersView()
-        ),
+      body: AdminOrdersView(),
     );
   }
 }
