@@ -16,6 +16,9 @@ class CustomButton extends StatelessWidget {
     this.fontWeight = FontWeight.bold,
     this.height = 55,
     this.fontSize = 20,
+    this.alignment = MainAxisAlignment.center,
+    this.horizontalPadding = 16.0,
+    this.iconSize = 18.0,
   });
 
   final String text;
@@ -30,12 +33,16 @@ class CustomButton extends StatelessWidget {
   final FontWeight fontWeight;
   final double height;
   final double fontSize;
+  final MainAxisAlignment alignment;
+  final double horizontalPadding;
+  final double iconSize;
   
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
         decoration: BoxDecoration(
           color: filledColor,
           borderRadius: BorderRadius.circular(borderRadius),
@@ -44,10 +51,10 @@ class CustomButton extends StatelessWidget {
         height: height,
         width: width,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: alignment,
           children: [
             if (icon != null) ...[
-              Icon(icon, color: textColor, size: 18),
+              Icon(icon, color: textColor, size: iconSize),
               const SizedBox(width: 10),
             ],
             Text(

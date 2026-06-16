@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tawfeer_market/widgets/custom_text_field.dart';
+import 'package:tawfeer_market/pages/search_products_page.dart';
+import 'package:tawfeer_market/widgets/custom_button.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
@@ -9,11 +10,12 @@ class HomeAppBar extends StatelessWidget {
     return AppBar(
       automaticallyImplyLeading: false,
       elevation: 0,
+      toolbarHeight: 90, 
       flexibleSpace: Container(
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(50),
-            bottomRight: Radius.circular(50),
+            bottomLeft: Radius.circular(40),
+            bottomRight: Radius.circular(40),
           ),
           gradient: LinearGradient(
             begin: Alignment.centerLeft,
@@ -22,13 +24,24 @@ class HomeAppBar extends StatelessWidget {
           ),
         ),
         child: SafeArea(
-          child: Center(
-            child: CustomTextField(
-              labelText: 'Search in Tawfeer Market',
-              prefixIcon: Icons.search,
-              prefixIconSize: 28,
-              borderRadius: 40,
-              readOnly: true,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+            child: CustomButton(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchProductPage()));
+              },
+              text: 'Search in Tawfeer Market',
+              textColor: const Color(0xFF6A6A6A), 
+              filledColor: Colors.white,
+              borderColor: Colors.transparent,
+              borderWidth: 0.0,
+              borderRadius: 30, 
+              icon: Icons.search_rounded,
+              alignment: MainAxisAlignment.start,
+              horizontalPadding: 20.0,
+              iconSize: 26.0,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
             ),
           ),
         ),
