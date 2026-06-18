@@ -45,6 +45,7 @@ class BulkView extends StatelessWidget {
                   name: product.name,
                   id: product.id,
                   type: product.type,
+                  stock: product.stock,
                   categoryId: product.categoryId,
                   hasDiscount: product.hasDiscount,
                   onTap: () {

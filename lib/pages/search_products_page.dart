@@ -108,6 +108,7 @@ class _SearchProductPageState extends State<SearchProductPage> {
                     id: product.id,
                     type: product.type,
                     categoryId: product.categoryId,
+                    stock: product.stock,
                     onTap: () {
                       Navigator.push(
                         context,

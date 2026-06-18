@@ -35,10 +35,16 @@ class _EditProductPageState extends State<EditProductPage> {
   void initState() {
     super.initState();
     nameController.text = widget.product.name;
-    priceController.text = widget.product.price.toString();
-    discountController.text = widget.product.oldPrice.toString();
     stockController.text = widget.product.stock.toString();
     selectedType = widget.product.type;
+    if (widget.product.hasDiscount && widget.product.oldPrice > 0.0) {
+      priceController.text = widget.product.oldPrice.toStringAsFixed(2);
+      double calculatedDiscount = ((widget.product.oldPrice - widget.product.price) / widget.product.oldPrice) * 100;
+      discountController.text = calculatedDiscount.toStringAsFixed(0);
+    } else {
+      priceController.text = widget.product.price.toStringAsFixed(2);
+      discountController.text = '0';
+    }
   }
 
   @override

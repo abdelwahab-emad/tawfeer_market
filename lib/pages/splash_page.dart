@@ -1,83 +1,95 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tawfeer_market/constants.dart';
-import 'package:tawfeer_market/cubits/language/language_cubit.dart';
-import 'package:tawfeer_market/pages/login_page.dart';
-import 'package:tawfeer_market/widgets/custom_button.dart';
+import 'package:tawfeer_market/pages/language_selection_page.dart';
+import 'package:tawfeer_market/pages/user_main_layout_page.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatefulWidget {
+  static const String id = 'splash_page';
   const SplashPage({super.key});
 
-  static const String id = 'splash_page';
+  @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    super.initState();
+    _goNext();
+  }
+
+  Future<void> _goNext() async {
+    await Future.delayed(const Duration(seconds: 4));
+    if (!mounted) return;
+
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      Navigator.pushReplacementNamed(context, UserMainLayout.id);
+    } else {
+      Navigator.pushReplacementNamed(context, LanguageSelectionPage.id);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          children: [
-            SizedBox(height: 16),
-             Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Tawfeer ',
-                        style: TextStyle(
-                          fontSize: 36,
-                          color: Color(kprimarycolor),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const Text(
-                        'Market',
-                        style: TextStyle(
-                          fontSize: 36,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-            const Spacer(flex: 1),
-            Image.asset(
-              'assets/splashphoto.png',
-            ),
-            const Spacer(flex: 2),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CustomButton(
-                      onTap: () {
-                        context.read<LanguageCubit>().changeLanguage('en');
-                        Navigator.pushNamed(context, LoginPage.id);
-                      },
-                      text: 'English',
-                      textColor: Color(0xFF001D3D),
-                      filledColor: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(width: 14,),
-                  Expanded(
-                    child: CustomButton(
-                      onTap: () {
-                        context.read<LanguageCubit>().changeLanguage('ar');
-                        Navigator.pushNamed(context, LoginPage.id);
-                      },
-                      text: 'العربيه',
-                      textColor: Color(0xFF001D3D),
-                      filledColor: Colors.white,
-                    ),
-                  ),
-                ],
+      backgroundColor: const Color(0xFFF97316), 
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Container(
+              width: 120,
+              height: 120,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(28),
+              ),
+              child: const Icon(
+                Icons.shopping_cart_rounded,
+                size: 60,
+                color: Color(0xFFF97316),
               ),
             ),
-          ],
-        ),
+          ),
+
+          const SizedBox(height: 30),
+
+          const Text(
+            'توفير ماركت',
+            style: TextStyle(
+              fontSize: 34,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'TAWFEER MARKET',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.white70,
+              letterSpacing: 3,
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'أفضل العروض · Best deals every day',
+            style: TextStyle(fontSize: 13, color: Colors.white54),
+          ),
+          const SizedBox(height: 60),
+          const SizedBox(
+            width: 160,
+            child: LinearProgressIndicator(
+              backgroundColor: Colors.white24,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Colors.white
+              ),
+              minHeight: 3,
+            ),
+          ),
+        ],
       ),
     );
   }

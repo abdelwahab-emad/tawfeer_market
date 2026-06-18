@@ -40,6 +40,7 @@ class CategoryProductsView extends StatelessWidget {
                   name: product.name,
                   hasDiscount: product.hasDiscount,
                   id: product.id,
+                  stock: product.stock,
                   type: product.type,
                   categoryId: product.categoryId,
                   onTap: () {

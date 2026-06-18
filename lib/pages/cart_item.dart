@@ -3,15 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/cubits/cart/cart_cubit.dart';
 import 'package:tawfeer_market/models/product_model.dart';
+import 'package:tawfeer_market/widgets/custom_snackbar.dart';
 import 'package:tawfeer_market/widgets/delete_from_cart_page.dart';
 
 class CartItem extends StatelessWidget {
   const CartItem({super.key, required this.product});
 
   final ProductModel product;
-  
   @override
   Widget build(BuildContext context) {
+    final int currentQuantity = product.quantity ?? 1;
     return Container(
       margin: const EdgeInsets.only(bottom: 15),
       padding: const EdgeInsets.all(12),
@@ -46,7 +47,10 @@ class CartItem extends StatelessWidget {
               children: [
                 Text(
                   product.name,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -90,11 +94,11 @@ class CartItem extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        if (product.stock > 1) {
+                        if (currentQuantity > 1) {
                           context.read<CartCubit>().updateQuantity(
-                                productId: product.id,
-                                quantity: product.stock - 1,
-                              );
+                            productId: product.id,
+                            quantity: currentQuantity - 1,
+                          );
                         }
                       },
                       child: const Icon(
@@ -106,16 +110,28 @@ class CartItem extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text(
-                        '${product.stock}',
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        '${currentQuantity}',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     InkWell(
-                      onTap: () {
-                        context.read<CartCubit>().updateQuantity(
+                      onTap: () async {
+                        bool isUpdated = await context
+                            .read<CartCubit>()
+                            .updateQuantity(
                               productId: product.id,
-                              quantity: product.stock + 1,
+                              quantity: currentQuantity + 1,
                             );
+                        if (!isUpdated && context.mounted) {
+                          showCustomSnackBar(
+                            context,
+                            'Sorry, maximum available stock reached!',
+                            color: Colors.red,
+                          );
+                        }
                       },
                       child: const Icon(
                         Icons.add,

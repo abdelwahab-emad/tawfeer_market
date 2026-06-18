@@ -8,12 +8,11 @@ import 'package:tawfeer_market/widgets/custom_snackbar.dart';
 
 class AddToCartPage extends StatelessWidget {
   const AddToCartPage({super.key, required this.product});
-
   final ProductModel product;
-
   @override
   Widget build(BuildContext context) {
     var locale = AppLocalizations.of(context)!;
+    final bool isOutOfStock = product.stock <= 0;
 
     return BlocConsumer<AddToCartCubit, AddToCartState>(
       listener: (context, state) {

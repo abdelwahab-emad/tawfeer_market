@@ -78,6 +78,7 @@ class AllProducts extends StatelessWidget {
                         hasDiscount: product.hasDiscount,
                         id: product.id,
                         type: product.type,
+                        stock: product.stock,
                         categoryId: product.categoryId,
                         onTap: () {
                           Navigator.push(

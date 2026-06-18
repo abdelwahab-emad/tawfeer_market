@@ -10,6 +10,10 @@ class AddToCartCubit extends Cubit<AddToCartState> {
   AddToCartCubit() : super(AddToCartInitial());
 
   Future<void> addProductToCart({required ProductModel product}) async{
+    if (product.stock <= 0) {
+      emit(AddToCartFailure(errorMessage: 'Product is out of stock'));
+      return;
+    }
      emit(AddToCartLoading());
 
      try {

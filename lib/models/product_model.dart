@@ -8,6 +8,7 @@ class ProductModel {
   final String type;
   final String categoryId;
   final int stock;
+  final int? quantity;
  
   ProductModel({
     required this.id,
@@ -19,6 +20,6 @@ class ProductModel {
     required this.type,
     required this.categoryId,
     required this.stock,
-
+    this.quantity,
   });
 }

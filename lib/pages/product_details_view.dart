@@ -140,6 +140,7 @@ class ProductDetailsView extends StatelessWidget {
                                     hasDiscount: relatedProduct.hasDiscount,
                                     id: relatedProduct.id,
                                     type: relatedProduct.type,
+                                    stock: relatedProduct.stock,
                                     categoryId: relatedProduct.categoryId,
                                     onTap: () {
                                       Navigator.pushReplacement(

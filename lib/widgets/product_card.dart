@@ -3,7 +3,12 @@ import 'package:tawfeer_market/constants.dart';
 import 'package:tawfeer_market/models/product_model.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key, required this.product, this.onEdit, this.onDelete});
+  const ProductCard({
+    super.key,
+    required this.product,
+    this.onEdit,
+    this.onDelete,
+  });
   final ProductModel product;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
@@ -60,14 +65,15 @@ class ProductCard extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
-                      Text(
-                        '${product.oldPrice} EGP',
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          decoration: TextDecoration.lineThrough,
-                          fontSize: 11,
+                      if (product.hasDiscount)
+                        Text(
+                          '${product.oldPrice} EGP',
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            decoration: TextDecoration.lineThrough,
+                            fontSize: 11,
+                          ),
                         ),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 25),

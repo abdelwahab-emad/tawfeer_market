@@ -44,13 +44,25 @@ class AddProductCubit extends Cubit<AddProductState> {
         CloudinaryFile.fromFile(selectedImage!.path),
       );
 
+      
+      double finalPrice = double.parse(price.toStringAsFixed(2));
+      double oldPrice = 0.0;
+      bool hasDiscount = false;
+
+      if (discount > 0.0) {
+        double calculatedPrice = price - (price * (discount / 100));
+        finalPrice = double.parse(calculatedPrice.toStringAsFixed(2));
+        oldPrice = double.parse(price.toStringAsFixed(2));
+        hasDiscount = true;
+      }
+
       await _firestore.collection('products').add({
         'name': name.trim(),
         'imageUrl': response.secureUrl,
         'categoryId': categoryId,
-        'price': discount > 0.0 ? discount : price,
-        'oldPrice': discount > 0.0 ? price : 0.0,
-        'hasDiscount': discount > 0.0 ? true : false,
+        'price': finalPrice,
+        'oldPrice': oldPrice,
+        'hasDiscount': hasDiscount,
         'stock': initialStock,
         'type': type,
         'createdAt': Timestamp.now(),
@@ -61,7 +73,7 @@ class AddProductCubit extends Cubit<AddProductState> {
       emit(AddProductFailure(errMessage: e.toString()));
     }
   }
-  
+
   Future<void> updateProduct({
     required String name,
     required String categoryId,
@@ -82,13 +94,24 @@ class AddProductCubit extends Cubit<AddProductState> {
         imageUrl = response.secureUrl;
       }
 
+      double finalPrice = double.parse(price.toStringAsFixed(2));
+      double oldPrice = 0.0;
+      bool hasDiscount = false;
+
+      if (discount > 0.0) {
+        double calculatedPrice = price - (price * (discount / 100));
+        finalPrice = double.parse(calculatedPrice.toStringAsFixed(2));
+        oldPrice = double.parse(price.toStringAsFixed(2));
+        hasDiscount = true;
+      }
+
       await _firestore.collection('products').doc(docId).update({
         'name': name.trim(),
         'imageUrl': imageUrl,
         'categoryId': categoryId,
-        'price': discount > 0.0 ? discount : price,
-        'oldPrice': discount > 0.0 ? price : 0.0,
-        'hasDiscount': discount > 0.0 ? true : false,
+        'price': finalPrice,
+        'oldPrice': oldPrice,
+        'hasDiscount': hasDiscount,
         'stock': initialStock,
         'type': type,
       });
@@ -98,10 +121,9 @@ class AddProductCubit extends Cubit<AddProductState> {
       emit(AddProductFailure(errMessage: e.toString()));
     }
   }
+
   void clearImage() {
     selectedImage = null;
     emit(AddProductInitial());
   }
 }
-
-
