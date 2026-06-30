@@ -10,96 +10,113 @@ import 'package:tawfeer_market/models/product_model.dart';
 part 'admin_orders_state.dart';
 
 class AdminOrdersCubit extends Cubit<AdminOrdersState> {
-  AdminOrdersCubit({required this.dashboardCubit}) : super(AdminOrdersInitial());
+  AdminOrdersCubit({required this.dashboardCubit})
+    : super(AdminOrdersInitial());
 
   final DashboardCubit dashboardCubit;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   StreamSubscription? _ordersSubscription;
 
-  Future<void> getOrders() async {
+  Future<void> getOrders({String? userId}) async {
     emit(AdminOrdersLoading());
     _ordersSubscription?.cancel();
+
     try {
-      _ordersSubscription = _firestore
-          .collection('orders')
-          .orderBy('orderDate', descending: true)
-          .snapshots()
-          .listen((querySnapshot) {
-            List<OrderModel> orders = [];
-            int pendingCount = 0;
-            int deliveredCount = 0;
-            int cancelledCount = 0;
+      Query query = _firestore.collection('orders');
 
-            for (var doc in querySnapshot.docs) {
-              var data = doc.data();
-              var itemsList = data['items'] as List<dynamic>? ?? [];
-              
-              List<ProductModel> parsedItems = [];
-              for (var item in itemsList) {
-                var itemMap = Map<String, dynamic>.from(item);
-                
-                parsedItems.add(
-                  ProductModel(
-                    id: itemMap['id'] ?? '',
-                    name: itemMap['name'] ?? '',
-                    imageUrl: itemMap['imageUrl'] ?? '',
-                    price: (itemMap['price'] as num? ?? 0).toDouble(),
-                    oldPrice: (itemMap['oldPrice'] as num? ?? 0).toDouble(),
-                    hasDiscount: itemMap['hasDiscount'] ?? false,
-                    type: itemMap['type'] ?? '',
-                    categoryId: itemMap['categoryId'] ?? '',
-                    stock: itemMap['stock'] ?? 0,
-                  ),
-                );
-              }
+      if (userId != null) {
+        query = query.where('userId', isEqualTo: userId);
+      }
 
-              String currentStatus = data['status'] ?? 'Pending';
+      query = query.orderBy('orderDate', descending: true);
+      _ordersSubscription = query.snapshots().listen(
+        (querySnapshot) {
+          List<OrderModel> orders = [];
+          int pendingCount = 0;
+          int deliveredCount = 0;
+          int cancelledCount = 0;
 
-              if (currentStatus.toLowerCase() == 'pending') {
-                pendingCount++;
-              } else if (currentStatus.toLowerCase() == 'delivered') {
-                deliveredCount++;
-              } else if (currentStatus.toLowerCase() == 'cancelled') {
-                cancelledCount++;
-              }
+          for (var doc in querySnapshot.docs) {
+            var data = doc.data() as Map<String, dynamic>;
+            var itemsList = data['items'] as List<dynamic>? ?? [];
 
-              orders.add(
-                OrderModel(
-                  orderId: data['orderId'] ?? doc.id,
-                  items: parsedItems,
-                  totalPrice: (data['totalPrice'] as num? ?? 0).toDouble(),
-                  orderDate: data['orderDate'] != null 
-                      ? DateTime.parse(data['orderDate'].toString()) 
-                      : DateTime.now(),
-                  status: currentStatus,
+            List<ProductModel> parsedItems = [];
+            for (var item in itemsList) {
+              var itemMap = Map<String, dynamic>.from(item);
+
+              parsedItems.add(
+                ProductModel(
+                  id: itemMap['id'] ?? '',
+                  name: itemMap['name'] ?? '',
+                  imageUrl: itemMap['imageUrl'] ?? '',
+                  price: (itemMap['price'] as num? ?? 0).toDouble(),
+                  oldPrice: (itemMap['oldPrice'] as num? ?? 0).toDouble(),
+                  hasDiscount: itemMap['hasDiscount'] ?? false,
+                  type: itemMap['type'] ?? '',
+                  categoryId: itemMap['categoryId'] ?? '',
+                  stock: itemMap['stock'] ?? 0,
                 ),
               );
             }
 
-            emit(AdminOrdersSuccess(
+            String currentStatus = data['status'] ?? 'Pending';
+
+            if (currentStatus.toLowerCase() == 'pending') {
+              pendingCount++;
+            } else if (currentStatus.toLowerCase() == 'delivered') {
+              deliveredCount++;
+            } else if (currentStatus.toLowerCase() == 'cancelled') {
+              cancelledCount++;
+            }
+
+            orders.add(
+              OrderModel(
+                orderId: data['orderId'] ?? doc.id,
+                items: parsedItems,
+                totalPrice: (data['totalPrice'] as num? ?? 0).toDouble(),
+                orderDate: data['orderDate'] != null
+                    ? DateTime.parse(data['orderDate'].toString())
+                    : DateTime.now(),
+                status: currentStatus,
+              ),
+            );
+          }
+
+          emit(
+            AdminOrdersSuccess(
               orders: orders,
               totalCount: orders.length,
               pendingCount: pendingCount,
               deliveredCount: deliveredCount,
               cancelledCount: cancelledCount,
-            ));
-          }, onError: (error) {
-            emit(AdminOrdersFailure(error.toString()));
-          });
+            ),
+          );
+        },
+        onError: (error) {
+          emit(AdminOrdersFailure(error.toString()));
+        },
+      );
     } catch (e) {
       emit(AdminOrdersFailure(e.toString()));
     }
   }
 
-  Future<void> updateOrderStatus({required String orderId, required String currentStatus, required String newStatus, required double totalPrice}) async {
+  Future<void> updateOrderStatus({
+    required String orderId,
+    required String currentStatus,
+    required String newStatus,
+    required double totalPrice,
+  }) async {
     try {
-      await _firestore.collection('orders').doc(orderId).update({'status': newStatus});
+      await _firestore.collection('orders').doc(orderId).update({
+        'status': newStatus,
+      });
       if (newStatus == 'Delivered') {
-        dashboardCubit.incrementTotalSales(orderPrice: totalPrice);
+        dashboardCubit.updateTotalSales(value: totalPrice);
       } else if (newStatus == 'Cancelled' && currentStatus == 'Delivered') {
-        dashboardCubit.incrementTotalSales(orderPrice: -totalPrice);
+        dashboardCubit.updateTotalSales(value: -totalPrice);
       }
-     } catch (e) {
+    } catch (e) {
       emit(AdminOrdersFailure(e.toString()));
     }
   }

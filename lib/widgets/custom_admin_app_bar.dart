@@ -46,7 +46,6 @@ class CustomAdminAppBar extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            if (actionIcon != null) actionIcon!,
           
             const CircleAvatar(
               radius: 16,

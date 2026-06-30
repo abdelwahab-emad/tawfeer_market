@@ -36,7 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) {
         if (state is RegisterSuccess) {
-          context.read<DashboardCubit>().incrementCustomersCount();
+          context.read<DashboardCubit>().updateCustomersCount(value: 1);
           Navigator.pushReplacementNamed(context, UserMainLayout.id);
         } else if (state is RegisterFailure) {
           String message;

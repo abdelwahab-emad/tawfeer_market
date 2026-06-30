@@ -11,8 +11,10 @@ class HomeAppBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       elevation: 0,
       toolbarHeight: 90, 
+      backgroundColor: Colors.transparent,
+      surfaceTintColor: Colors.transparent,
       flexibleSpace: Container(
-        decoration: const BoxDecoration(
+        decoration:  BoxDecoration(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(40),
             bottomRight: Radius.circular(40),

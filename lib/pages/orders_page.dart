@@ -18,8 +18,8 @@ class OrdersPage extends StatefulWidget {
 class _OrdersPageState extends State<OrdersPage> {
   @override
   void initState() {
-    super.initState();
     context.read<OrdersCubit>().fetchUserOrders();
+    super.initState();
   }
 
   @override

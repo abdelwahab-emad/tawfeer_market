@@ -15,7 +15,7 @@ class BulkView extends StatelessWidget {
     bool isArabic = Localizations.localeOf(context).languageCode == 'ar';
 
     return BlocProvider(
-      create: (context) => ProductCubit()..getProductsByType('bulk'),
+      create: (context) => ProductCubit()..getProductsByType('Bulk'),
       child: BlocBuilder<ProductCubit, ProductState>(
         builder: (context, state) {
           Widget content;

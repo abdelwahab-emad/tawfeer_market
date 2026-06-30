@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:tawfeer_market/constants.dart';
-import 'package:tawfeer_market/cubits/orders/orders_cubit.dart';
-import 'package:tawfeer_market/cubits/orders/orders_state.dart';
+import 'package:tawfeer_market/cubits/order_details_cubit/order_details_cubit.dart';
 import 'package:tawfeer_market/l10n/app_localizations.dart';
 
 class OrderDetailsPage extends StatefulWidget {
-  const OrderDetailsPage({super.key, required this.orderId});
+  const OrderDetailsPage({
+    super.key,
+    required this.orderId,
+  });
+
   final String orderId;
 
   @override
@@ -18,34 +21,54 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   @override
   void initState() {
     super.initState();
-    context.read<OrdersCubit>().fetchOrderDetails(widget.orderId);
+    context.read<OrderDetailsCubit>().fetchOrderDetails(widget.orderId);
   }
 
   @override
   Widget build(BuildContext context) {
-    var locale = AppLocalizations.of(context)!;
+    final locale = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
-        title: Text(
-          locale.orderDetails,
-          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(
+          locale.orderDetails,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      body: BlocBuilder<OrdersCubit, OrdersState>(
+      body: BlocBuilder<OrderDetailsCubit, OrderDetailsState>(
         builder: (context, state) {
-          if (state is OrdersLoading) {
+          if (state is OrderDetailsLoading) {
             return const Center(
-              child: CircularProgressIndicator(color: Color(kprimarycolor)),
+              child: CircularProgressIndicator(
+                color: Color(kprimarycolor),
+              ),
             );
-          } else if (state is OrderDetailsSuccess) {
+          }
+
+          if (state is OrderDetailsFailure) {
+            return Center(
+              child: Text(state.errorMessage),
+            );
+          }
+
+          if (state is OrderDetailsSuccess) {
             final order = state.order;
-            String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(order.orderDate);
+
+            final formattedDate = DateFormat(
+              'yyyy-MM-dd – kk:mm',
+            ).format(order.orderDate);
 
             return SingleChildScrollView(
               padding: const EdgeInsets.all(16),
@@ -56,11 +79,14 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: const Color(kprimarycolor).withOpacity(0.05),
+                      color: const Color(
+                        kprimarycolor,
+                      ).withOpacity(0.05),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start,
                       children: [
                         Text(
                           '${locale.orderId}: #${order.orderId.substring(0, 8)}',
@@ -72,7 +98,9 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                         const SizedBox(height: 8),
                         Text(
                           '${locale.date}: $formattedDate',
-                          style: const TextStyle(color: Colors.grey),
+                          style: const TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                         const SizedBox(height: 8),
                         Text(
@@ -96,26 +124,37 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                   const SizedBox(height: 24),
                   Text(
                     locale.products,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   ListView.builder(
                     shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
+                    physics:
+                        const NeverScrollableScrollPhysics(),
                     itemCount: order.items.length,
                     itemBuilder: (context, index) {
                       final item = order.items[index];
+
                       return Card(
                         elevation: 0,
-                        margin: const EdgeInsets.only(bottom: 12),
+                        margin:
+                            const EdgeInsets.only(bottom: 12),
                         shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.grey.shade200),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius:
+                              BorderRadius.circular(12),
+                          side: BorderSide(
+                            color: Colors.grey.shade200,
+                          ),
                         ),
                         child: ListTile(
-                          contentPadding: const EdgeInsets.all(8),
+                          contentPadding:
+                              const EdgeInsets.all(8),
                           leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius:
+                                BorderRadius.circular(8),
                             child: Image.network(
                               item.imageUrl,
                               width: 60,
@@ -125,9 +164,13 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                           ),
                           title: Text(
                             item.name,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          subtitle: Text('${locale.quantity}: ${item.stock}'),
+                          subtitle: Text(
+                            '${locale.quantity}: ${item.stock}',
+                          ),
                           trailing: Text(
                             '${item.price} ${locale.currency}',
                             style: const TextStyle(
@@ -142,9 +185,8 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                 ],
               ),
             );
-          } else if (state is OrdersFailure) {
-            return Center(child: Text(state.errorMessage));
           }
+
           return const SizedBox();
         },
       ),

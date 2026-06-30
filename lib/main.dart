@@ -13,6 +13,7 @@ import 'package:tawfeer_market/cubits/dashboard/dashboard_cubit.dart';
 import 'package:tawfeer_market/cubits/favorite/favorite_cubit.dart';
 import 'package:tawfeer_market/cubits/language/language_cubit.dart';
 import 'package:tawfeer_market/cubits/login_cubit/login_cubit.dart';
+import 'package:tawfeer_market/cubits/order_details_cubit/order_details_cubit.dart';
 import 'package:tawfeer_market/cubits/orders/orders_cubit.dart';
 import 'package:tawfeer_market/cubits/product_cubit/product_cubit.dart';
 import 'package:tawfeer_market/cubits/register_cubit/register_cubit.dart';
@@ -44,6 +45,17 @@ void main() async {
   runApp(const TawfeerMarket());
 }
 
+class MyScrollBehavior extends ScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) {
+    return child;
+  }
+}
+
 class TawfeerMarket extends StatelessWidget {
   const TawfeerMarket({super.key});
 
@@ -63,14 +75,22 @@ class TawfeerMarket extends StatelessWidget {
         ),
         BlocProvider(create: (context) => LanguageCubit()..getSavedLanguage()),
         BlocProvider(create: (context) => OrdersCubit()),
+        BlocProvider(create: (context) => OrderDetailsCubit()),
         BlocProvider(create: (context) => UserCubit()),
-        BlocProvider(create : (context) => AddCategoryCubit()),
+        BlocProvider(create: (context) => AddCategoryCubit()),
         BlocProvider(create: (context) => AddProductCubit()),
-        BlocProvider(create:  (context) => UsersCubit()..getUsers()),
-        BlocProvider(create:  (context) => DashboardCubit()..listenToDashboardData()),
-        BlocProvider(create: (context) => AdminOrdersCubit(
-              dashboardCubit: context.read<DashboardCubit>(),
-          )..getOrders()
+        BlocProvider(
+          create: (context) => DashboardCubit()..listenToDashboardData(),
+        ),
+        BlocProvider(
+          create: (context) =>
+              UsersCubit(dashboardCubit: context.read<DashboardCubit>())
+                ..getUsers(),
+        ),
+        BlocProvider(
+          create: (context) =>
+              AdminOrdersCubit(dashboardCubit: context.read<DashboardCubit>())
+                ..getOrders(),
         ),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
@@ -85,10 +105,7 @@ class TawfeerMarket extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
 
-            supportedLocales: const [
-              Locale('en'), 
-              Locale('ar'), 
-            ],
+            supportedLocales: const [Locale('en'), Locale('ar')],
             routes: {
               SplashPage.id: (context) => const SplashPage(),
               LoginPage.id: (context) => const LoginPage(),
@@ -100,13 +117,15 @@ class TawfeerMarket extends StatelessWidget {
               UserMainLayout.id: (context) => const UserMainLayout(),
               OrdersPage.id: (context) => const OrdersPage(),
               ChangePasswordPage.id: (context) => const ChangePasswordPage(),
-              AdminHubPage.id : (context) => const AdminHubPage(),
-              DashboardPage.id : (context) => const DashboardPage(),
-              AdminProductsPage.id : (context) => const AdminProductsPage(),
-              ManageCategoriesPage.id : (context) => const ManageCategoriesPage(),
-              UsersManagmentPage.id : (context) => const UsersManagmentPage(),
-              AdminOrdersPage.id : (context) => const AdminOrdersPage(),
-              LanguageSelectionPage.id : (context) => const LanguageSelectionPage(),
+              AdminHubPage.id: (context) => const AdminHubPage(),
+              DashboardPage.id: (context) => const DashboardPage(),
+              AdminProductsPage.id: (context) => const AdminProductsPage(),
+              ManageCategoriesPage.id: (context) =>
+                  const ManageCategoriesPage(),
+              UsersManagmentPage.id: (context) => const UsersManagmentPage(),
+              AdminOrdersPage.id: (context) => const AdminOrdersPage(),
+              LanguageSelectionPage.id: (context) =>
+                  const LanguageSelectionPage(),
             },
             initialRoute: SplashPage.id,
           );

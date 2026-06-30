@@ -20,7 +20,7 @@ class ConfirmOrderSheet extends StatelessWidget {
       onRightTap: () {
         context.read<CartCubit>().confirmOrder(products: products);
         context.read<DashboardCubit>().updateWeeklyOrdersChart();
-        context.read<DashboardCubit>().incrementOrdersCount();
+        context.read<DashboardCubit>().updateOrdersCount(value: 1);
         Navigator.pop(context);
         showCustomSnackBar(
           context,

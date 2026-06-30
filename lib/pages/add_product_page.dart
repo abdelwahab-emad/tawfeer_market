@@ -28,7 +28,7 @@ class _AddProductPageState extends State<AddProductPage> {
   CategoryModel? selectedCategory;
   String? selectedType;
 
-  final List<String> types = ['Daily Needs', 'Top Selling', 'other'];
+  final List<String> types = ['Daily Needs', 'Bulk', 'Top Selling', 'other'];
 
   @override
   Widget build(BuildContext context) {

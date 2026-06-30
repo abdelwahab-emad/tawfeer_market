@@ -92,12 +92,10 @@ class SingleOrderCard extends StatelessWidget {
               ),
             ],
           ),
-
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 12.0),
             child: Divider(color: Color(0xFFF1F3F5), height: 1),
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -119,7 +117,6 @@ class SingleOrderCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-
           _buildActionButtons(context, status),
         ],
       ),
@@ -158,6 +155,8 @@ class SingleOrderCard extends StatelessWidget {
     Color secondaryBorderColor = Colors.transparent;
     double secondaryBorderWidth = 0.0;
 
+    double dynamicFontSize = 14;
+
     if (status == 'Pending') {
       secondaryButtonText = 'Confirm';
       secondaryButtonIcon = Icons.check;
@@ -166,6 +165,7 @@ class SingleOrderCard extends StatelessWidget {
       secondaryButtonText = 'Mark Delivered';
       secondaryButtonIcon = Icons.local_shipping_outlined;
       nextStatus = 'Delivered';
+      dynamicFontSize = 11.5;
     } else if (status == 'Delivered') {
       secondaryButtonText = 'Refund';
       secondaryButtonIcon = Icons.keyboard_return_rounded;
@@ -196,11 +196,10 @@ class SingleOrderCard extends StatelessWidget {
             borderRadius: 8,
             icon: Icons.visibility_outlined,
             fontWeight: FontWeight.w500,
-            fontSize: 14,
+            fontSize: 13,
           ),
         ),
-        const SizedBox(width: 12),
-
+        const SizedBox(width: 8),
         Expanded(
           child: CustomButton(
             onTap: () {
@@ -219,7 +218,7 @@ class SingleOrderCard extends StatelessWidget {
             borderRadius: 8,
             icon: secondaryButtonIcon,
             fontWeight: FontWeight.w500,
-            fontSize: 14,
+            fontSize: dynamicFontSize,
           ),
         ),
       ],

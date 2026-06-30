@@ -19,22 +19,16 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _goNext() async {
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 2));
     if (!mounted) return;
 
-    final user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      Navigator.pushReplacementNamed(context, UserMainLayout.id);
-    } else {
-      Navigator.pushReplacementNamed(context, LanguageSelectionPage.id);
-    }
+    Navigator.pushReplacementNamed(context, LanguageSelectionPage.id);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF97316), 
+      backgroundColor: const Color(0xFFF97316),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -83,9 +77,7 @@ class _SplashPageState extends State<SplashPage> {
             width: 160,
             child: LinearProgressIndicator(
               backgroundColor: Colors.white24,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                Colors.white
-              ),
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               minHeight: 3,
             ),
           ),

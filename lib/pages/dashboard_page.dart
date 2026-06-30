@@ -14,14 +14,14 @@ class DashboardPage extends StatelessWidget {
         preferredSize: const Size.fromHeight(70),
         child: CustomAdminAppBar(
           title: 'DASHBOARD',
-          actionIcon: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.settings_outlined,
-              color: Colors.grey,
-              size: 22,
-            ),
-          ),
+          // actionIcon: IconButton(
+          //   onPressed: () {},
+          //   // icon: const Icon(
+          //   //   Icons.settings_outlined,
+          //   //   color: Colors.grey,
+          //   //   size: 22,
+          //   // ),
+          // ),
         ),
       ),
       body: DashboardView(),

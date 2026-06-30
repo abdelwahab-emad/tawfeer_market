@@ -42,6 +42,7 @@ class UsersListView extends StatelessWidget {
                 email: user.email,
                 createdAt: user.createdAt.toLocal().toString().split(' ')[0],
                 status: user.status,
+                userId: user.uId,
               );
             },
           );

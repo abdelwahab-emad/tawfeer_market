@@ -10,6 +10,7 @@ class DashboardCubit extends Cubit<DashboardState> {
   DashboardCubit() : super(DashboardInitial());
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   StreamSubscription? _dashboardSubscription;
   StreamSubscription? _weeklyOrdersSubscription;
 
@@ -24,6 +25,7 @@ class DashboardCubit extends Cubit<DashboardState> {
       (docSnap) {
         if (docSnap.exists) {
           _weeklyOrdersSubscription?.cancel();
+
           _weeklyOrdersSubscription = _firestore
               .collection('analytics')
               .doc('dashboard')
@@ -46,83 +48,82 @@ class DashboardCubit extends Cubit<DashboardState> {
               }
             }
 
-            List<int> orderedWeeklyData = [
-              daysMap['Mon']!,
-              daysMap['Tue']!,
-              daysMap['Wed']!,
-              daysMap['Thu']!,
-              daysMap['Fri']!,
-              daysMap['Sat']!,
-              daysMap['Sun']!,
-            ];
-
             emit(
               DashboardSuccess(
-                totalSales: (docSnap.data()?['totalSales'] as num?)?.toDouble() ?? 0.0,
+                totalSales:
+                    (docSnap.data()?['totalSales'] as num?)?.toDouble() ?? 0,
                 ordersCount: docSnap.data()?['ordersCount'] ?? 0,
                 customersCount: docSnap.data()?['customersCount'] ?? 0,
                 stockAlertsCount: docSnap.data()?['stockAlertsCount'] ?? 0,
-                weeklyOrdersData: orderedWeeklyData,
+                weeklyOrdersData: [
+                  daysMap['Mon']!,
+                  daysMap['Tue']!,
+                  daysMap['Wed']!,
+                  daysMap['Thu']!,
+                  daysMap['Fri']!,
+                  daysMap['Sat']!,
+                  daysMap['Sun']!,
+                ],
               ),
             );
           });
         } else {
           emit(
             DashboardSuccess(
-              totalSales: 0.0,
+              totalSales: 0,
               ordersCount: 0,
               customersCount: 0,
               stockAlertsCount: 0,
-              weeklyOrdersData: [0, 0, 0, 0, 0, 0, 0],
+              weeklyOrdersData: const [0, 0, 0, 0, 0, 0, 0],
             ),
           );
         }
       },
-      onError: (error) {
-        emit(DashboardError(errorMessage: error.toString()));
+      onError: (e) {
+        emit(DashboardError(errorMessage: e.toString()));
       },
     );
   }
 
   Future<void> updateWeeklyOrdersChart() async {
-    final FirebaseFirestore firestore = FirebaseFirestore.instance;
     String currentDay = DateFormat('E').format(DateTime.now());
 
-    await firestore
+    await _firestore
         .collection('analytics')
         .doc('dashboard')
         .collection('weekly_orders')
         .doc(currentDay)
-        .update({'count': FieldValue.increment(1)});
+        .update({
+      'count': FieldValue.increment(1),
+    });
   }
-
-  Future<void> incrementCustomersCount() async {
+  Future<void> updateCustomersCount({required int value}) async {
     try {
       await _firestore.collection('analytics').doc('dashboard').update({
-        'customersCount': FieldValue.increment(1),
+        'customersCount': FieldValue.increment(value),
       });
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
   }
 
-  Future<void> incrementOrdersCount() async {
+  Future<void> updateOrdersCount({required int value}) async {
     try {
       await _firestore.collection('analytics').doc('dashboard').update({
-        'ordersCount': FieldValue.increment(1),
+        'ordersCount': FieldValue.increment(value),
       });
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
   }
 
-  Future<void> incrementTotalSales({required double orderPrice}) async {
+  Future<void> updateTotalSales({required double value}) async {
     try {
       await _firestore.collection('analytics').doc('dashboard').update({
-        'totalSales': FieldValue.increment(orderPrice),
+        'totalSales': FieldValue.increment(value),
       });
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
   }
 
@@ -132,7 +133,7 @@ class DashboardCubit extends Cubit<DashboardState> {
         'stockAlertsCount': FieldValue.increment(value),
       });
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
   }
 

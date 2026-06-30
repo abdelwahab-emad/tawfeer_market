@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tawfeer_market/pages/bulk_view.dart';
 import 'package:tawfeer_market/pages/categories_view.dart';
 import 'package:tawfeer_market/pages/daily_needs_view.dart';
+import 'package:tawfeer_market/pages/top_selling_page.dart';
 import 'package:tawfeer_market/widgets/home_app_bar.dart';
 import 'package:tawfeer_market/widgets/offers_slider.dart';
 
@@ -17,20 +18,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(130),
-        child: HomeAppBar(),
-      ),
+       backgroundColor: Colors.white,
       body: ListView(
         children: [
-          const SizedBox(height: 30),
-          OffersSlider(),
+          HomeAppBar(),
           const SizedBox(height: 30),
           CategoriesView(),
           const SizedBox(height: 30),
           DailyNeedsView(),
           const SizedBox(height: 30),
+          TopSellingPage(),
+          const SizedBox(height: 30,),
           BulkView(),
         ],
       ),

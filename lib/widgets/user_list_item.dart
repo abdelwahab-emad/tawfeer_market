@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tawfeer_market/constants.dart';
+import 'package:tawfeer_market/pages/user_orders_page.dart';
+import 'package:tawfeer_market/widgets/delete_user_sheet.dart';
 
 class UserListItem extends StatelessWidget {
   const UserListItem({
@@ -8,12 +10,14 @@ class UserListItem extends StatelessWidget {
     required this.email,
     required this.createdAt,
     required this.status,
+    required this.userId,
   });
 
   final String name;
   final String email;
   final String createdAt;
   final String status;
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
@@ -95,9 +99,21 @@ class UserListItem extends StatelessWidget {
                 icon: const Icon(Icons.more_vert, color: Colors.grey),
                 onSelected: (value) {
                   if (value == 'orders') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserOrdersPage(userId: userId),
+                      ),
+                    );
                   } else if (value == 'edit') {
                   } else if (value == 'block') {
-                  } else if (value == 'delete') {}
+                  } else if (value == 'delete') {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (_) =>
+                          DeleteUserSheet(userId: userId, userName: name),
+                    );
+                  }
                 },
                 itemBuilder: (context) => [
                   buildPopupMenuItem(
@@ -107,21 +123,21 @@ class UserListItem extends StatelessWidget {
                     icon: Icons.shopping_bag_outlined,
                     color: Colors.blue,
                   ),
-                  buildPopupMenuItem(
-                    context,
-                    value: 'edit',
-                    text: 'Edit',
-                    icon: Icons.edit_outlined,
-                    color: Colors.green,
-                  ),
-                  buildPopupMenuItem(
-                    context,
-                    value: 'block',
-                    text: 'Block User',
-                    icon: Icons.block_outlined,
-                    color: Colors.orange,
-                  ),
-                  const PopupMenuDivider(),
+                  // buildPopupMenuItem(
+                  //   context,
+                  //   value: 'edit',
+                  //   text: 'Edit',
+                  //   icon: Icons.edit_outlined,
+                  //   color: Colors.green,
+                  // ),
+                  // buildPopupMenuItem(
+                  //   context,
+                  //   value: 'block',
+                  //   text: 'Block User',
+                  //   icon: Icons.block_outlined,
+                  //   color: Colors.orange,
+                  // ),
+                  //const PopupMenuDivider(),
                   buildPopupMenuItem(
                     context,
                     value: 'delete',
