@@ -6,6 +6,14 @@ The app is built with a clean **BLoC/Cubit** architecture and runs on **Android,
 
 ---
 
+## 🎥 Demo
+
+[![Watch the demo video](https://img.youtube.com/vi/lVa7HbpOOWA/maxresdefault.jpg)](https://www.youtube.com/watch?v=lVa7HbpOOWA)
+
+▶️ [Watch on YouTube](https://www.youtube.com/watch?v=lVa7HbpOOWA)
+
+---
+
 ## ✨ Features
 
 ### 👤 Customer
