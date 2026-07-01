@@ -8,9 +8,9 @@ The app is built with a clean **BLoC/Cubit** architecture and runs on **Android,
 
 ## 🎥 Demo
 
-[![Watch the demo video](https://img.youtube.com/vi/lVa7HbpOOWA/maxresdefault.jpg)](https://www.youtube.com/watch?v=lVa7HbpOOWA)
+[![Watch the demo video](https://img.youtube.com/vi/voS3dc4tg2g/maxresdefault.jpg)](https://www.youtube.com/watch?v=voS3dc4tg2g)
 
-▶️ [Watch on YouTube](https://www.youtube.com/watch?v=lVa7HbpOOWA)
+▶️ [Watch on YouTube](https://www.youtube.com/watch?v=voS3dc4tg2g)
 
 ---
 
